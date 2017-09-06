@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    name: lottery_db_name
+    url: jdbc:mysql://127.0.0.1:3306/security_common
+    username: cmanager
+    password: cmanager
+    driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      initial-size: 1
+      min-idle: 5
+      max-active: 20
+
+  redis:
+    cluster:
+      nodes:
+      - 192.168.56.10:9000
+      - 192.168.56.10:9001
+      - 192.168.56.10:9002
+      - 192.168.56.10:9003
+      - 192.168.56.10:9004
+      - 192.168.56.10:9005   
