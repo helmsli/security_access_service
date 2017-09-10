@@ -21,7 +21,7 @@ import com.company.security.service.SecurityUserService;
 import com.company.security.utils.SecurityUserAlgorithm;
 @Service("userLoginService")
 public class UserLoginServiceImpl implements IUserLoginService {
-	@Autowired
+	@Resource(name="securityUserCacheService")
 	private SecurityUserCacheService securityUserCacheService;
 	@Resource(name="userMainDbService")
 	private SecurityUserService userMainDbService;
@@ -431,5 +431,22 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		return SecurityUserConst.RESULT_Error_PhoneError;
 	}
 
+	public SecurityUserService getUserMainDbService() {
+		return userMainDbService;
+	}
+
+	public void setUserMainDbService(SecurityUserService userMainDbService) {
+		this.userMainDbService = userMainDbService;
+	}
+
+	public SecurityUserService getUserReadDbService() {
+		return userReadDbService;
+	}
+
+	public void setUserReadDbService(SecurityUserService userReadDbService) {
+		this.userReadDbService = userReadDbService;
+	}
+
+	
 			
 }

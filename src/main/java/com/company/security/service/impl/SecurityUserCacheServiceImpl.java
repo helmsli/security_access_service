@@ -80,7 +80,11 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
 		String phoneKey = this.getPhoneKey(phone);
 		Long  userid = (Long)opsForValue.get(phoneKey);
-		return getBasicInfo(userid.longValue());
+		if(userid!=null)
+		{
+			return getBasicInfo(userid.longValue());
+		}
+		return null;
 	}
 
 	@Override
