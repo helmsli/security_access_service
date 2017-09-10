@@ -87,6 +87,8 @@
 			<artifactId>hessian</artifactId>
 			<version>4.0.38</version>
 		</dependency>
+		
+
         <!--引入lib目录中的第三方包 -->
 		<dependency>
 			<groupId>com</groupId>

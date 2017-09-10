@@ -12,6 +12,9 @@ import com.company.security.domain.AccessContext;
 import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.domain.SecurityUser;
+import com.company.security.domain.sms.AuthCode;
+import com.company.security.domain.sms.SmsContext;
+import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
 import com.company.security.service.SecurityUserCacheService;
 import com.company.security.service.SecurityUserService;
@@ -22,6 +25,15 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	private SecurityUserCacheService securityUserCacheService;
 	@Resource(name="userMainDbService")
 	private SecurityUserService userMainDbService;
+	//读数据库
+	@Resource(name="userReadDbService")
+	private SecurityUserService userReadDbService;
+	/**
+	 * 短信认证服务
+	 */
+	@Resource(name="smsValidCodeService")
+	private ISmsValidCodeService smsValidCodeService;
+	
 	@Value("${db.dbUserkey}")  
 	private String dbUserKey;	
 	@Value("${hessian.transferUserKey}")  
@@ -99,6 +111,24 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	}
 	
 	/**
+	 * 获取主库或者从库的读写记录
+	 * @param phone
+	 * @return
+	 */
+	protected SecurityUserService getSecurityService(String phone)
+	{
+		long lastModify = this.securityUserCacheService.getLastModifyTime(phone);
+		if(lastModify==0)
+		{
+			return this.userReadDbService;
+		}
+		else
+		{
+			return userMainDbService;
+		}
+	}
+	
+	/**
 	 * 先从缓存中获取loginUser基本信息，如果不存在在从数据库获取
 	 * @return --null 用户不存在
 	 */
@@ -106,9 +136,11 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	{
 		LoginUser loginUser = securityUserCacheService.getBInfoByPhone(phone);
 		if(loginUser==null)
-		{			
+		{		
 			//从数据库中获取信息，
-			SecurityUser securityUser = userMainDbService.selectUserByPhone(phone);
+			//如果最近修改过
+			SecurityUserService securityUserService = this.getSecurityService(phone);
+			SecurityUser securityUser = securityUserService.selectUserByPhone(phone);
 			//如果数据库中不存在
 			if(securityUser==null)
 			{
@@ -130,7 +162,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	 * @param password
 	 * @return
 	 */
-	protected int checkPassword(AccessContext accessContext, String countryCode, String phone, String password)
+	protected int checkPassword(AccessContext accessContext, String phone, String password)
 	{
 		int bRet = LoginServiceConst.RESULT_Error_PasswordError;
 		try {
@@ -259,10 +291,18 @@ public class UserLoginServiceImpl implements IUserLoginService {
 
 
 	@Override
-	public int registerUserByPhone(AccessContext accessContext, String countryCode, String phone, String password) {
+	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
 		// TODO Auto-generated method stub
 		//获取用户名
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
+		//校验短信认证码
+		SmsContext smsContext = new SmsContext();
+		iRet = smsValidCodeService.checkValidCodeBySms(smsContext, validCode);
+		if(LoginServiceConst.RESULT_Success!=iRet)
+		{
+			return iRet;
+		}
+		//注册用户
 		LoginUser  loginUser = getLoginUser(phone);
 		if(loginUser!=null)
 		{
@@ -279,17 +319,19 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		iRet = userMainDbService.registerUserByPhone(securityUser);
 		return iRet;
 	}
-	@Override
-	public int loginUserManual(AccessContext accessContext, String countryCode, String phone, String password) {
-		// TODO Auto-generated method stub
-		//根据电话号码获取loginUser信息
-		int iRet = checkPassword(accessContext,countryCode,phone,password);
-		if(iRet!=LoginServiceConst.RESULT_Success)
-		{
-			return iRet;
-		}
-		LoginUser  loginUser = accessContext.getLoginUserInfo();
-		LoginUserSession loginUserSession = accessContext.getLoginUserSession();
+	
+	/**
+	 * 不需要验证，验证成功后基础的登录流程
+	 * @param accessContext
+	 * @param loginUser
+	 * @param loginUserSession
+	 * @return
+	 */
+	protected int baseLogin(AccessContext accessContext,LoginUser  loginUser,LoginUserSession loginUserSession)
+	{
+		int iRet = LoginServiceConst.RESULT_Error_Fail;
+		accessContext.setLoginUserInfo(loginUser);
+		accessContext.setLoginUserSession(loginUserSession);
 		//构造token
 		String token = getToken(loginUser);
 		loginUserSession.setToken(token);
@@ -306,18 +348,88 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	}
 	
 	@Override
-	public int resetPasswrodByPhone(AccessContext accessContext, String countryCode, String phone, String password) {
+	public int loginUserManual(AccessContext accessContext, String countryCode, String phone, String password,LoginUserSession loginUserSession) {
 		// TODO Auto-generated method stub
-		String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,password);
-		boolean bRet= userMainDbService.resetPasswordByPhone(phone, password, encodeMd5);
-		if(bRet)
+		//根据电话号码获取loginUser信息
+		int iRet = checkPassword(accessContext,phone,password);
+		if(iRet!=LoginServiceConst.RESULT_Success)
 		{
-			return LoginServiceConst.RESULT_Success;
+			return iRet;
 		}
-		else
-		{
-			return LoginServiceConst.RESULT_Error_Fail;
-		}
-	}
 		
+		LoginUser  loginUser = accessContext.getLoginUserInfo();
+		return baseLogin(accessContext,loginUser,loginUserSession);
+		
+	}
+	@Override
+	public int loginUserBySmsCode(AccessContext accessContext,String countryCode,String phone,LoginUserSession loginUserSession,AuthCode validCode) {
+		// TODO Auto-generated method stub
+		//验证短信认证码
+		SmsContext smsContext= new SmsContext();
+		int iRet = this.smsValidCodeService.checkValidCodeBySms(smsContext, validCode);
+		if(LoginServiceConst.RESULT_Success!=iRet)
+		{
+			return iRet;
+		}
+		
+		LoginUser loginUser = this.getLoginUser(phone);
+		//电话号码不存在
+		if(loginUser==null)
+		{
+			return SecurityUserConst.RESULT_Error_PhoneExist;
+		}
+		return this.baseLogin(accessContext, loginUser, loginUserSession);
+		
+	}
+	@Override
+	public int loginUserAuto(AccessContext accessContext, String countryCode, String phone, String password) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public int resetPasswrodByPhone(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
+		// TODO Auto-generated method stub
+		
+		SmsContext smsContext  = new SmsContext();
+		
+		int iRet = smsValidCodeService.checkValidCodeBySms(smsContext, validCode);
+		if(iRet == LoginServiceConst.RESULT_Success)
+		{	
+			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,password);
+			boolean bRet= userMainDbService.resetPasswordByPhone(phone, password, encodeMd5);
+			if(bRet)
+			{
+				return LoginServiceConst.RESULT_Success;
+			}
+			else
+			{
+				return LoginServiceConst.RESULT_Error_Fail;
+			}
+		}
+		return iRet;
+		
+	}
+	
+	@Override
+	public int modifyPasswrodByPhone(AccessContext accessContext, String phone, String oldPassword,String newPassword) {
+		// TODO Auto-generated method stub
+		LoginUser loginUser = getLoginUser(phone);
+		if(loginUser!=null)
+		{
+			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,newPassword);
+			boolean bRet= userMainDbService.updatePassword(loginUser.getUserId(), newPassword, oldPassword, encodeMd5);
+			if(bRet)
+			{
+				return LoginServiceConst.RESULT_Success;
+			}
+			else
+			{
+				return LoginServiceConst.RESULT_Error_Fail;
+			}
+		}
+		return SecurityUserConst.RESULT_Error_PhoneError;
+	}
+
+			
 }

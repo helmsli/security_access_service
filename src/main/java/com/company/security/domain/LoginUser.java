@@ -1,7 +1,7 @@
 package com.company.security.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 public class LoginUser implements Serializable{
 	/** 用户ID. */

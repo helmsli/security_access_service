@@ -35,11 +35,13 @@ public class LoginUserSession {
 	public static final int loginType_pc = 4;
 	
 	/**
-	 * 当前登录的名字的类型
+	 * 登录的渠道名字，PC/WEB/mobile/pad
 	 */
 	private int loginType;
 	
-	
+	/**
+	 * 当前登录的名字的类型
+	 */
 	private int loginIdType;
 	/** 登录的用户标识.*/
 	private String loginId;

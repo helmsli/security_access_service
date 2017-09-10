@@ -1,5 +1,5 @@
 package com.company.security.controller;
 
-public class BaseController {
+public class UserController {
 
 }

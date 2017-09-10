@@ -9,8 +9,7 @@ public class AccessContext {
 	/**
 	 * 登录成功的用户静态信息
 	 */
-    private LoginUser loginUserInfo;
-    
+    private LoginUser loginUserInfo;   
    
     
     /**

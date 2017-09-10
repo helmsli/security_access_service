@@ -119,4 +119,18 @@ public class SecurityUserCacheKeyService {
 		return retStr.toString();
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public String getLastModifyKeyPhone(String phone)
+	{
+		StringBuilder retStr = new StringBuilder();
+		//用两个分隔符和userid区分
+		retStr.append(Key_prefix_lastModify);
+		retStr.append(Key_prefix_lastModify);
+		retStr.append(phone);
+		return retStr.toString();
+	}
 }

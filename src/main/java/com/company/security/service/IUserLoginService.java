@@ -2,6 +2,7 @@ package com.company.security.service;
 
 import com.company.security.domain.AccessContext;
 import com.company.security.domain.LoginUserSession;
+import com.company.security.domain.sms.AuthCode;
 
 public interface IUserLoginService {
 	/**
@@ -13,8 +14,30 @@ public interface IUserLoginService {
 	 * @param LoginUserSession
 	 * @return
 	 */
-	public int loginUserManual(AccessContext accessContext,String countryCode,String phone,String password);
+	public int loginUserManual(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession);
 	
+	
+	/**
+	 * 处理通过短信认证码登录的流程
+	 * @param accessContext
+	 * @param countryCode
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
+	public int loginUserBySmsCode(AccessContext accessContext,String countryCode,String phone,LoginUserSession loginUserSession,AuthCode validCode);
+
+	/**
+	 * 处理后台自动登录的流程
+	 * @param accessContext
+	 * @param countryCode
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
+	public int loginUserAuto(AccessContext accessContext,String countryCode,String phone,String password);
+	
+		
 	/**
 	 * 将验证好的信息注册成为用户
 	 * @param accessContext
@@ -22,7 +45,7 @@ public interface IUserLoginService {
 	 * @param phone
 	 * @return
 	 */
-	public int registerUserByPhone(AccessContext accessContext,String countryCode,String phone,String password);
+	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode);
 	
 	/**
 	 * 
@@ -32,6 +55,18 @@ public interface IUserLoginService {
 	 * @param password
 	 * @return
 	 */
-	public int resetPasswrodByPhone(AccessContext accessContext,String countryCode,String phone,String password);
+	public int resetPasswrodByPhone(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode);
+	
+	/**
+	 * 修改用户密码
+	 * @param accessContext
+	 * @param phone
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return
+	 */
+	public int modifyPasswrodByPhone(AccessContext accessContext, String phone, String oldPassword,String newPassword);
+	
+	
 	
 }

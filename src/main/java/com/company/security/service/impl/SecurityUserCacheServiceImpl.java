@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	
 	@Resource(name="redisLockService")
 	private RedisLockServiceImpl redisLockService;
+	
+	@Value("${user.synReadDbSeconds}")  
+	private int synReadDbSeconds;
 	
 	/**
 	 * token在内存中失效的天数,仅仅时内存中保留的天数，不是token失效的天数
@@ -95,13 +99,42 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		redisTemplate.delete(key);
 		return true;
 	}
+	
+	@Override
+	public long getLastModifyTime(String phone) {
+		String modifyKey = this.getLastModifyKeyPhone(phone);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+		String lastModifyTime = (String)opsForValue.get(modifyKey);
+		try {
+			if(!StringUtils.isEmpty(lastModifyTime))
+			{
+				return Long.parseLong(lastModifyTime);
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return 0;
+	}	
+	
 	@Override
 	public long getLastModifyTime(long userId) {
 		// TODO Auto-generated method stub
-		String lockKey = this.getLockkey(userId);
+		String modifyKey = this.getLastModifyKey(userId);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		String lastModifyTime = (String)opsForValue.get(lockKey);
-		return Long.parseLong(lastModifyTime);
+		String lastModifyTime = (String)opsForValue.get(modifyKey);
+		try {
+			if(!StringUtils.isEmpty(lastModifyTime))
+			{
+				return Long.parseLong(lastModifyTime);
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return 0;
 	}
 	/**
 	 * 清除所有缓存
@@ -122,17 +155,21 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		redisTemplate.delete(key);
 	}
 	@Override
-	public boolean putLastModifyTime(long userId, long lastModifyTime) {
+	public boolean putLastModifyTime(LoginUser loginUser, long lastModifyTime) {
 		// TODO Auto-generated method stub
-		String lockKey = this.getLockkey(userId);
+		String lockKey = this.getLockkey(loginUser.getUserId());
 		String transTime = String.valueOf(System.currentTimeMillis());
 		boolean isLock = getLock(lockKey,transTime);
 		try {
 			if (isLock) {
-               String modifyKey = this.getLastModifyKey(userId);
-               cleanAllUserCache(userId);
+               String modifyKey = this.getLastModifyKey(loginUser.getUserId());
+               String modifyKeyphone = this.getLastModifyKeyPhone(loginUser.getPhone());
+               
                ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-               opsForValue.set(modifyKey, String.valueOf(lastModifyTime));               
+               opsForValue.set(modifyKey, String.valueOf(lastModifyTime),synReadDbSeconds,TimeUnit.SECONDS);               
+               opsForValue.set(modifyKeyphone, String.valueOf(lastModifyTime),synReadDbSeconds,TimeUnit.SECONDS);               
+   			   
+               cleanAllUserCache(loginUser.getUserId());
 			} 
 		} finally {
 			if (isLock) {
@@ -167,8 +204,11 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	protected boolean refreshSessionInfo(LoginUserSession loginUserSession,int duartionSeconds)
 	{
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+		//按照登录的渠道类型和用户ID构造用户登录的具体设备信息
 		String tokenkey = this.getTokenKey(loginUserSession.getLoginType(), loginUserSession.getUserId());
+		//所有的登录设备信息保留一个固定的时间
 		opsForValue.set(tokenkey, loginUserSession,tokenExpiredDays,TimeUnit.DAYS);
+		//设置token信息
 		this.setSessionAccessTime(loginUserSession.getToken(), System.currentTimeMillis(), duartionSeconds);		
 		return true;
 	}
@@ -230,8 +270,10 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 
 	@Override
 	public boolean setSessionAccessTime(String token, long accessTime,int duartionSeconds) {
+		//获取tokne的ken
 		String accessKey  =this.getTokenAccessKey(token);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+		//判断token是否有效
 		opsForValue.set(accessKey, String.valueOf(accessTime),duartionSeconds,TimeUnit.SECONDS);
 		return true;
 	}
@@ -251,7 +293,9 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
 		Long retValue= opsForValue.increment(key, numbers);
 		return retValue.longValue() + 110000000;
-	}	
+	}
+
+	
 	
 
 }

@@ -17,6 +17,9 @@
 		<property name="serviceInterface" value="com.company.security.service.SecurityUserService" />
 		<property name="serviceUrl" value="${hessian.mainUserDb}userMainDbService" />
 	</bean>
-	 
+	<bean id="userReadDbService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceInterface" value="com.company.security.service.SecurityUserService" />
+		<property name="serviceUrl" value="${hessian.readUserDb}userMainDbService" />
+	</bean>
 	
 </beans>

@@ -91,6 +91,14 @@ public interface SecurityUserCacheService {
 	 */
 	public long getLastModifyTime(long userId);
 	
+	/**
+	 * 
+	 * @param phone
+	 * @return
+	 */
+	public long getLastModifyTime(String phone);
+	
+	
 	
 	
 	/**
@@ -99,7 +107,7 @@ public interface SecurityUserCacheService {
 	 * @param lastModifyTime
 	 * @return
 	 */
-	public boolean putLastModifyTime(long userId,long lastModifyTime);
+	public boolean putLastModifyTime(LoginUser loginUser,long lastModifyTime);
 		
 	/**
 	 * 申请新创建的userid
