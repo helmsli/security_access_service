@@ -1,5 +1,7 @@
 package com.company.security.service.impl;
 
+import org.springframework.util.StringUtils;
+
 public class SecurityUserCacheKeyService {
 	
 	public static final String Key_prefix_LoginUser= "luser:";
@@ -10,6 +12,8 @@ public class SecurityUserCacheKeyService {
 	public static final String Key_prefix_DeviceType= "luDType:";
 	public static final String Key_prefix_TokenExpired= "luExpir:";
 	public static final String Key_prefix_CreateUserid= "luserCreate:";
+	public static final String Key_prefix_RandId= "luserRand:";
+	
 	
 	public static final String Key_prefix_Split=":";
 	
@@ -74,12 +78,16 @@ public class SecurityUserCacheKeyService {
 	 * @param userId
 	 * @return
 	 */
-	public String getLoginUserkey(long userId)
+	public String getLoginUserkey(long userId) throws Exception
 	{
-		StringBuilder retStr = new StringBuilder();
-		retStr.append(Key_prefix_LoginUser);
-		retStr.append(userId);
-		return retStr.toString();
+		if(userId>0)
+		{
+			StringBuilder retStr = new StringBuilder();
+			retStr.append(Key_prefix_LoginUser);
+			retStr.append(userId);
+			return retStr.toString();
+		}
+		throw new Exception("userId is 0");
 	}
 	
 	/**
@@ -87,24 +95,33 @@ public class SecurityUserCacheKeyService {
 	 * @param phone
 	 * @return
 	 */
-	public String getPhoneKey(String phone)
+	public String getPhoneKey(String phone) throws Exception
 	{
-		StringBuilder retStr = new StringBuilder();
-		retStr.append(Key_prefix_phone);
-		retStr.append(phone);
-		return retStr.toString();
+		if(!StringUtils.isEmpty(phone))
+		{
+			StringBuilder retStr = new StringBuilder();
+			retStr.append(Key_prefix_phone);
+			retStr.append(phone);
+			return retStr.toString();
+		}
+		throw new Exception("phone is null");
 	}
 	/**
 	 * 
 	 * @param phone
 	 * @return
 	 */
-	public String getEmailKey(String email)
+	public String getEmailKey(String email) throws Exception
 	{
-		StringBuilder retStr = new StringBuilder();
-		retStr.append(Key_prefix_email);
-		retStr.append(email);
-		return retStr.toString();
+		if(!StringUtils.isEmpty(email))
+		{
+			StringBuilder retStr = new StringBuilder();
+			retStr.append(Key_prefix_email);
+			retStr.append(email);
+			return retStr.toString();
+		}
+		throw new Exception("email is null");
+		
 	}
 	/**
 	 * 
@@ -131,6 +148,21 @@ public class SecurityUserCacheKeyService {
 		retStr.append(Key_prefix_lastModify);
 		retStr.append(Key_prefix_lastModify);
 		retStr.append(phone);
+		return retStr.toString();
+	}
+	/**
+	 * 获取用户的随机数
+	 * @param loginId
+	 * @param transid
+	 * @return
+	 */
+	public String getRandomkey(String loginId,String transid)
+	{
+		StringBuilder retStr = new StringBuilder();
+		retStr.append(Key_prefix_RandId);
+		retStr.append(loginId);
+		retStr.append(this.Key_prefix_Split);
+		retStr.append(transid);
 		return retStr.toString();
 	}
 }

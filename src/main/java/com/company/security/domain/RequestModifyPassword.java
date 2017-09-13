@@ -26,6 +26,11 @@ public class RequestModifyPassword extends AuthCode{
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	@Override
+	public String toString() {
+		return "RequestModifyPassword [phone=" + phone + ", modifyKey=" + modifyKey + ", newPassword=" + newPassword
+				+ "]" + super.toString();
 	} 
 	
 }

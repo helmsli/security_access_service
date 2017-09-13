@@ -1,6 +1,8 @@
 package com.company.security.domain;
 
-public class RequestTokenBody {
+import java.io.Serializable;
+
+public class RequestTokenBody implements Serializable{
 	private String token;
 	private Object requestBody;
 	public String getToken() {
@@ -14,6 +16,10 @@ public class RequestTokenBody {
 	}
 	public void setRequestBody(Object requestBody) {
 		this.requestBody = requestBody;
+	}
+	@Override
+	public String toString() {
+		return "RequestTokenBody [token=" + token + ", requestBody=" + requestBody + "]";
 	}
 	
 	

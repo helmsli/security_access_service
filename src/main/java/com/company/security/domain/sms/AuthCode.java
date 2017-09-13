@@ -1,6 +1,8 @@
 package com.company.security.domain.sms;
 
-public class AuthCode {
+import java.io.Serializable;
+
+public class AuthCode implements Serializable{
 	
 	private String phone;
 	/**
@@ -52,4 +54,11 @@ public class AuthCode {
 		}
 		return false;
 	}
+	@Override
+	public String toString() {
+		return "AuthCode [phone=" + phone + ", transid=" + transid + ", sendSeqno=" + sendSeqno + ", authCode="
+				+ authCode + "]";
+	}
+	
+	
 }

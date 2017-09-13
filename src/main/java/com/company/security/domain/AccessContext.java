@@ -1,16 +1,18 @@
 package com.company.security.domain;
 
+import java.io.Serializable;
+
 /**
  * 用户接入的各种上下文信息
  * @author helmsli
  *
  */
-public class AccessContext {
+public class AccessContext implements Serializable{
+	private String transid;
 	/**
 	 * 登录成功的用户静态信息
 	 */
     private LoginUser loginUserInfo;   
-   
     
     /**
      * 用户登录成功后的动态信息
@@ -49,6 +51,22 @@ public class AccessContext {
 	public void setOldUserSession(LoginUserSession oldUserSession) {
 		this.oldUserSession = oldUserSession;
 	}
+
+	public String getTransid() {
+		return transid;
+	}
+
+	public void setTransid(String transid) {
+		this.transid = transid;
+	}
+
+	@Override
+	public String toString() {
+		return "AccessContext [transid=" + transid + ", loginUserInfo=" + loginUserInfo + ", loginUserSession="
+				+ loginUserSession + ", oldUserSession=" + oldUserSession + "]";
+	}
+
+	
 
 
 	

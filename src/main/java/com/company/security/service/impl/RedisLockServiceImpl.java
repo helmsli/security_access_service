@@ -74,7 +74,7 @@ public class RedisLockServiceImpl {
             String transValue = accessKey;
             while (true){
             	if(redisTemplate.opsForValue().setIfAbsent(lockKey,transValue)){  
-                	redisTemplate.opsForValue().set(lockKey,transValue,lockExpireTime,TimeUnit.SECONDS);  
+                	redisTemplate.opsForValue().set(lockKey,transValue,lockExpireTime,TimeUnit.MILLISECONDS);  
                 	
                 	return true;  
                 }

@@ -1,8 +1,11 @@
 package com.company.security.service;
 
+import java.security.KeyPair;
+
 import com.company.security.domain.AccessContext;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.domain.sms.AuthCode;
+import com.company.security.domain.sms.SmsContext;
 
 public interface IUserLoginService {
 	/**
@@ -67,6 +70,29 @@ public interface IUserLoginService {
 	 */
 	public int modifyPasswrodByPhone(AccessContext accessContext, String phone, String oldPassword,String newPassword);
 	
+	/**
+	 * 根据电话号码生成transid和random 
+	 * @param smsContext
+	 * @param phone
+	 * @return --authcode对象；
+	 */
+	public int createRandom(SmsContext smsContext,String phone); 
+	
+	/**
+	 * 根据电话号码和事务号，查询随机数，用于校验
+	 * @param phone
+	 * @param transid
+	 * @return
+	 */
+	public String getRandom(String phone,String transid); 
+	
+	/**
+	 * 
+	 * @param smsContext
+	 * @param phone
+	 * @return
+	 */
+	public  KeyPair getRsaInfo(SmsContext smsContext,String phone); 
 	
 	
 }

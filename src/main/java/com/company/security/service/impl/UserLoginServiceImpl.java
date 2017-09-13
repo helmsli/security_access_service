@@ -1,10 +1,13 @@
 package com.company.security.service.impl;
 
+import java.security.KeyPair;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.company.security.Const.LoginServiceConst;
 import com.company.security.Const.SecurityUserConst;
@@ -58,6 +61,8 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	 * 新申请的UserID的起始id
 	 */
 	private long startNewuserId=0;
+	
+	
 	
 	/**
 	 * 本地初始化的userid，如果cache出错，会使用这个变量
@@ -155,6 +160,22 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	}
 	
 	/**
+	 * 将数据库的密码和随机数加密，以方便和客户端比较
+	 * @param accessContext
+	 * @param phone
+	 * @param dbPassword
+	 * @return
+	 */
+	protected String getCorrentPassword(AccessContext accessContext, String phone,String dbPassword)
+	{
+		
+		String random = getRandom(phone,accessContext.getTransid());
+		String correctPassword = SecurityUserAlgorithm.EncoderByMd5(random, dbPassword);
+		
+		return correctPassword;
+	}
+	
+	/**
 	 * 校验密码信息
 	 * @param accessContext
 	 * @param countryCode
@@ -173,9 +194,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 				bRet = SecurityUserConst.RESULT_Error_PhoneExist;
 				return bRet;
 			}
-			
+			String correctPassword = getCorrentPassword(accessContext,phone,loginUser.getPassword());
+		
 			//如果密码不相等
-			if(!loginUser.getPassword().equalsIgnoreCase(password))
+			if(!correctPassword.equalsIgnoreCase(password))
 			{
 				return LoginServiceConst.RESULT_Error_PasswordError;
 			}
@@ -315,6 +337,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		securityUser.setPhoneccode(countryCode);
 		securityUser.setPassword(password);
 		securityUser.setUserId(this.createUserId());
+		securityUser.setPhoneverified(securityUser.verified_Success);
 		accessContext.setLoginUserInfo(securityUser.getLoginUser());
 		iRet = userMainDbService.registerUserByPhone(securityUser);
 		return iRet;
@@ -338,11 +361,15 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		//清除老的session
 		clearOldsession(accessContext,loginUserSession);
 		int durationSeconds = getSessionDurSedonds(loginUserSession.getLoginType());
-		boolean bRet = securityUserCacheService.putSessionInfo(loginUserSession, durationSeconds);
+		boolean bRet = securityUserCacheService.putSessionInfo(loginUserSession, loginUser,durationSeconds);
 		//
 		if(!bRet)
 		{
 			iRet =  LoginServiceConst.RESULT_Error_putSession;
+		}
+		else
+		{
+			iRet =  LoginServiceConst.RESULT_Success;
 		}
 		return iRet;
 	}
@@ -351,14 +378,26 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	public int loginUserManual(AccessContext accessContext, String countryCode, String phone, String password,LoginUserSession loginUserSession) {
 		// TODO Auto-generated method stub
 		//根据电话号码获取loginUser信息
-		int iRet = checkPassword(accessContext,phone,password);
-		if(iRet!=LoginServiceConst.RESULT_Success)
-		{
-			return iRet;
+		int iRet = LoginServiceConst.RESULT_Error_Fail;
+		try {
+			accessContext.setLoginUserSession(loginUserSession);
+			 iRet = checkPassword(accessContext,phone,password);
+			if(iRet!=LoginServiceConst.RESULT_Success)
+			{
+				return iRet;
+			}
+					
+			LoginUser  loginUser = accessContext.getLoginUserInfo();
+			return baseLogin(accessContext,loginUser,loginUserSession);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			if(iRet == LoginServiceConst.RESULT_Success)
+			{
+				iRet = LoginServiceConst.RESULT_Error_Fail;
+			}
 		}
-		
-		LoginUser  loginUser = accessContext.getLoginUserInfo();
-		return baseLogin(accessContext,loginUser,loginUserSession);
+		return iRet;
 		
 	}
 	@Override
@@ -371,13 +410,14 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		{
 			return iRet;
 		}
-		
+		accessContext.setLoginUserSession(loginUserSession);
 		LoginUser loginUser = this.getLoginUser(phone);
 		//电话号码不存在
 		if(loginUser==null)
 		{
 			return SecurityUserConst.RESULT_Error_PhoneExist;
 		}
+		accessContext.setLoginUserInfo(loginUser);
 		return this.baseLogin(accessContext, loginUser, loginUserSession);
 		
 	}
@@ -445,6 +485,43 @@ public class UserLoginServiceImpl implements IUserLoginService {
 
 	public void setUserReadDbService(SecurityUserService userReadDbService) {
 		this.userReadDbService = userReadDbService;
+	}
+
+	@Override
+	public int createRandom(SmsContext smsContext,String phone) 
+	 {
+		// TODO Auto-generated method stub
+		String retStr=this.securityUserCacheService.getTrandsId(phone);
+		String[] transInfo = StringUtils.split(retStr, SecurityUserCacheKeyService.Key_prefix_Split);
+		if(transInfo.length==2)
+		{
+			AuthCode authCode = new AuthCode();
+			authCode.setTransid(transInfo[0]);
+			authCode.setAuthCode(transInfo[1]);
+			smsContext.setSmsValidCode(authCode);
+			return 0;
+		}
+		return -1;
+	}
+
+	
+
+	@Override
+	public String getRandom(String phone, String transid) {
+		// TODO Auto-generated method stub
+		String random = this.securityUserCacheService.getRandomByTransid(phone, transid);
+		if(StringUtils.isEmpty(random))
+		{
+			random="";
+		}
+		return random;
+	}
+
+	@Override
+	public KeyPair getRsaInfo(SmsContext smsContext, String phone) {
+		// TODO Auto-generated method stub
+		
+		return null;
 	}
 
 	

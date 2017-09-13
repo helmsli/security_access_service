@@ -12,14 +12,15 @@
 		<property name="serviceInterface" value="com.xinwei.crm.adapter.sms.service.SmsSendService"/>
     	<property name="serviceUrl" value="${sms.service.url}SmsSendService"/>
     </bean>
+  
     -->
     <bean id="userMainDbService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceInterface" value="com.company.security.service.SecurityUserService" />
-		<property name="serviceUrl" value="${hessian.mainUserDb}userMainDbService" />
+		<property name="serviceUrl" value="${hessian.mainUserDb}UserMainDbService" />
 	</bean>
 	<bean id="userReadDbService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceInterface" value="com.company.security.service.SecurityUserService" />
-		<property name="serviceUrl" value="${hessian.readUserDb}userMainDbService" />
+		<property name="serviceUrl" value="${hessian.readUserDb}UserMainDbService" />
 	</bean>
 	
 </beans>

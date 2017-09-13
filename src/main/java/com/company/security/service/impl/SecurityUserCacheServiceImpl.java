@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -30,6 +29,41 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	 * token在内存中失效的天数,仅仅时内存中保留的天数，不是token失效的天数
 	 */
 	protected int tokenExpiredDays = 5;
+	
+	/**
+	 * 将基本信息放入cache，不加锁
+	 * @param loginUser
+	 * @return
+	 */
+	protected boolean cacheBasicInfoNolock(LoginUser loginUser)
+	{
+		this.cleanAllUserCache(loginUser.getUserId());
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+		try {
+			String userKey = this.getLoginUserkey(loginUser.getUserId());
+			opsForValue.set(userKey, loginUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			String emailkey = this.getEmailKey(loginUser.getEmail());
+			opsForValue.set(emailkey, new Long(loginUser.getUserId()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			String phoneKey = this.getPhoneKey(loginUser.getPhone());
+			opsForValue.set(phoneKey, new Long(loginUser.getUserId()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
 	@Override
 	public boolean putBasicInfo(LoginUser loginUser) {
 		String lockKey = this.getLockkey(loginUser.getUserId());
@@ -40,14 +74,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 			// TODO Auto-generated method stub
 			if(isLock)
 			{
-				this.cleanAllUserCache(loginUser.getUserId());
-				ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-				String userKey = this.getLoginUserkey(loginUser.getUserId());
-				opsForValue.set(userKey, loginUser);
-				String emailkey = this.getEmailKey(loginUser.getEmail());
-				opsForValue.set(emailkey, new Long(loginUser.getUserId()));
-				String phoneKey = this.getPhoneKey(loginUser.getPhone());
-				opsForValue.set(phoneKey, new Long(loginUser.getUserId()));
+				cacheBasicInfoNolock(loginUser);
 					
 			}
 		} finally {
@@ -66,23 +93,36 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	@Override
 	public LoginUser getBasicInfo(long userId) {
 		// TODO Auto-generated method stub
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
 		
-		String userKey = this.getLoginUserkey(userId);
-		LoginUser loginUser = (LoginUser)opsForValue.get(userKey);
-		return loginUser;
+		try {
+			String userKey = this.getLoginUserkey(userId);
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+			
+			LoginUser loginUser = (LoginUser)opsForValue.get(userKey);
+			return loginUser;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 		
 	}
 
 	@Override
 	public LoginUser getBInfoByPhone(String phone) {
 		// TODO Auto-generated method stub
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		String phoneKey = this.getPhoneKey(phone);
-		Long  userid = (Long)opsForValue.get(phoneKey);
-		if(userid!=null)
-		{
-			return getBasicInfo(userid.longValue());
+		try {
+			String phoneKey = this.getPhoneKey(phone);
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+			
+			Long  userid = (Long)opsForValue.get(phoneKey);
+			if(userid!=null)
+			{
+				return getBasicInfo(userid.longValue());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -90,17 +130,29 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	@Override
 	public LoginUser getBInfoByEmail(String email) {
 		// TODO Auto-generated method stub
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		String emailkey = this.getEmailKey(email);
-		Long  userid = (Long)opsForValue.get(emailkey);
-		return getBasicInfo(userid.longValue());
+		try {
+			String emailkey = this.getEmailKey(email);
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+			
+			Long  userid = (Long)opsForValue.get(emailkey);
+			return getBasicInfo(userid.longValue());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public boolean removeBasinInfo(long userId) {
 		// TODO Auto-generated method stub
-		String key = this.getLoginUserkey(userId);
-		redisTemplate.delete(key);
+		try {
+			String key = this.getLoginUserkey(userId);
+			redisTemplate.delete(key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
@@ -146,17 +198,22 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	 */
 	protected void cleanAllUserCache(long userId)
 	{
-		String key = this.getLoginUserkey(userId);
-		LoginUser loginUser = getBasicInfo(userId);
-		if(loginUser!=null)
-		{
-			String childKey = this.getEmailKey(loginUser.getEmail());
-			redisTemplate.delete(childKey);
-			
-			childKey = this.getPhoneKey(loginUser.getPhone());
-			redisTemplate.delete(childKey);
+		try {
+			String key = this.getLoginUserkey(userId);
+			LoginUser loginUser = getBasicInfo(userId);
+			if(loginUser!=null)
+			{
+				String childKey = this.getEmailKey(loginUser.getEmail());
+				redisTemplate.delete(childKey);
+				
+				childKey = this.getPhoneKey(loginUser.getPhone());
+				redisTemplate.delete(childKey);
+			}
+			redisTemplate.delete(key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		redisTemplate.delete(key);
 	}
 	@Override
 	public boolean putLastModifyTime(LoginUser loginUser, long lastModifyTime) {
@@ -172,8 +229,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
                ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
                opsForValue.set(modifyKey, String.valueOf(lastModifyTime),synReadDbSeconds,TimeUnit.SECONDS);               
                opsForValue.set(modifyKeyphone, String.valueOf(lastModifyTime),synReadDbSeconds,TimeUnit.SECONDS);               
-   			   
-               cleanAllUserCache(loginUser.getUserId());
+   			   cleanAllUserCache(loginUser.getUserId());
 			} 
 		} finally {
 			if (isLock) {
@@ -196,7 +252,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	 */
 	protected boolean getLock(String key,String accesskey)
 	{
-		return redisLockService.getUserTransLock(key, accesskey, 15000, 1000, 15000);				 
+		return redisLockService.getUserTransLock(key, accesskey, 20000, 1000, 20000);				 
 	}
 
 	/**
@@ -217,7 +273,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		return true;
 	}
 	@Override
-	public boolean putSessionInfo(LoginUserSession loginUserSession,int duartionSeconds) {
+	public boolean putSessionInfo(LoginUserSession loginUserSession,LoginUser loginUser,int duartionSeconds) {
 		String lockKey = this.getLockkey(loginUserSession.getUserId());
 		String transTime = String.valueOf(System.currentTimeMillis());
 		
@@ -227,13 +283,14 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 			// TODO Auto-generated method stub
 			if(isLock)
 			{
-				
 				refreshSessionInfo(loginUserSession,duartionSeconds);
+				cacheBasicInfoNolock(loginUser);
 			}
 			return isLock;
 		} 
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 		finally {
@@ -299,7 +356,47 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		return retValue.longValue() + 110000000;
 	}
 
-	
-	
 
+	@Override
+	public String getTrandsId(String loginId) {
+		// TODO Auto-generated method stub
+		String transid = getTransId();
+		String random = getRandom4();
+		String key = getRandomkey(loginId,transid);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
+		opsForValue.set(key, random,300,TimeUnit.SECONDS);		
+		return transid+SecurityUserCacheKeyService.Key_prefix_Split+random;
+	}
+	@Override
+	public String getRandomByTransid(String loginId,String transid)
+	{
+		String key = getRandomkey(loginId,transid);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
+		String random = (String) opsForValue.get(key);	
+		return random;
+	}
+	/**
+	 * 获取transid
+	 * @return
+	 */
+	public String getTransId()
+	{
+		long transId =  System.currentTimeMillis()-1504369881000l;
+		return transId+"*"+getRandom4();
+	}
+	
+	/**
+	 * 获取4位数字的随机数
+	 * @return
+	 */
+	protected String getRandom4()
+	{
+		int mobile_code = (int)((Math.random()*9+1)*1000);
+		if(mobile_code>9999)
+		{
+			String ret = String.valueOf(mobile_code);
+			return ret.substring(0, 3);
+		}
+		return String.valueOf(mobile_code);
+	}
 }

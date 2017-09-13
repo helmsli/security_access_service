@@ -29,15 +29,18 @@ public class SmsValidCodeServiceImpl implements ISmsValidCodeService {
 	{
 		// TODO Auto-generated method stub
 		//SmsValidCode smcValidCode = new SmsValidCode();	   
-		String validKey = createSmsValidKey(smsValidCode);
+		
 		String authCode = this.getValidCode();
 		String seqno = getValidCodeSeqNo();
+		smsValidCode.setTransid(getAuthTransId(seqno));
+		String validKey = createSmsValidKey(smsValidCode);
 		smsValidCode.setAuthCode(authCode);
 		smsValidCode.setSendSeqno(seqno);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
 		
 		opsForValue.set(validKey, smsValidCode,smsValidCodeDurSeconds,TimeUnit.SECONDS);
-		
+		smsContext.setAuthCode(smsValidCode.getAuthCode());
+		System.out.println(smsValidCode);
 		smsValidCode.setAuthCode("");
 		smsContext.setSmsValidCode(smsValidCode);
 		return 0;
@@ -85,6 +88,18 @@ public class SmsValidCodeServiceImpl implements ISmsValidCodeService {
 		}
 		return String.valueOf(mobile_code);
 	}
+	
+	/**
+	 * 获取transid
+	 * @param phone
+	 * @return
+	 */
+	public String getAuthTransId(String seqNo)
+	{
+		long transId =  System.currentTimeMillis()-1504369881000l;
+		return transId+"*"+seqNo;
+	}
+	
 	/**
 	 * 生成rediskey
 	 * @param smcValidCode
@@ -92,8 +107,7 @@ public class SmsValidCodeServiceImpl implements ISmsValidCodeService {
 	 */
 	protected synchronized String createSmsValidKey(AuthCode smcValidCode)
 	{	
-		long transId =  System.currentTimeMillis()-1504369881000l;
-		smcValidCode.setTransid(String.valueOf(transId));
+		
 		StringBuilder str = new StringBuilder();
 		str.append("smsValid:");
 		str.append(smcValidCode.getPhone());

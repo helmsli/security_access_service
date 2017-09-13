@@ -45,7 +45,11 @@
             <artifactId>spring-session-data-redis</artifactId>  
         </dependency>
         
-		
+		<!-- aop  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>	
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -59,8 +63,10 @@
 			<scope>test</scope>
 		</dependency>
 		-->
-		
-		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>	
 		
 		<dependency>
 			<groupId>mysql</groupId>
@@ -78,7 +84,11 @@
 			<version>2.10.0</version>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			
+		</dependency>
 		
         <dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -100,13 +110,17 @@
 			<artifactId>security_user_db</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/security_user_db-1.0.jar</systemPath>
+			<systemPath>${basedir}/lib/security_user_db-2.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.xinwei.nnl</groupId>
 			<artifactId>nnl-commons</artifactId>
 			<version>1.9</version>
 		</dependency>
+		<!--dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>	
+		</dependency-->
 	</dependencies>
 
 	<build>
@@ -114,6 +128,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				  
 			</plugin>
 		</plugins>
 		<!-- 引入第三方包，打包需要引入 -->

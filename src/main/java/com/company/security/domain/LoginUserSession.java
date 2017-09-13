@@ -1,8 +1,9 @@
 package com.company.security.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LoginUserSession {
+public class LoginUserSession implements Serializable{
 	/**
 	 * email登录
 	 */
@@ -70,6 +71,8 @@ public class LoginUserSession {
 	private String loginDeviceId;
 	
 	private String ip;
+	
+	
 	
 	public Date getLoginTime() {
 		return loginTime;

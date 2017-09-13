@@ -41,5 +41,10 @@ public class RequestLogin extends LoginUserSession {
 	public void setAuthCode(String authCode) {
 		this.authCode = authCode;
 	}
+	@Override
+	public String toString() {
+		return "RequestLogin [transid=" + transid + ", password=" + password + ", countryCode=" + countryCode
+				+ ", authCode=" + authCode + "]"  + super.toString();
+	}
     
 }

@@ -42,7 +42,7 @@ public interface SecurityUserCacheService {
 	 * @param oldUserSession
 	 * @return
 	 */
-	public boolean putSessionInfo(LoginUserSession loginUserSession,int duartionSeconds);
+	public boolean putSessionInfo(LoginUserSession loginUserSession,LoginUser loginUser,int duartionSeconds);
 	
 	/**
 	 * 根据登录类型和用户ID或者token信息
@@ -115,5 +115,22 @@ public interface SecurityUserCacheService {
 	 * @return -- 增加后的数值
 	 */
 	public long createUserId(int numbers);
+	
+	
+	/**
+	 * 
+	 * @param loginId
+	 * @return  使用：分割，返回事务号和随机码
+	 */
+	public String getTrandsId(String loginId);
+	/**
+	 * 验证随机码和事务号
+	 * @param loginId
+	 * @return
+	 */
+	public String getRandomByTransid(String loginId,String transid);
+	
+	
+	
 	
 }
