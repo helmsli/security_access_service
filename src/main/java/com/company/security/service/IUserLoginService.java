@@ -92,7 +92,7 @@ public interface IUserLoginService {
 	 * @param phone
 	 * @return
 	 */
-	public  KeyPair getRsaInfo(SmsContext smsContext,String phone); 
+	public  KeyPair getRsaInfo(String phone); 
 	
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.company.security.Const.LoginServiceConst;
 import com.company.security.domain.sms.SmsContext;
@@ -32,7 +33,11 @@ public class SmsValidCodeServiceImpl implements ISmsValidCodeService {
 		
 		String authCode = this.getValidCode();
 		String seqno = getValidCodeSeqNo();
-		smsValidCode.setTransid(getAuthTransId(seqno));
+		//如果transid为空，重新申请transid，否则复用原来的transid
+		if(StringUtils.isEmpty(smsValidCode.getTransid()))
+		{
+			smsValidCode.setTransid(getAuthTransId(seqno));
+		}
 		String validKey = createSmsValidKey(smsValidCode);
 		smsValidCode.setAuthCode(authCode);
 		smsValidCode.setSendSeqno(seqno);

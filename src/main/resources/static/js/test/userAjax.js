@@ -61,14 +61,17 @@ let RESULT_Error_ValidCode = 3004;
  * @param errorCallback
  * @returns
  */
-function ajaxLoginWithPass(countryCode,phone,password,successCallback,errorCallback)
+function ajaxLoginWithPass(transid,countryCode,phone,password1,successCallback,errorCallback)
 {
 	let serverUrl = getRootPath() + "/user/" + countryCode + "/loginByPass";
+	console.log(password1);
+	console.log(";;;;;;;;;;;;;;;;;");
     let data = {
+    		"transid":transid,
     		"loginIdType":LoginIdType_phone,
     		"loginId":phone,
     		"countryCode":countryCode,
-    		"password":password,
+    		"password":password1,
     		"loginType":loginType_web
     		};	
     console.log(JSON.stringify(data));
@@ -122,12 +125,38 @@ function ajaxRegisterWithAuth(countryCode,phone,password,authTransid,authCode,su
  */
 function ajaxGetAuthCode(countryCode,phone,successCallback,errorCallback)
 {
-	let serverUrl = getRootPath() + "/user/"+ "/getSmsValid";
+	let serverUrl = getRootPath() + "/user"+ "/getSmsValid";
     let data = {
     		"phone":phone
     		};	
     console.log(JSON.stringify(data));
 	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
+		console.log(data);
+		sessionStorage.setItem("transid", data.responseInfo.transid);
+		successCallback(data.retCode,data.responseInfo);
+	},
+	function errorLogin(xhr,testStatus){
+		//errorCallback(xhr,testStatus);
+	});
+}
+/**
+ * 
+ * @param countryCode
+ * @param phone
+ * @param successCallback
+ * @param errorCallback
+ * @returns
+ */
+function ajaxGetRsaPublicKey(countryCode,phone,successCallback,errorCallback)
+{
+	let serverUrl = getRootPath() + "/user"+ "/getRsaPubKey";
+    let data = {
+    		"phone":phone
+    		};	
+    console.log(JSON.stringify(data));
+	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
+		sessionStorage.setItem("transid", data.responseInfo.transid);
+		
 		console.log(data);
 		successCallback(data.retCode,data.responseInfo);
 	},
@@ -135,4 +164,3 @@ function ajaxGetAuthCode(countryCode,phone,successCallback,errorCallback)
 		//errorCallback(xhr,testStatus);
 	});
 }
-

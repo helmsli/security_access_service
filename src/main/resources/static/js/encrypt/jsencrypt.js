@@ -1,2904 +1,4351 @@
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-  <link rel="dns-prefetch" href="https://assets-cdn.github.com">
-  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
-  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
-
-
-
-  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/frameworks-bedfc518345498ab3204d330c1727cde7e733526a09cd7df6867f6a231565091.css" integrity="sha256-vt/FGDRUmKsyBNMwwXJ83n5zNSagnNffaGf2ojFWUJE=" media="all" rel="stylesheet" />
-  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-9834cae963e0a4ec36c8876cf08b39d02a74cc617a90cc783ed862209e00fc9b.css" integrity="sha256-mDTK6WPgpOw2yIds8Is50Cp0zGF6kMx4PthiIJ4A/Js=" media="all" rel="stylesheet" />
-  
-  
-  
-  
-
-  <meta name="viewport" content="width=device-width">
-  
-  <title>jsencrypt/jsencrypt.js at master · travist/jsencrypt</title>
-  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
-  <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
-  <meta property="fb:app_id" content="1401488693436528">
-
-    
-    <meta content="https://avatars1.githubusercontent.com/u/130052?v=4&amp;s=400" property="og:image" /><meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="travist/jsencrypt" property="og:title" /><meta content="https://github.com/travist/jsencrypt" property="og:url" /><meta content="jsencrypt - A Javascript library to perform OpenSSL RSA Encryption, Decryption, and Key Generation." property="og:description" />
-
-  <link rel="assets" href="https://assets-cdn.github.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MTc3MzgyNDg2OjUwYzc0ZmY2N2RjYWRiNDI5YTZhNGVkYzMwZTkxZGYwYWQzZTMxODI5ZWJlYWZhOThhOWMxNGMyNGQwYmVkODM=--790482a784edf9d589e71428ea9d9320139d8a26">
-  <meta name="pjax-timeout" content="1000">
-  <link rel="sudo-modal" href="/sessions/sudo_modal">
-  <meta name="request-id" content="B3EE:2BD85:9DFE779:EFB504E:59B93982" data-pjax-transient>
-  
-
-  <meta name="selected-link" value="repo_source" data-pjax-transient>
-
-  <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
-<meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
-    <meta name="google-analytics" content="UA-3769691-2">
-
-<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="B3EE:2BD85:9DFE779:EFB504E:59B93982" name="octolytics-dimension-request_id" /><meta content="sea" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" /><meta content="28003287" name="octolytics-actor-id" /><meta content="helmsli" name="octolytics-actor-login" /><meta content="f8bbdbc524115a30354dc372d9beb6298ff80183afa44e3e29715c988285139d" name="octolytics-actor-hash" />
-<meta content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" name="analytics-location" />
-
-
-
-
-  <meta class="js-ga-set" name="dimension1" content="Logged In">
-
-
-  
-
-      <meta name="hostname" content="github.com">
-  <meta name="user-login" content="helmsli">
-
-      <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="ZGYwYjcxY2ZkODFmY2ZiYzlmMGE0ZGVjNTA1NjZhNGZkNGFiZDkxNjM3MzY1NDcyMzk0YTg0YmM1MzllNjM5ZXx7InJlbW90ZV9hZGRyZXNzIjoiMTIzLjExMi4xOTQuOTciLCJyZXF1ZXN0X2lkIjoiQjNFRToyQkQ4NTo5REZFNzc5OkVGQjUwNEU6NTlCOTM5ODIiLCJ0aW1lc3RhbXAiOjE1MDUzMTExMDYsImhvc3QiOiJnaXRodWIuY29tIn0=">
-
-    <meta name="enabled-features" content="UNIVERSE_BANNER">
-
-  <meta name="html-safe-nonce" content="359ec7baa7143e35eb3b6de9ef1c56c25ce5de54">
-
-  <meta http-equiv="x-pjax-version" content="a018121dc1b3f1b71aabff9528b49c0b">
-  
-
-      <link href="https://github.com/travist/jsencrypt/commits/master.atom" rel="alternate" title="Recent Commits to jsencrypt:master" type="application/atom+xml">
-
-  <meta name="description" content="jsencrypt - A Javascript library to perform OpenSSL RSA Encryption, Decryption, and Key Generation.">
-  <meta name="go-import" content="github.com/travist/jsencrypt git https://github.com/travist/jsencrypt.git">
-
-  <meta content="130052" name="octolytics-dimension-user_id" /><meta content="travist" name="octolytics-dimension-user_login" /><meta content="8227684" name="octolytics-dimension-repository_id" /><meta content="travist/jsencrypt" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="8227684" name="octolytics-dimension-repository_network_root_id" /><meta content="travist/jsencrypt" name="octolytics-dimension-repository_network_root_nwo" /><meta content="false" name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" />
-
-
-    <link rel="canonical" href="https://github.com/travist/jsencrypt/blob/master/src/jsencrypt.js" data-pjax-transient>
-
-
-  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
-
-  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
-
-  <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#000000">
-  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
-
-<meta name="theme-color" content="#1e2327">
-
-
-  <meta name="u2f-support" content="true">
-
-  </head>
-
-  <body class="logged-in env-production page-blob">
-    
-
-  <div class="position-relative js-header-wrapper ">
-    <a href="#start-of-content" tabindex="1" class="bg-black text-white p-3 show-on-focus js-skip-to-content">Skip to content</a>
-    <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
-
-    
-    
-    
-
-
-
-        
-<header class="Header  f5" role="banner">
-  <div class="d-flex px-3 flex-justify-between container-lg">
-    <div class="d-flex flex-justify-between">
-      <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
-  <svg aria-hidden="true" class="octicon octicon-mark-github" height="32" version="1.1" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-</a>
-
-
-    </div>
-
-    <div class="HeaderMenu d-flex flex-justify-between flex-auto">
-      <div class="d-flex">
-            <div class="">
-              <div class="header-search scoped-search site-scoped-search js-site-search" role="search">
-  <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/travist/jsencrypt/search" class="js-site-search-form" data-scoped-search-url="/travist/jsencrypt/search" data-unscoped-search-url="/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-    <label class="form-control header-search-wrapper js-chromeless-input-container">
-        <a href="/travist/jsencrypt/blob/master/src/jsencrypt.js" class="header-search-scope no-underline">This repository</a>
-      <input type="text"
-        class="form-control header-search-input js-site-search-focus js-site-search-field is-clearable"
-        data-hotkey="s"
-        name="q"
-        value=""
-        placeholder="Search"
-        aria-label="Search this repository"
-        data-unscoped-placeholder="Search GitHub"
-        data-scoped-placeholder="Search"
-        autocapitalize="off">
-        <input type="hidden" class="js-site-search-type-field" name="type" >
-    </label>
-</form></div>
-
-            </div>
-
-          <ul class="d-flex pl-2 flex-items-center text-bold list-style-none" role="navigation">
-            <li>
-              <a href="/pulls" aria-label="Pull requests you created" class="js-selected-navigation-item HeaderNavlink px-2" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
-                Pull requests
-</a>            </li>
-            <li>
-              <a href="/issues" aria-label="Issues you created" class="js-selected-navigation-item HeaderNavlink px-2" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
-                Issues
-</a>            </li>
-                <li>
-                  <a href="/marketplace" class="js-selected-navigation-item HeaderNavlink px-2" data-ga-click="Header, click, Nav menu - item:marketplace context:user" data-selected-links=" /marketplace">
-                    Marketplace
-</a>                </li>
-            <li>
-              <a href="/explore" class="js-selected-navigation-item HeaderNavlink px-2" data-ga-click="Header, click, Nav menu - item:explore" data-selected-links="/explore /trending /trending/developers /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship showcases showcases_search showcases_landing /explore">
-                Explore
-</a>            </li>
-          </ul>
-      </div>
-
-      <div class="d-flex">
-        
-<ul class="user-nav d-flex flex-items-center list-style-none" id="user-links">
-  <li class="dropdown js-menu-container js-header-notifications">
-    <span class="d-inline-block  px-2">
-      
-
-    </span>
-  </li>
-
-  <li class="dropdown js-menu-container">
-    <details class="dropdown-details js-dropdown-details d-flex px-2 flex-items-center">
-      <summary class="HeaderNavlink"
-         aria-label="Create new…"
-         data-ga-click="Header, create new, icon:add">
-        <svg aria-hidden="true" class="octicon octicon-plus float-left mr-1 mt-1" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 9H7v5H5V9H0V7h5V2h2v5h5z"/></svg>
-        <span class="dropdown-caret mt-1"></span>
-      </summary>
-
-      <ul class="dropdown-menu dropdown-menu-sw">
-        
-<a class="dropdown-item" href="/new" data-ga-click="Header, create new repository">
-  New repository
-</a>
-
-  <a class="dropdown-item" href="/new/import" data-ga-click="Header, import a repository">
-    Import repository
-  </a>
-
-<a class="dropdown-item" href="https://gist.github.com/" data-ga-click="Header, create new gist">
-  New gist
-</a>
-
-  <a class="dropdown-item" href="/organizations/new" data-ga-click="Header, create new organization">
-    New organization
-  </a>
-
-
-
-  <div class="dropdown-divider"></div>
-  <div class="dropdown-header">
-    <span title="travist/jsencrypt">This repository</span>
-  </div>
-    <a class="dropdown-item" href="/travist/jsencrypt/issues/new" data-ga-click="Header, create new issue">
-      New issue
-    </a>
-
-      </ul>
-    </details>
-  </li>
-
-  <li class="dropdown js-menu-container">
-
-    <details class="dropdown-details js-dropdown-details d-flex pl-2 flex-items-center">
-      <summary class="HeaderNavlink name mt-1"
-        aria-label="View profile and more"
-        data-ga-click="Header, show menu, icon:avatar">
-        <img alt="@helmsli" class="avatar float-left mr-1" src="https://avatars3.githubusercontent.com/u/28003287?v=4&amp;s=40" height="20" width="20">
-        <span class="dropdown-caret"></span>
-      </summary>
-
-      <ul class="dropdown-menu dropdown-menu-sw">
-        <li class="dropdown-header header-nav-current-user css-truncate">
-          Signed in as <strong class="css-truncate-target">helmsli</strong>
-        </li>
-
-        <li class="dropdown-divider"></li>
-
-        <li><a class="dropdown-item" href="/helmsli" data-ga-click="Header, go to profile, text:your profile">
-          Your profile
-        </a></li>
-        <li><a class="dropdown-item" href="/helmsli?tab=stars" data-ga-click="Header, go to starred repos, text:your stars">
-          Your stars
-        </a></li>
-          <li><a class="dropdown-item" href="https://gist.github.com/" data-ga-click="Header, your gists, text:your gists">Your Gists</a></li>
-
-        <li class="dropdown-divider"></li>
-
-        <li><a class="dropdown-item" href="https://help.github.com" data-ga-click="Header, go to help, text:help">
-          Help
-        </a></li>
-
-        <li><a class="dropdown-item" href="/settings/profile" data-ga-click="Header, go to settings, icon:settings">
-          Settings
-        </a></li>
-
-        <li><!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="pQbsOEEtGw7nLqCHtqi8Ok+fet7AMOHoEsQyofvXz3nZW7grnyt05cibs32WxMETDmgmPJ1P+K7R9RjxWskPUQ==" /></div>
-          <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
-            Sign out
-          </button>
-        </form></li>
-      </ul>
-    </details>
-  </li>
-</ul>
-
-
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="sr-only right-0" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="/O5jmtkzDGk6HroMY1ivP+JtSKy8HUXT9cSysd/kF02AszeJBzVjghWrqfZDNNIWo5oUTuFiXJU29ZjhfvrXZQ==" /></div>
-          <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
-            Sign out
-          </button>
-</form>      </div>
-    </div>
-  </div>
-</header>
-
-
-      
-
-  </div>
-
-  <div id="start-of-content" class="show-on-focus"></div>
-
-    <div id="js-flash-container">
-</div>
-
-
-
-  <div role="main">
-        <div itemscope itemtype="http://schema.org/SoftwareSourceCode">
-    <div id="js-repo-pjax-container" data-pjax-container>
-      
-
-
-
-
-
-    <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav">
-      <div class="container repohead-details-container">
-
-        <ul class="pagehead-actions">
-  <li>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="MLrffygmc0kBLnziLc1Id1uXnBQ6CNYLSCZoGJ1UbBNF6DhWrUmqhvb+yubhn4E4RZ+3VfdSdCkUkBA6rcT6sw==" /></div>      <input class="form-control" id="repository_id" name="repository_id" type="hidden" value="8227684" />
-
-        <div class="select-menu js-menu-container js-select-menu">
-          <a href="/travist/jsencrypt/subscription"
-            class="btn btn-sm btn-with-count select-menu-button js-menu-target"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-label="Toggle repository notifications menu"
-            data-ga-click="Repository, click Watch settings, action:blob#show">
-            <span class="js-select-button">
-                <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
-                Watch
-            </span>
-          </a>
-            <a class="social-count js-social-count"
-              href="/travist/jsencrypt/watchers"
-              aria-label="117 users are watching this repository">
-              117
-            </a>
-
-        <div class="select-menu-modal-holder">
-          <div class="select-menu-modal subscription-menu-modal js-menu-content">
-            <div class="select-menu-header js-navigation-enable" tabindex="-1">
-              <svg aria-label="Close" class="octicon octicon-x js-menu-close" height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-              <span class="select-menu-title">Notifications</span>
-            </div>
-
-              <div class="select-menu-list js-navigation-container" role="menu">
-
-                <div class="select-menu-item js-navigation-item selected" role="menuitem" tabindex="0">
-                  <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-                  <div class="select-menu-item-text">
-                    <input checked="checked" id="do_included" name="do" type="radio" value="included" />
-                    <span class="select-menu-item-heading">Not watching</span>
-                    <span class="description">Be notified when participating or @mentioned.</span>
-                    <span class="js-select-button-text hidden-select-button-text">
-                      <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
-                      Watch
-                    </span>
-                  </div>
-                </div>
-
-                <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
-                  <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-                  <div class="select-menu-item-text">
-                    <input id="do_subscribed" name="do" type="radio" value="subscribed" />
-                    <span class="select-menu-item-heading">Watching</span>
-                    <span class="description">Be notified of all conversations.</span>
-                    <span class="js-select-button-text hidden-select-button-text">
-                      <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
-                        Unwatch
-                    </span>
-                  </div>
-                </div>
-
-                <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
-                  <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-                  <div class="select-menu-item-text">
-                    <input id="do_ignore" name="do" type="radio" value="ignore" />
-                    <span class="select-menu-item-heading">Ignoring</span>
-                    <span class="description">Never be notified.</span>
-                    <span class="js-select-button-text hidden-select-button-text">
-                      <svg aria-hidden="true" class="octicon octicon-mute" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8 2.81v10.38c0 .67-.81 1-1.28.53L3 10H1c-.55 0-1-.45-1-1V7c0-.55.45-1 1-1h2l3.72-3.72C7.19 1.81 8 2.14 8 2.81zm7.53 3.22l-1.06-1.06-1.97 1.97-1.97-1.97-1.06 1.06L11.44 8 9.47 9.97l1.06 1.06 1.97-1.97 1.97 1.97 1.06-1.06L13.56 8l1.97-1.97z"/></svg>
-                        Stop ignoring
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-        </div>
-</form>
-  </li>
-
-  <li>
-    
-  <div class="js-toggler-container js-social-container starring-container ">
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/travist/jsencrypt/unstar" class="starred" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="eyvJPL9E/dwQFpi5MeEy4BtTfSrCk6jcXHkAHYlBo3RY5rr/79zAgv2FdXYTK+87lfJECoYvmVDyfBL0p7PY9g==" /></div>
-      <button
-        type="submit"
-        class="btn btn-sm btn-with-count js-toggler-target"
-        aria-label="Unstar this repository" title="Unstar travist/jsencrypt"
-        data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">
-        <svg aria-hidden="true" class="octicon octicon-star" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"/></svg>
-        Unstar
-      </button>
-        <a class="social-count js-social-count" href="/travist/jsencrypt/stargazers"
-           aria-label="1632 users starred this repository">
-          1,632
-        </a>
-</form>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/travist/jsencrypt/star" class="unstarred" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="EsS9PjRD9JAYTFxNCXHas//THhKz+PcF6vKKohGoVgYLXW3kWYdOPtXubCeJ4nhGI0ZPA2WAn2bs/f8GOxfkTQ==" /></div>
-      <button
-        type="submit"
-        class="btn btn-sm btn-with-count js-toggler-target"
-        aria-label="Star this repository" title="Star travist/jsencrypt"
-        data-ga-click="Repository, click star button, action:blob#show; text:Star">
-        <svg aria-hidden="true" class="octicon octicon-star" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"/></svg>
-        Star
-      </button>
-        <a class="social-count js-social-count" href="/travist/jsencrypt/stargazers"
-           aria-label="1632 users starred this repository">
-          1,632
-        </a>
-</form>  </div>
-
-  </li>
-
-  <li>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/travist/jsencrypt/fork" class="btn-with-count" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="1LurVlVuBG3R6WylY+gQC5I4efe05+rZ1tRxqYBX8hxKNitEPFeE6GwvQ/mMe+0T7A1Kv+ugQt5gsfVTDkZIIw==" /></div>
-            <button
-                type="submit"
-                class="btn btn-sm btn-with-count"
-                data-ga-click="Repository, show fork modal, action:blob#show; text:Fork"
-                title="Fork your own copy of travist/jsencrypt to your account"
-                aria-label="Fork your own copy of travist/jsencrypt to your account">
-              <svg aria-hidden="true" class="octicon octicon-repo-forked" height="16" version="1.1" viewBox="0 0 10 16" width="10"><path fill-rule="evenodd" d="M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
-              Fork
-            </button>
-</form>
-    <a href="/travist/jsencrypt/network" class="social-count"
-       aria-label="490 users forked this repository">
-      490
-    </a>
-  </li>
-</ul>
-
-        <h1 class="public ">
-  <svg aria-hidden="true" class="octicon octicon-repo" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"/></svg>
-  <span class="author" itemprop="author"><a href="/travist" class="url fn" rel="author">travist</a></span><!--
---><span class="path-divider">/</span><!--
---><strong itemprop="name"><a href="/travist/jsencrypt" data-pjax="#js-repo-pjax-container">jsencrypt</a></strong>
-
-</h1>
-
-      </div>
-      <div class="container">
-        
-<nav class="reponav js-repo-nav js-sidenav-container-pjax"
-     itemscope
-     itemtype="http://schema.org/BreadcrumbList"
-     role="navigation"
-     data-pjax="#js-repo-pjax-container">
-
-  <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-    <a href="/travist/jsencrypt" class="js-selected-navigation-item selected reponav-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /travist/jsencrypt" itemprop="url">
-      <svg aria-hidden="true" class="octicon octicon-code" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg>
-      <span itemprop="name">Code</span>
-      <meta itemprop="position" content="1">
-</a>  </span>
-
-    <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-      <a href="/travist/jsencrypt/issues" class="js-selected-navigation-item reponav-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /travist/jsencrypt/issues" itemprop="url">
-        <svg aria-hidden="true" class="octicon octicon-issue-opened" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"/></svg>
-        <span itemprop="name">Issues</span>
-        <span class="Counter">34</span>
-        <meta itemprop="position" content="2">
-</a>    </span>
-
-  <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-    <a href="/travist/jsencrypt/pulls" class="js-selected-navigation-item reponav-item" data-hotkey="g p" data-selected-links="repo_pulls /travist/jsencrypt/pulls" itemprop="url">
-      <svg aria-hidden="true" class="octicon octicon-git-pull-request" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
-      <span itemprop="name">Pull requests</span>
-      <span class="Counter">8</span>
-      <meta itemprop="position" content="3">
-</a>  </span>
-
-    <a href="/travist/jsencrypt/projects" class="js-selected-navigation-item reponav-item" data-selected-links="repo_projects new_repo_project repo_project /travist/jsencrypt/projects">
-      <svg aria-hidden="true" class="octicon octicon-project" height="16" version="1.1" viewBox="0 0 15 16" width="15"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/></svg>
-      Projects
-      <span class="Counter" >0</span>
-</a>
-    <a href="/travist/jsencrypt/wiki" class="js-selected-navigation-item reponav-item" data-hotkey="g w" data-selected-links="repo_wiki /travist/jsencrypt/wiki">
-      <svg aria-hidden="true" class="octicon octicon-book" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
-      Wiki
-</a>
-
-    <div class="reponav-dropdown js-menu-container">
-      <button type="button" class="btn-link reponav-item reponav-dropdown js-menu-target " data-no-toggle aria-expanded="false" aria-haspopup="true">
-        Insights
-        <svg aria-hidden="true" class="octicon octicon-triangle-down v-align-middle text-gray" height="11" version="1.1" viewBox="0 0 12 16" width="8"><path fill-rule="evenodd" d="M0 5l6 6 6-6z"/></svg>
-      </button>
-      <div class="dropdown-menu-content js-menu-content">
-        <div class="dropdown-menu dropdown-menu-sw">
-          <a class="dropdown-item" href="/travist/jsencrypt/pulse" data-skip-pjax>
-            <svg aria-hidden="true" class="octicon octicon-pulse" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M11.5 8L8.8 5.4 6.6 8.5 5.5 1.6 2.38 8H0v2h3.6l.9-1.8.9 5.4L9 8.5l1.6 1.5H14V8z"/></svg>
-            Pulse
-          </a>
-          <a class="dropdown-item" href="/travist/jsencrypt/graphs" data-skip-pjax>
-            <svg aria-hidden="true" class="octicon octicon-graph" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"/></svg>
-            Graphs
-          </a>
-        </div>
-      </div>
-    </div>
-</nav>
-
-      </div>
-    </div>
-
-<div class="container new-discussion-timeline experiment-repo-nav">
-  <div class="repository-content">
-
-    
-  <a href="/travist/jsencrypt/blob/e39ccaf7caeeee854591c705a907f64309ade7a0/src/jsencrypt.js" class="d-none js-permalink-shortcut" data-hotkey="y">Permalink</a>
-
-  <!-- blob contrib key: blob_contributors:v21:7b932c9e87127b45e90a8419eb24f76b -->
-
-  <div class="file-navigation js-zeroclipboard-container">
-    
-<div class="select-menu branch-select-menu js-menu-container js-select-menu float-left">
-  <button class=" btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w"
-    
-    type="button" aria-label="Switch branches or tags" aria-expanded="false" aria-haspopup="true">
-      <i>Branch:</i>
-      <span class="js-select-button css-truncate-target">master</span>
-  </button>
-
-  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax>
-
-    <div class="select-menu-modal">
-      <div class="select-menu-header">
-        <svg aria-label="Close" class="octicon octicon-x js-menu-close" height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-        <span class="select-menu-title">Switch branches/tags</span>
-      </div>
-
-      <div class="select-menu-filters">
-        <div class="select-menu-text-filter">
-          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="form-control js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
-        </div>
-        <div class="select-menu-tabs">
-          <ul>
-            <li class="select-menu-tab">
-              <a href="#" data-tab-filter="branches" data-filter-placeholder="Filter branches/tags" class="js-select-menu-tab" role="tab">Branches</a>
-            </li>
-            <li class="select-menu-tab">
-              <a href="#" data-tab-filter="tags" data-filter-placeholder="Find a tag…" class="js-select-menu-tab" role="tab">Tags</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches" role="menu">
-
-        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
-
-
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/travist/jsencrypt/blob/develop/src/jsencrypt.js"
-               data-name="develop"
-               data-skip-pjax="true"
-               rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target js-select-menu-filter-text">
-                develop
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/travist/jsencrypt/blob/gh-pages/src/jsencrypt.js"
-               data-name="gh-pages"
-               data-skip-pjax="true"
-               rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target js-select-menu-filter-text">
-                gh-pages
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open selected"
-               href="/travist/jsencrypt/blob/master/src/jsencrypt.js"
-               data-name="master"
-               data-skip-pjax="true"
-               rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target js-select-menu-filter-text">
-                master
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/travist/jsencrypt/blob/revert-75-master/src/jsencrypt.js"
-               data-name="revert-75-master"
-               data-skip-pjax="true"
-               rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target js-select-menu-filter-text">
-                revert-75-master
-              </span>
-            </a>
-        </div>
-
-          <div class="select-menu-no-results">Nothing to show</div>
-      </div>
-
-      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
-        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
-
-
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-              href="/travist/jsencrypt/tree/v2.3.0/src/jsencrypt.js"
-              data-name="v2.3.0"
-              data-skip-pjax="true"
-              rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target" title="v2.3.0">
-                v2.3.0
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-              href="/travist/jsencrypt/tree/v2.2.0/src/jsencrypt.js"
-              data-name="v2.2.0"
-              data-skip-pjax="true"
-              rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target" title="v2.2.0">
-                v2.2.0
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-              href="/travist/jsencrypt/tree/v2.1.0/src/jsencrypt.js"
-              data-name="v2.1.0"
-              data-skip-pjax="true"
-              rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target" title="v2.1.0">
-                v2.1.0
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-              href="/travist/jsencrypt/tree/2.0.0/src/jsencrypt.js"
-              data-name="2.0.0"
-              data-skip-pjax="true"
-              rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target" title="2.0.0">
-                2.0.0
-              </span>
-            </a>
-            <a class="select-menu-item js-navigation-item js-navigation-open "
-              href="/travist/jsencrypt/tree/1.x/src/jsencrypt.js"
-              data-name="1.x"
-              data-skip-pjax="true"
-              rel="nofollow">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"/></svg>
-              <span class="select-menu-item-text css-truncate-target" title="1.x">
-                1.x
-              </span>
-            </a>
-        </div>
-
-        <div class="select-menu-no-results">Nothing to show</div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-    <div class="BtnGroup float-right">
-      <a href="/travist/jsencrypt/find/master"
-            class="js-pjax-capture-input btn btn-sm BtnGroup-item"
-            data-pjax
-            data-hotkey="t">
-        Find file
-      </a>
-      <button aria-label="Copy file path to clipboard" class="js-zeroclipboard btn btn-sm BtnGroup-item tooltipped tooltipped-s" data-copied-hint="Copied!" type="button">Copy path</button>
-    </div>
-    <div class="breadcrumb js-zeroclipboard-target">
-      <span class="repo-root js-repo-root"><span class="js-path-segment"><a href="/travist/jsencrypt"><span>jsencrypt</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a href="/travist/jsencrypt/tree/master/src"><span>src</span></a></span><span class="separator">/</span><strong class="final-path">jsencrypt.js</strong>
-    </div>
-  </div>
-
-
-  
-  <div class="commit-tease">
-      <span class="float-right">
-        <a class="commit-tease-sha" href="/travist/jsencrypt/commit/9e43644e5448e57c584004e8548b594dc9be6db7" data-pjax>
-          9e43644
-        </a>
-        <relative-time datetime="2014-12-16T13:12:35Z">Dec 16, 2014</relative-time>
-      </span>
-      <div>
-        <img alt="" class="avatar" data-canonical-src="https://2.gravatar.com/avatar/17ba08405edaf8ea7dc91e677d047f0c?d=https%3A%2F%2Fassets-cdn.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png&amp;r=x&amp;s=140" height="20" src="https://camo.githubusercontent.com/e64ac97e266124a0e128241190b93b91296f8796/68747470733a2f2f322e67726176617461722e636f6d2f6176617461722f31376261303834303565646166386561376463393165363737643034376630633f643d68747470732533412532462532466173736574732d63646e2e6769746875622e636f6d253246696d6167657325324667726176617461727325324667726176617461722d757365722d3432302e706e6726723d7826733d313430" width="20" />
-        <span class="user-mention">Mark Harding</span>
-          <a href="/travist/jsencrypt/commit/9e43644e5448e57c584004e8548b594dc9be6db7" class="message" data-pjax="true" title="resolves issue with OpenSSL private keys #37">resolves issue with OpenSSL private keys</a> <a href="https://github.com/travist/jsencrypt/issues/37" class="issue-link js-issue-link" data-url="https://github.com/travist/jsencrypt/issues/37" data-id="52098149" data-error-text="Failed to load issue title" data-permission-text="Issue title is private">#37</a>
-      </div>
-
-    <div class="commit-tease-contributors">
-      <button type="button" class="btn-link muted-link contributors-toggle" data-facebox="#blob_contributors_box">
-        <strong>2</strong>
-         contributors
-      </button>
-          <a class="avatar-link tooltipped tooltipped-s" aria-label="travist" href="/travist/jsencrypt/commits/master/src/jsencrypt.js?author=travist"><img alt="@travist" class="avatar" height="20" src="https://avatars0.githubusercontent.com/u/130052?v=4&amp;s=40" width="20" /> </a>
-    <a class="avatar-link tooltipped tooltipped-s" aria-label="zoloft" href="/travist/jsencrypt/commits/master/src/jsencrypt.js?author=zoloft"><img alt="@zoloft" class="avatar" height="20" src="https://avatars2.githubusercontent.com/u/2939780?v=4&amp;s=40" width="20" /> </a>
-
-
-    </div>
-
-    <div id="blob_contributors_box" style="display:none">
-      <h2 class="facebox-header" data-facebox-id="facebox-header">Users who have contributed to this file</h2>
-      <ul class="facebox-user-list" data-facebox-id="facebox-description">
-          <li class="facebox-user-list-item">
-            <img alt="@travist" height="24" src="https://avatars2.githubusercontent.com/u/130052?v=4&amp;s=48" width="24" />
-            <a href="/travist">travist</a>
-          </li>
-          <li class="facebox-user-list-item">
-            <img alt="@zoloft" height="24" src="https://avatars0.githubusercontent.com/u/2939780?v=4&amp;s=48" width="24" />
-            <a href="/zoloft">zoloft</a>
-          </li>
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="file">
-    <div class="file-header">
-  <div class="file-actions">
-
-    <div class="BtnGroup">
-      <a href="/travist/jsencrypt/raw/master/src/jsencrypt.js" class="btn btn-sm BtnGroup-item" id="raw-url">Raw</a>
-        <a href="/travist/jsencrypt/blame/master/src/jsencrypt.js" class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b">Blame</a>
-      <a href="/travist/jsencrypt/commits/master/src/jsencrypt.js" class="btn btn-sm BtnGroup-item" rel="nofollow">History</a>
-    </div>
-
-        <a class="btn-octicon tooltipped tooltipped-nw"
-           href="https://desktop.github.com"
-           aria-label="Open this file in GitHub Desktop"
-           data-ga-click="Repository, open with desktop, type:windows">
-            <svg aria-hidden="true" class="octicon octicon-device-desktop" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"/></svg>
-        </a>
-
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/travist/jsencrypt/edit/master/src/jsencrypt.js" class="inline-form js-update-url-with-hash" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="pNm4/mnE6mF+ZzMXl3F0iJAJOa49+24gBm8CWd7WFItp2cTlf19S2p9LAGlRw/SBJOg6XL7KK/s/PHeXiYUb8w==" /></div>
-          <button class="btn-octicon tooltipped tooltipped-nw" type="submit"
-            aria-label="Fork this project and edit the file" data-hotkey="e" data-disable-with>
-            <svg aria-hidden="true" class="octicon octicon-pencil" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></svg>
-          </button>
-</form>        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/travist/jsencrypt/delete/master/src/jsencrypt.js" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="PrezASinGO2bv0nYndnBdKQigJapkqmxUgWsNJAgEdyfwp3w48ZuF+c8xXHkKiMgSEwU8ZgrdT795tU/b2Ex3Q==" /></div>
-          <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
-            aria-label="Fork this project and delete the file" data-disable-with>
-            <svg aria-hidden="true" class="octicon octicon-trashcan" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z"/></svg>
-          </button>
-</form>  </div>
-
-  <div class="file-info">
-      501 lines (455 sloc)
-      <span class="file-info-divider"></span>
-    15.3 KB
-  </div>
-</div>
-
-    
-
-  <div itemprop="text" class="blob-wrapper data type-javascript">
-      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
-      <tr>
-        <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
-        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
-        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Retrieve the hexadecimal value (as a string) of the current ASN.1 element</span></td>
-      </tr>
-      <tr>
-        <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
-        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span></span></td>
-      </tr>
-      <tr>
-        <td id="L4" class="blob-num js-line-number" data-line-number="4"></td>
-        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
-        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
-        <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c1">ASN1</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getHexStringValue</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
-        <td id="LC7" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> hexString <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-en">toHexString</span>();</td>
-      </tr>
-      <tr>
-        <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
-        <td id="LC8" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> offset <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">header</span> <span class="pl-k">*</span> <span class="pl-c1">2</span>;</td>
-      </tr>
-      <tr>
-        <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
-        <td id="LC9" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> length <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-c1">length</span> <span class="pl-k">*</span> <span class="pl-c1">2</span>;</td>
-      </tr>
-      <tr>
-        <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
-        <td id="LC10" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-smi">hexString</span>.<span class="pl-c1">substr</span>(offset, length);</td>
-      </tr>
-      <tr>
-        <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
-        <td id="LC11" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
-        <td id="LC12" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
-        <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
-        <td id="LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Method to parse a pem encoded string containing both a public or private key.</span></td>
-      </tr>
-      <tr>
-        <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
-        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * The method will translate the pem encoded string in a der encoded string and</span></td>
-      </tr>
-      <tr>
-        <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
-        <td id="LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * will parse private key and public key parameters. This method accepts public key</span></td>
-      </tr>
-      <tr>
-        <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
-        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * in the rsaencryption pkcs #1 format (oid: 1.2.840.113549.1.1.1).</span></td>
-      </tr>
-      <tr>
-        <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
-        <td id="LC18" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *</span></td>
-      </tr>
-      <tr>
-        <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
-        <td id="LC19" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@todo</span> Check how many rsa formats use the same format of pkcs #1.</span></td>
-      </tr>
-      <tr>
-        <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
-        <td id="LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *</span></td>
-      </tr>
-      <tr>
-        <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
-        <td id="LC21" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * The format is defined as:</span></td>
-      </tr>
-      <tr>
-        <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
-        <td id="LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * PublicKeyInfo ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
-        <td id="LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   algorithm       AlgorithmIdentifier,</span></td>
-      </tr>
-      <tr>
-        <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
-        <td id="LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   PublicKey       BIT STRING</span></td>
-      </tr>
-      <tr>
-        <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
-        <td id="LC25" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
-        <td id="LC26" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Where AlgorithmIdentifier is:</span></td>
-      </tr>
-      <tr>
-        <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
-        <td id="LC27" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * AlgorithmIdentifier ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
-        <td id="LC28" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   algorithm       OBJECT IDENTIFIER,     the OID of the enc algorithm</span></td>
-      </tr>
-      <tr>
-        <td id="L29" class="blob-num js-line-number" data-line-number="29"></td>
-        <td id="LC29" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   parameters      ANY DEFINED BY algorithm OPTIONAL (NULL for PKCS #1)</span></td>
-      </tr>
-      <tr>
-        <td id="L30" class="blob-num js-line-number" data-line-number="30"></td>
-        <td id="LC30" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L31" class="blob-num js-line-number" data-line-number="31"></td>
-        <td id="LC31" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * and PublicKey is a SEQUENCE encapsulated in a BIT STRING</span></td>
-      </tr>
-      <tr>
-        <td id="L32" class="blob-num js-line-number" data-line-number="32"></td>
-        <td id="LC32" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * RSAPublicKey ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L33" class="blob-num js-line-number" data-line-number="33"></td>
-        <td id="LC33" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   modulus           INTEGER,  -- n</span></td>
-      </tr>
-      <tr>
-        <td id="L34" class="blob-num js-line-number" data-line-number="34"></td>
-        <td id="LC34" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   publicExponent    INTEGER   -- e</span></td>
-      </tr>
-      <tr>
-        <td id="L35" class="blob-num js-line-number" data-line-number="35"></td>
-        <td id="LC35" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L36" class="blob-num js-line-number" data-line-number="36"></td>
-        <td id="LC36" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * it&#39;s possible to examine the structure of the keys obtained from openssl using</span></td>
-      </tr>
-      <tr>
-        <td id="L37" class="blob-num js-line-number" data-line-number="37"></td>
-        <td id="LC37" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * an asn.1 dumper as the one used here to parse the components: http://lapo.it/asn1js/</span></td>
-      </tr>
-      <tr>
-        <td id="L38" class="blob-num js-line-number" data-line-number="38"></td>
-        <td id="LC38" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@argument</span> <span class="pl-en">{string}</span> <span class="pl-smi">pem</span> the pem encoded string, can include the BEGIN/END header/footer</span></td>
-      </tr>
-      <tr>
-        <td id="L39" class="blob-num js-line-number" data-line-number="39"></td>
-        <td id="LC39" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L40" class="blob-num js-line-number" data-line-number="40"></td>
-        <td id="LC40" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L41" class="blob-num js-line-number" data-line-number="41"></td>
-        <td id="LC41" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">parseKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">pem</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L42" class="blob-num js-line-number" data-line-number="42"></td>
-        <td id="LC42" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">try</span> {</td>
-      </tr>
-      <tr>
-        <td id="L43" class="blob-num js-line-number" data-line-number="43"></td>
-        <td id="LC43" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> modulus <span class="pl-k">=</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L44" class="blob-num js-line-number" data-line-number="44"></td>
-        <td id="LC44" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> public_exponent <span class="pl-k">=</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L45" class="blob-num js-line-number" data-line-number="45"></td>
-        <td id="LC45" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> reHex <span class="pl-k">=</span><span class="pl-sr"> <span class="pl-pds">/</span><span class="pl-k">^</span><span class="pl-c1">\s</span><span class="pl-k">*</span>(?:<span class="pl-c1">[<span class="pl-c1">0-9A-Fa-f</span>][<span class="pl-c1">0-9A-Fa-f</span>]</span><span class="pl-c1">\s</span><span class="pl-k">*</span>)<span class="pl-k">+</span><span class="pl-k">$</span><span class="pl-pds">/</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L46" class="blob-num js-line-number" data-line-number="46"></td>
-        <td id="LC46" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> der <span class="pl-k">=</span> <span class="pl-smi">reHex</span>.<span class="pl-c1">test</span>(pem) <span class="pl-k">?</span> <span class="pl-smi">Hex</span>.<span class="pl-en">decode</span>(pem) <span class="pl-k">:</span> <span class="pl-smi">Base64</span>.<span class="pl-en">unarmor</span>(pem);</td>
-      </tr>
-      <tr>
-        <td id="L47" class="blob-num js-line-number" data-line-number="47"></td>
-        <td id="LC47" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">var</span> asn1 <span class="pl-k">=</span> <span class="pl-c1">ASN1</span>.<span class="pl-en">decode</span>(der);</td>
-      </tr>
-      <tr>
-        <td id="L48" class="blob-num js-line-number" data-line-number="48"></td>
-        <td id="LC48" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L49" class="blob-num js-line-number" data-line-number="49"></td>
-        <td id="LC49" class="blob-code blob-code-inner js-file-line">    <span class="pl-c"><span class="pl-c">//</span>Fixes a bug with OpenSSL 1.0+ private keys</span></td>
-      </tr>
-      <tr>
-        <td id="L50" class="blob-num js-line-number" data-line-number="50"></td>
-        <td id="LC50" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span>(<span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>.<span class="pl-c1">length</span> <span class="pl-k">===</span> <span class="pl-c1">3</span>){</td>
-      </tr>
-      <tr>
-        <td id="L51" class="blob-num js-line-number" data-line-number="51"></td>
-        <td id="LC51" class="blob-code blob-code-inner js-file-line">        asn1 <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">2</span>].<span class="pl-smi">sub</span>[<span class="pl-c1">0</span>];</td>
-      </tr>
-      <tr>
-        <td id="L52" class="blob-num js-line-number" data-line-number="52"></td>
-        <td id="LC52" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L53" class="blob-num js-line-number" data-line-number="53"></td>
-        <td id="LC53" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (<span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>.<span class="pl-c1">length</span> <span class="pl-k">===</span> <span class="pl-c1">9</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L54" class="blob-num js-line-number" data-line-number="54"></td>
-        <td id="LC54" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L55" class="blob-num js-line-number" data-line-number="55"></td>
-        <td id="LC55" class="blob-code blob-code-inner js-file-line">      <span class="pl-c"><span class="pl-c">//</span> Parse the private key.</span></td>
-      </tr>
-      <tr>
-        <td id="L56" class="blob-num js-line-number" data-line-number="56"></td>
-        <td id="LC56" class="blob-code blob-code-inner js-file-line">      modulus <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">1</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L57" class="blob-num js-line-number" data-line-number="57"></td>
-        <td id="LC57" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">n</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(modulus, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L58" class="blob-num js-line-number" data-line-number="58"></td>
-        <td id="LC58" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L59" class="blob-num js-line-number" data-line-number="59"></td>
-        <td id="LC59" class="blob-code blob-code-inner js-file-line">      public_exponent <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">2</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>int</span></td>
-      </tr>
-      <tr>
-        <td id="L60" class="blob-num js-line-number" data-line-number="60"></td>
-        <td id="LC60" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">e</span> <span class="pl-k">=</span> <span class="pl-c1">parseInt</span>(public_exponent, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L61" class="blob-num js-line-number" data-line-number="61"></td>
-        <td id="LC61" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L62" class="blob-num js-line-number" data-line-number="62"></td>
-        <td id="LC62" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> private_exponent <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">3</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L63" class="blob-num js-line-number" data-line-number="63"></td>
-        <td id="LC63" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">d</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(private_exponent, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L64" class="blob-num js-line-number" data-line-number="64"></td>
-        <td id="LC64" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L65" class="blob-num js-line-number" data-line-number="65"></td>
-        <td id="LC65" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> prime1 <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">4</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L66" class="blob-num js-line-number" data-line-number="66"></td>
-        <td id="LC66" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">p</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(prime1, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L67" class="blob-num js-line-number" data-line-number="67"></td>
-        <td id="LC67" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L68" class="blob-num js-line-number" data-line-number="68"></td>
-        <td id="LC68" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> prime2 <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">5</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L69" class="blob-num js-line-number" data-line-number="69"></td>
-        <td id="LC69" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">q</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(prime2, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L70" class="blob-num js-line-number" data-line-number="70"></td>
-        <td id="LC70" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L71" class="blob-num js-line-number" data-line-number="71"></td>
-        <td id="LC71" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> exponent1 <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">6</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L72" class="blob-num js-line-number" data-line-number="72"></td>
-        <td id="LC72" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">dmp1</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(exponent1, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L73" class="blob-num js-line-number" data-line-number="73"></td>
-        <td id="LC73" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L74" class="blob-num js-line-number" data-line-number="74"></td>
-        <td id="LC74" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> exponent2 <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">7</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L75" class="blob-num js-line-number" data-line-number="75"></td>
-        <td id="LC75" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">dmq1</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(exponent2, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L76" class="blob-num js-line-number" data-line-number="76"></td>
-        <td id="LC76" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L77" class="blob-num js-line-number" data-line-number="77"></td>
-        <td id="LC77" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> coefficient <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">8</span>].<span class="pl-en">getHexStringValue</span>(); <span class="pl-c"><span class="pl-c">//</span>bigint</span></td>
-      </tr>
-      <tr>
-        <td id="L78" class="blob-num js-line-number" data-line-number="78"></td>
-        <td id="LC78" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">coeff</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(coefficient, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L79" class="blob-num js-line-number" data-line-number="79"></td>
-        <td id="LC79" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L80" class="blob-num js-line-number" data-line-number="80"></td>
-        <td id="LC80" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L81" class="blob-num js-line-number" data-line-number="81"></td>
-        <td id="LC81" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">else</span> <span class="pl-k">if</span> (<span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>.<span class="pl-c1">length</span> <span class="pl-k">===</span> <span class="pl-c1">2</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L82" class="blob-num js-line-number" data-line-number="82"></td>
-        <td id="LC82" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L83" class="blob-num js-line-number" data-line-number="83"></td>
-        <td id="LC83" class="blob-code blob-code-inner js-file-line">      <span class="pl-c"><span class="pl-c">//</span> Parse the public key.</span></td>
-      </tr>
-      <tr>
-        <td id="L84" class="blob-num js-line-number" data-line-number="84"></td>
-        <td id="LC84" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> bit_string <span class="pl-k">=</span> <span class="pl-smi">asn1</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">1</span>];</td>
-      </tr>
-      <tr>
-        <td id="L85" class="blob-num js-line-number" data-line-number="85"></td>
-        <td id="LC85" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">var</span> sequence <span class="pl-k">=</span> <span class="pl-smi">bit_string</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">0</span>];</td>
-      </tr>
-      <tr>
-        <td id="L86" class="blob-num js-line-number" data-line-number="86"></td>
-        <td id="LC86" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L87" class="blob-num js-line-number" data-line-number="87"></td>
-        <td id="LC87" class="blob-code blob-code-inner js-file-line">      modulus <span class="pl-k">=</span> <span class="pl-smi">sequence</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">0</span>].<span class="pl-en">getHexStringValue</span>();</td>
-      </tr>
-      <tr>
-        <td id="L88" class="blob-num js-line-number" data-line-number="88"></td>
-        <td id="LC88" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">n</span> <span class="pl-k">=</span> <span class="pl-en">parseBigInt</span>(modulus, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L89" class="blob-num js-line-number" data-line-number="89"></td>
-        <td id="LC89" class="blob-code blob-code-inner js-file-line">      public_exponent <span class="pl-k">=</span> <span class="pl-smi">sequence</span>.<span class="pl-smi">sub</span>[<span class="pl-c1">1</span>].<span class="pl-en">getHexStringValue</span>();</td>
-      </tr>
-      <tr>
-        <td id="L90" class="blob-num js-line-number" data-line-number="90"></td>
-        <td id="LC90" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">e</span> <span class="pl-k">=</span> <span class="pl-c1">parseInt</span>(public_exponent, <span class="pl-c1">16</span>);</td>
-      </tr>
-      <tr>
-        <td id="L91" class="blob-num js-line-number" data-line-number="91"></td>
-        <td id="LC91" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L92" class="blob-num js-line-number" data-line-number="92"></td>
-        <td id="LC92" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L93" class="blob-num js-line-number" data-line-number="93"></td>
-        <td id="LC93" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">else</span> {</td>
-      </tr>
-      <tr>
-        <td id="L94" class="blob-num js-line-number" data-line-number="94"></td>
-        <td id="LC94" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">return</span> <span class="pl-c1">false</span>;</td>
-      </tr>
-      <tr>
-        <td id="L95" class="blob-num js-line-number" data-line-number="95"></td>
-        <td id="LC95" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L96" class="blob-num js-line-number" data-line-number="96"></td>
-        <td id="LC96" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">true</span>;</td>
-      </tr>
-      <tr>
-        <td id="L97" class="blob-num js-line-number" data-line-number="97"></td>
-        <td id="LC97" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L98" class="blob-num js-line-number" data-line-number="98"></td>
-        <td id="LC98" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">catch</span> (ex) {</td>
-      </tr>
-      <tr>
-        <td id="L99" class="blob-num js-line-number" data-line-number="99"></td>
-        <td id="LC99" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">false</span>;</td>
-      </tr>
-      <tr>
-        <td id="L100" class="blob-num js-line-number" data-line-number="100"></td>
-        <td id="LC100" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L101" class="blob-num js-line-number" data-line-number="101"></td>
-        <td id="LC101" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L102" class="blob-num js-line-number" data-line-number="102"></td>
-        <td id="LC102" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L103" class="blob-num js-line-number" data-line-number="103"></td>
-        <td id="LC103" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L104" class="blob-num js-line-number" data-line-number="104"></td>
-        <td id="LC104" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Translate rsa parameters in a hex encoded string representing the rsa key.</span></td>
-      </tr>
-      <tr>
-        <td id="L105" class="blob-num js-line-number" data-line-number="105"></td>
-        <td id="LC105" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *</span></td>
-      </tr>
-      <tr>
-        <td id="L106" class="blob-num js-line-number" data-line-number="106"></td>
-        <td id="LC106" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * The translation follow the ASN.1 notation :</span></td>
-      </tr>
-      <tr>
-        <td id="L107" class="blob-num js-line-number" data-line-number="107"></td>
-        <td id="LC107" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * RSAPrivateKey ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L108" class="blob-num js-line-number" data-line-number="108"></td>
-        <td id="LC108" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   version           Version,</span></td>
-      </tr>
-      <tr>
-        <td id="L109" class="blob-num js-line-number" data-line-number="109"></td>
-        <td id="LC109" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   modulus           INTEGER,  -- n</span></td>
-      </tr>
-      <tr>
-        <td id="L110" class="blob-num js-line-number" data-line-number="110"></td>
-        <td id="LC110" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   publicExponent    INTEGER,  -- e</span></td>
-      </tr>
-      <tr>
-        <td id="L111" class="blob-num js-line-number" data-line-number="111"></td>
-        <td id="LC111" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   privateExponent   INTEGER,  -- d</span></td>
-      </tr>
-      <tr>
-        <td id="L112" class="blob-num js-line-number" data-line-number="112"></td>
-        <td id="LC112" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   prime1            INTEGER,  -- p</span></td>
-      </tr>
-      <tr>
-        <td id="L113" class="blob-num js-line-number" data-line-number="113"></td>
-        <td id="LC113" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   prime2            INTEGER,  -- q</span></td>
-      </tr>
-      <tr>
-        <td id="L114" class="blob-num js-line-number" data-line-number="114"></td>
-        <td id="LC114" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   exponent1         INTEGER,  -- d mod (p1)</span></td>
-      </tr>
-      <tr>
-        <td id="L115" class="blob-num js-line-number" data-line-number="115"></td>
-        <td id="LC115" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   exponent2         INTEGER,  -- d mod (q-1)</span></td>
-      </tr>
-      <tr>
-        <td id="L116" class="blob-num js-line-number" data-line-number="116"></td>
-        <td id="LC116" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   coefficient       INTEGER,  -- (inverse of q) mod p</span></td>
-      </tr>
-      <tr>
-        <td id="L117" class="blob-num js-line-number" data-line-number="117"></td>
-        <td id="LC117" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L118" class="blob-num js-line-number" data-line-number="118"></td>
-        <td id="LC118" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span>  DER Encoded String representing the rsa private key</span></td>
-      </tr>
-      <tr>
-        <td id="L119" class="blob-num js-line-number" data-line-number="119"></td>
-        <td id="LC119" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L120" class="blob-num js-line-number" data-line-number="120"></td>
-        <td id="LC120" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L121" class="blob-num js-line-number" data-line-number="121"></td>
-        <td id="LC121" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPrivateBaseKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L122" class="blob-num js-line-number" data-line-number="122"></td>
-        <td id="LC122" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> options <span class="pl-k">=</span> {</td>
-      </tr>
-      <tr>
-        <td id="L123" class="blob-num js-line-number" data-line-number="123"></td>
-        <td id="LC123" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">&#39;</span>array<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> [</td>
-      </tr>
-      <tr>
-        <td id="L124" class="blob-num js-line-number" data-line-number="124"></td>
-        <td id="LC124" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>int<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L125" class="blob-num js-line-number" data-line-number="125"></td>
-        <td id="LC125" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">n</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L126" class="blob-num js-line-number" data-line-number="126"></td>
-        <td id="LC126" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>int<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">e</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L127" class="blob-num js-line-number" data-line-number="127"></td>
-        <td id="LC127" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">d</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L128" class="blob-num js-line-number" data-line-number="128"></td>
-        <td id="LC128" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">p</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L129" class="blob-num js-line-number" data-line-number="129"></td>
-        <td id="LC129" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">q</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L130" class="blob-num js-line-number" data-line-number="130"></td>
-        <td id="LC130" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">dmp1</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L131" class="blob-num js-line-number" data-line-number="131"></td>
-        <td id="LC131" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">dmq1</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L132" class="blob-num js-line-number" data-line-number="132"></td>
-        <td id="LC132" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">coeff</span>})</td>
-      </tr>
-      <tr>
-        <td id="L133" class="blob-num js-line-number" data-line-number="133"></td>
-        <td id="LC133" class="blob-code blob-code-inner js-file-line">    ]</td>
-      </tr>
-      <tr>
-        <td id="L134" class="blob-num js-line-number" data-line-number="134"></td>
-        <td id="LC134" class="blob-code blob-code-inner js-file-line">  };</td>
-      </tr>
-      <tr>
-        <td id="L135" class="blob-num js-line-number" data-line-number="135"></td>
-        <td id="LC135" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> seq <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERSequence</span>(options);</td>
-      </tr>
-      <tr>
-        <td id="L136" class="blob-num js-line-number" data-line-number="136"></td>
-        <td id="LC136" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-smi">seq</span>.<span class="pl-en">getEncodedHex</span>();</td>
-      </tr>
-      <tr>
-        <td id="L137" class="blob-num js-line-number" data-line-number="137"></td>
-        <td id="LC137" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L138" class="blob-num js-line-number" data-line-number="138"></td>
-        <td id="LC138" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L139" class="blob-num js-line-number" data-line-number="139"></td>
-        <td id="LC139" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L140" class="blob-num js-line-number" data-line-number="140"></td>
-        <td id="LC140" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * base64 (pem) encoded version of the DER encoded representation</span></td>
-      </tr>
-      <tr>
-        <td id="L141" class="blob-num js-line-number" data-line-number="141"></td>
-        <td id="LC141" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> pem encoded representation without header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L142" class="blob-num js-line-number" data-line-number="142"></td>
-        <td id="LC142" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L143" class="blob-num js-line-number" data-line-number="143"></td>
-        <td id="LC143" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L144" class="blob-num js-line-number" data-line-number="144"></td>
-        <td id="LC144" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPrivateBaseKeyB64</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L145" class="blob-num js-line-number" data-line-number="145"></td>
-        <td id="LC145" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-en">hex2b64</span>(<span class="pl-c1">this</span>.<span class="pl-en">getPrivateBaseKey</span>());</td>
-      </tr>
-      <tr>
-        <td id="L146" class="blob-num js-line-number" data-line-number="146"></td>
-        <td id="LC146" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L147" class="blob-num js-line-number" data-line-number="147"></td>
-        <td id="LC147" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L148" class="blob-num js-line-number" data-line-number="148"></td>
-        <td id="LC148" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L149" class="blob-num js-line-number" data-line-number="149"></td>
-        <td id="LC149" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Translate rsa parameters in a hex encoded string representing the rsa public key.</span></td>
-      </tr>
-      <tr>
-        <td id="L150" class="blob-num js-line-number" data-line-number="150"></td>
-        <td id="LC150" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * The representation follow the ASN.1 notation :</span></td>
-      </tr>
-      <tr>
-        <td id="L151" class="blob-num js-line-number" data-line-number="151"></td>
-        <td id="LC151" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * PublicKeyInfo ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L152" class="blob-num js-line-number" data-line-number="152"></td>
-        <td id="LC152" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   algorithm       AlgorithmIdentifier,</span></td>
-      </tr>
-      <tr>
-        <td id="L153" class="blob-num js-line-number" data-line-number="153"></td>
-        <td id="LC153" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   PublicKey       BIT STRING</span></td>
-      </tr>
-      <tr>
-        <td id="L154" class="blob-num js-line-number" data-line-number="154"></td>
-        <td id="LC154" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L155" class="blob-num js-line-number" data-line-number="155"></td>
-        <td id="LC155" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Where AlgorithmIdentifier is:</span></td>
-      </tr>
-      <tr>
-        <td id="L156" class="blob-num js-line-number" data-line-number="156"></td>
-        <td id="LC156" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * AlgorithmIdentifier ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L157" class="blob-num js-line-number" data-line-number="157"></td>
-        <td id="LC157" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   algorithm       OBJECT IDENTIFIER,     the OID of the enc algorithm</span></td>
-      </tr>
-      <tr>
-        <td id="L158" class="blob-num js-line-number" data-line-number="158"></td>
-        <td id="LC158" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   parameters      ANY DEFINED BY algorithm OPTIONAL (NULL for PKCS #1)</span></td>
-      </tr>
-      <tr>
-        <td id="L159" class="blob-num js-line-number" data-line-number="159"></td>
-        <td id="LC159" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L160" class="blob-num js-line-number" data-line-number="160"></td>
-        <td id="LC160" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * and PublicKey is a SEQUENCE encapsulated in a BIT STRING</span></td>
-      </tr>
-      <tr>
-        <td id="L161" class="blob-num js-line-number" data-line-number="161"></td>
-        <td id="LC161" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * RSAPublicKey ::= SEQUENCE {</span></td>
-      </tr>
-      <tr>
-        <td id="L162" class="blob-num js-line-number" data-line-number="162"></td>
-        <td id="LC162" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   modulus           INTEGER,  -- n</span></td>
-      </tr>
-      <tr>
-        <td id="L163" class="blob-num js-line-number" data-line-number="163"></td>
-        <td id="LC163" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *   publicExponent    INTEGER   -- e</span></td>
-      </tr>
-      <tr>
-        <td id="L164" class="blob-num js-line-number" data-line-number="164"></td>
-        <td id="LC164" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * }</span></td>
-      </tr>
-      <tr>
-        <td id="L165" class="blob-num js-line-number" data-line-number="165"></td>
-        <td id="LC165" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> DER Encoded String representing the rsa public key</span></td>
-      </tr>
-      <tr>
-        <td id="L166" class="blob-num js-line-number" data-line-number="166"></td>
-        <td id="LC166" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L167" class="blob-num js-line-number" data-line-number="167"></td>
-        <td id="LC167" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L168" class="blob-num js-line-number" data-line-number="168"></td>
-        <td id="LC168" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPublicBaseKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L169" class="blob-num js-line-number" data-line-number="169"></td>
-        <td id="LC169" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> options <span class="pl-k">=</span> {</td>
-      </tr>
-      <tr>
-        <td id="L170" class="blob-num js-line-number" data-line-number="170"></td>
-        <td id="LC170" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">&#39;</span>array<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> [</td>
-      </tr>
-      <tr>
-        <td id="L171" class="blob-num js-line-number" data-line-number="171"></td>
-        <td id="LC171" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERObjectIdentifier</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>oid<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">&#39;</span>1.2.840.113549.1.1.1<span class="pl-pds">&#39;</span></span>}), <span class="pl-c"><span class="pl-c">//</span>RSA Encryption pkcs #1 oid</span></td>
-      </tr>
-      <tr>
-        <td id="L172" class="blob-num js-line-number" data-line-number="172"></td>
-        <td id="LC172" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERNull</span>()</td>
-      </tr>
-      <tr>
-        <td id="L173" class="blob-num js-line-number" data-line-number="173"></td>
-        <td id="LC173" class="blob-code blob-code-inner js-file-line">    ]</td>
-      </tr>
-      <tr>
-        <td id="L174" class="blob-num js-line-number" data-line-number="174"></td>
-        <td id="LC174" class="blob-code blob-code-inner js-file-line">  };</td>
-      </tr>
-      <tr>
-        <td id="L175" class="blob-num js-line-number" data-line-number="175"></td>
-        <td id="LC175" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> first_sequence <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERSequence</span>(options);</td>
-      </tr>
-      <tr>
-        <td id="L176" class="blob-num js-line-number" data-line-number="176"></td>
-        <td id="LC176" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L177" class="blob-num js-line-number" data-line-number="177"></td>
-        <td id="LC177" class="blob-code blob-code-inner js-file-line">  options <span class="pl-k">=</span> {</td>
-      </tr>
-      <tr>
-        <td id="L178" class="blob-num js-line-number" data-line-number="178"></td>
-        <td id="LC178" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">&#39;</span>array<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> [</td>
-      </tr>
-      <tr>
-        <td id="L179" class="blob-num js-line-number" data-line-number="179"></td>
-        <td id="LC179" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>bigint<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">n</span>}),</td>
-      </tr>
-      <tr>
-        <td id="L180" class="blob-num js-line-number" data-line-number="180"></td>
-        <td id="LC180" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERInteger</span>({<span class="pl-s"><span class="pl-pds">&#39;</span>int<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">e</span>})</td>
-      </tr>
-      <tr>
-        <td id="L181" class="blob-num js-line-number" data-line-number="181"></td>
-        <td id="LC181" class="blob-code blob-code-inner js-file-line">    ]</td>
-      </tr>
-      <tr>
-        <td id="L182" class="blob-num js-line-number" data-line-number="182"></td>
-        <td id="LC182" class="blob-code blob-code-inner js-file-line">  };</td>
-      </tr>
-      <tr>
-        <td id="L183" class="blob-num js-line-number" data-line-number="183"></td>
-        <td id="LC183" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> second_sequence <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERSequence</span>(options);</td>
-      </tr>
-      <tr>
-        <td id="L184" class="blob-num js-line-number" data-line-number="184"></td>
-        <td id="LC184" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L185" class="blob-num js-line-number" data-line-number="185"></td>
-        <td id="LC185" class="blob-code blob-code-inner js-file-line">  options <span class="pl-k">=</span> {</td>
-      </tr>
-      <tr>
-        <td id="L186" class="blob-num js-line-number" data-line-number="186"></td>
-        <td id="LC186" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">&#39;</span>hex<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">&#39;</span>00<span class="pl-pds">&#39;</span></span> <span class="pl-k">+</span> <span class="pl-smi">second_sequence</span>.<span class="pl-en">getEncodedHex</span>()</td>
-      </tr>
-      <tr>
-        <td id="L187" class="blob-num js-line-number" data-line-number="187"></td>
-        <td id="LC187" class="blob-code blob-code-inner js-file-line">  };</td>
-      </tr>
-      <tr>
-        <td id="L188" class="blob-num js-line-number" data-line-number="188"></td>
-        <td id="LC188" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> bit_string <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERBitString</span>(options);</td>
-      </tr>
-      <tr>
-        <td id="L189" class="blob-num js-line-number" data-line-number="189"></td>
-        <td id="LC189" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L190" class="blob-num js-line-number" data-line-number="190"></td>
-        <td id="LC190" class="blob-code blob-code-inner js-file-line">  options <span class="pl-k">=</span> {</td>
-      </tr>
-      <tr>
-        <td id="L191" class="blob-num js-line-number" data-line-number="191"></td>
-        <td id="LC191" class="blob-code blob-code-inner js-file-line">    <span class="pl-s"><span class="pl-pds">&#39;</span>array<span class="pl-pds">&#39;</span></span><span class="pl-k">:</span> [</td>
-      </tr>
-      <tr>
-        <td id="L192" class="blob-num js-line-number" data-line-number="192"></td>
-        <td id="LC192" class="blob-code blob-code-inner js-file-line">      first_sequence,</td>
-      </tr>
-      <tr>
-        <td id="L193" class="blob-num js-line-number" data-line-number="193"></td>
-        <td id="LC193" class="blob-code blob-code-inner js-file-line">      bit_string</td>
-      </tr>
-      <tr>
-        <td id="L194" class="blob-num js-line-number" data-line-number="194"></td>
-        <td id="LC194" class="blob-code blob-code-inner js-file-line">    ]</td>
-      </tr>
-      <tr>
-        <td id="L195" class="blob-num js-line-number" data-line-number="195"></td>
-        <td id="LC195" class="blob-code blob-code-inner js-file-line">  };</td>
-      </tr>
-      <tr>
-        <td id="L196" class="blob-num js-line-number" data-line-number="196"></td>
-        <td id="LC196" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> seq <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">KJUR.asn1.DERSequence</span>(options);</td>
-      </tr>
-      <tr>
-        <td id="L197" class="blob-num js-line-number" data-line-number="197"></td>
-        <td id="LC197" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-smi">seq</span>.<span class="pl-en">getEncodedHex</span>();</td>
-      </tr>
-      <tr>
-        <td id="L198" class="blob-num js-line-number" data-line-number="198"></td>
-        <td id="LC198" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L199" class="blob-num js-line-number" data-line-number="199"></td>
-        <td id="LC199" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L200" class="blob-num js-line-number" data-line-number="200"></td>
-        <td id="LC200" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L201" class="blob-num js-line-number" data-line-number="201"></td>
-        <td id="LC201" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * base64 (pem) encoded version of the DER encoded representation</span></td>
-      </tr>
-      <tr>
-        <td id="L202" class="blob-num js-line-number" data-line-number="202"></td>
-        <td id="LC202" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> pem encoded representation without header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L203" class="blob-num js-line-number" data-line-number="203"></td>
-        <td id="LC203" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L204" class="blob-num js-line-number" data-line-number="204"></td>
-        <td id="LC204" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L205" class="blob-num js-line-number" data-line-number="205"></td>
-        <td id="LC205" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPublicBaseKeyB64</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L206" class="blob-num js-line-number" data-line-number="206"></td>
-        <td id="LC206" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-en">hex2b64</span>(<span class="pl-c1">this</span>.<span class="pl-en">getPublicBaseKey</span>());</td>
-      </tr>
-      <tr>
-        <td id="L207" class="blob-num js-line-number" data-line-number="207"></td>
-        <td id="LC207" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L208" class="blob-num js-line-number" data-line-number="208"></td>
-        <td id="LC208" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L209" class="blob-num js-line-number" data-line-number="209"></td>
-        <td id="LC209" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L210" class="blob-num js-line-number" data-line-number="210"></td>
-        <td id="LC210" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * wrap the string in block of width chars. The default value for rsa keys is 64</span></td>
-      </tr>
-      <tr>
-        <td id="L211" class="blob-num js-line-number" data-line-number="211"></td>
-        <td id="LC211" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * characters.</span></td>
-      </tr>
-      <tr>
-        <td id="L212" class="blob-num js-line-number" data-line-number="212"></td>
-        <td id="LC212" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{string}</span> <span class="pl-smi">str</span> the pem encoded string without header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L213" class="blob-num js-line-number" data-line-number="213"></td>
-        <td id="LC213" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{Number}</span> <span class="pl-smi">[width<span class="pl-k">=</span><span class="pl-s1"><span class="pl-c1">64</span></span>]</span> - the length the string has to be wrapped at</span></td>
-      </tr>
-      <tr>
-        <td id="L214" class="blob-num js-line-number" data-line-number="214"></td>
-        <td id="LC214" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span></span></td>
-      </tr>
-      <tr>
-        <td id="L215" class="blob-num js-line-number" data-line-number="215"></td>
-        <td id="LC215" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L216" class="blob-num js-line-number" data-line-number="216"></td>
-        <td id="LC216" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L217" class="blob-num js-line-number" data-line-number="217"></td>
-        <td id="LC217" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">wordwrap</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">str</span>, <span class="pl-smi">width</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L218" class="blob-num js-line-number" data-line-number="218"></td>
-        <td id="LC218" class="blob-code blob-code-inner js-file-line">  width <span class="pl-k">=</span> width <span class="pl-k">||</span> <span class="pl-c1">64</span>;</td>
-      </tr>
-      <tr>
-        <td id="L219" class="blob-num js-line-number" data-line-number="219"></td>
-        <td id="LC219" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (<span class="pl-k">!</span>str) {</td>
-      </tr>
-      <tr>
-        <td id="L220" class="blob-num js-line-number" data-line-number="220"></td>
-        <td id="LC220" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> str;</td>
-      </tr>
-      <tr>
-        <td id="L221" class="blob-num js-line-number" data-line-number="221"></td>
-        <td id="LC221" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L222" class="blob-num js-line-number" data-line-number="222"></td>
-        <td id="LC222" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> regex <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&#39;</span>(.{1,<span class="pl-pds">&#39;</span></span> <span class="pl-k">+</span> width <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">&#39;</span>})( +|$<span class="pl-cce">\n</span>?)|(.{1,<span class="pl-pds">&#39;</span></span> <span class="pl-k">+</span> width <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">&#39;</span>})<span class="pl-pds">&#39;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L223" class="blob-num js-line-number" data-line-number="223"></td>
-        <td id="LC223" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-smi">str</span>.<span class="pl-c1">match</span>(<span class="pl-c1">RegExp</span>(regex, <span class="pl-s"><span class="pl-pds">&#39;</span>g<span class="pl-pds">&#39;</span></span>)).<span class="pl-c1">join</span>(<span class="pl-s"><span class="pl-pds">&#39;</span><span class="pl-cce">\n</span><span class="pl-pds">&#39;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L224" class="blob-num js-line-number" data-line-number="224"></td>
-        <td id="LC224" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L225" class="blob-num js-line-number" data-line-number="225"></td>
-        <td id="LC225" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L226" class="blob-num js-line-number" data-line-number="226"></td>
-        <td id="LC226" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L227" class="blob-num js-line-number" data-line-number="227"></td>
-        <td id="LC227" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Retrieve the pem encoded private key</span></td>
-      </tr>
-      <tr>
-        <td id="L228" class="blob-num js-line-number" data-line-number="228"></td>
-        <td id="LC228" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> the pem encoded private key with header/footer</span></td>
-      </tr>
-      <tr>
-        <td id="L229" class="blob-num js-line-number" data-line-number="229"></td>
-        <td id="LC229" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L230" class="blob-num js-line-number" data-line-number="230"></td>
-        <td id="LC230" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L231" class="blob-num js-line-number" data-line-number="231"></td>
-        <td id="LC231" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPrivateKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L232" class="blob-num js-line-number" data-line-number="232"></td>
-        <td id="LC232" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> key <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>-----BEGIN RSA PRIVATE KEY-----<span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L233" class="blob-num js-line-number" data-line-number="233"></td>
-        <td id="LC233" class="blob-code blob-code-inner js-file-line">  key <span class="pl-k">+=</span> <span class="pl-c1">this</span>.<span class="pl-en">wordwrap</span>(<span class="pl-c1">this</span>.<span class="pl-en">getPrivateBaseKeyB64</span>()) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L234" class="blob-num js-line-number" data-line-number="234"></td>
-        <td id="LC234" class="blob-code blob-code-inner js-file-line">  key <span class="pl-k">+=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>-----END RSA PRIVATE KEY-----<span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L235" class="blob-num js-line-number" data-line-number="235"></td>
-        <td id="LC235" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> key;</td>
-      </tr>
-      <tr>
-        <td id="L236" class="blob-num js-line-number" data-line-number="236"></td>
-        <td id="LC236" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L237" class="blob-num js-line-number" data-line-number="237"></td>
-        <td id="LC237" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L238" class="blob-num js-line-number" data-line-number="238"></td>
-        <td id="LC238" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L239" class="blob-num js-line-number" data-line-number="239"></td>
-        <td id="LC239" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Retrieve the pem encoded public key</span></td>
-      </tr>
-      <tr>
-        <td id="L240" class="blob-num js-line-number" data-line-number="240"></td>
-        <td id="LC240" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> the pem encoded public key with header/footer</span></td>
-      </tr>
-      <tr>
-        <td id="L241" class="blob-num js-line-number" data-line-number="241"></td>
-        <td id="LC241" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L242" class="blob-num js-line-number" data-line-number="242"></td>
-        <td id="LC242" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L243" class="blob-num js-line-number" data-line-number="243"></td>
-        <td id="LC243" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPublicKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L244" class="blob-num js-line-number" data-line-number="244"></td>
-        <td id="LC244" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">var</span> key <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>-----BEGIN PUBLIC KEY-----<span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L245" class="blob-num js-line-number" data-line-number="245"></td>
-        <td id="LC245" class="blob-code blob-code-inner js-file-line">  key <span class="pl-k">+=</span> <span class="pl-c1">this</span>.<span class="pl-en">wordwrap</span>(<span class="pl-c1">this</span>.<span class="pl-en">getPublicBaseKeyB64</span>()) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L246" class="blob-num js-line-number" data-line-number="246"></td>
-        <td id="LC246" class="blob-code blob-code-inner js-file-line">  key <span class="pl-k">+=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>-----END PUBLIC KEY-----<span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L247" class="blob-num js-line-number" data-line-number="247"></td>
-        <td id="LC247" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> key;</td>
-      </tr>
-      <tr>
-        <td id="L248" class="blob-num js-line-number" data-line-number="248"></td>
-        <td id="LC248" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L249" class="blob-num js-line-number" data-line-number="249"></td>
-        <td id="LC249" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L250" class="blob-num js-line-number" data-line-number="250"></td>
-        <td id="LC250" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L251" class="blob-num js-line-number" data-line-number="251"></td>
-        <td id="LC251" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Check if the object contains the necessary parameters to populate the rsa modulus</span></td>
-      </tr>
-      <tr>
-        <td id="L252" class="blob-num js-line-number" data-line-number="252"></td>
-        <td id="LC252" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * and public exponent parameters.</span></td>
-      </tr>
-      <tr>
-        <td id="L253" class="blob-num js-line-number" data-line-number="253"></td>
-        <td id="LC253" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{Object}</span> <span class="pl-smi">[obj<span class="pl-k">=</span><span class="pl-s1">{}</span>]</span> - An object that may contain the two public key</span></td>
-      </tr>
-      <tr>
-        <td id="L254" class="blob-num js-line-number" data-line-number="254"></td>
-        <td id="LC254" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * parameters</span></td>
-      </tr>
-      <tr>
-        <td id="L255" class="blob-num js-line-number" data-line-number="255"></td>
-        <td id="LC255" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{boolean}</span> true if the object contains both the modulus and the public exponent</span></td>
-      </tr>
-      <tr>
-        <td id="L256" class="blob-num js-line-number" data-line-number="256"></td>
-        <td id="LC256" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * properties (n and e)</span></td>
-      </tr>
-      <tr>
-        <td id="L257" class="blob-num js-line-number" data-line-number="257"></td>
-        <td id="LC257" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@todo</span> check for types of n and e. N should be a parseable bigInt object, E should</span></td>
-      </tr>
-      <tr>
-        <td id="L258" class="blob-num js-line-number" data-line-number="258"></td>
-        <td id="LC258" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * be a parseable integer number</span></td>
-      </tr>
-      <tr>
-        <td id="L259" class="blob-num js-line-number" data-line-number="259"></td>
-        <td id="LC259" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L260" class="blob-num js-line-number" data-line-number="260"></td>
-        <td id="LC260" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L261" class="blob-num js-line-number" data-line-number="261"></td>
-        <td id="LC261" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">hasPublicKeyProperty</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">obj</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L262" class="blob-num js-line-number" data-line-number="262"></td>
-        <td id="LC262" class="blob-code blob-code-inner js-file-line">  obj <span class="pl-k">=</span> obj <span class="pl-k">||</span> {};</td>
-      </tr>
-      <tr>
-        <td id="L263" class="blob-num js-line-number" data-line-number="263"></td>
-        <td id="LC263" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> (</td>
-      </tr>
-      <tr>
-        <td id="L264" class="blob-num js-line-number" data-line-number="264"></td>
-        <td id="LC264" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>n<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L265" class="blob-num js-line-number" data-line-number="265"></td>
-        <td id="LC265" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>e<span class="pl-pds">&#39;</span></span>)</td>
-      </tr>
-      <tr>
-        <td id="L266" class="blob-num js-line-number" data-line-number="266"></td>
-        <td id="LC266" class="blob-code blob-code-inner js-file-line">  );</td>
-      </tr>
-      <tr>
-        <td id="L267" class="blob-num js-line-number" data-line-number="267"></td>
-        <td id="LC267" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L268" class="blob-num js-line-number" data-line-number="268"></td>
-        <td id="LC268" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L269" class="blob-num js-line-number" data-line-number="269"></td>
-        <td id="LC269" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L270" class="blob-num js-line-number" data-line-number="270"></td>
-        <td id="LC270" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Check if the object contains ALL the parameters of an RSA key.</span></td>
-      </tr>
-      <tr>
-        <td id="L271" class="blob-num js-line-number" data-line-number="271"></td>
-        <td id="LC271" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{Object}</span> <span class="pl-smi">[obj<span class="pl-k">=</span><span class="pl-s1">{}</span>]</span> - An object that may contain nine rsa key</span></td>
-      </tr>
-      <tr>
-        <td id="L272" class="blob-num js-line-number" data-line-number="272"></td>
-        <td id="LC272" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * parameters</span></td>
-      </tr>
-      <tr>
-        <td id="L273" class="blob-num js-line-number" data-line-number="273"></td>
-        <td id="LC273" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{boolean}</span> true if the object contains all the parameters needed</span></td>
-      </tr>
-      <tr>
-        <td id="L274" class="blob-num js-line-number" data-line-number="274"></td>
-        <td id="LC274" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@todo</span> check for types of the parameters all the parameters but the public exponent</span></td>
-      </tr>
-      <tr>
-        <td id="L275" class="blob-num js-line-number" data-line-number="275"></td>
-        <td id="LC275" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * should be parseable bigint objects, the public exponent should be a parseable integer number</span></td>
-      </tr>
-      <tr>
-        <td id="L276" class="blob-num js-line-number" data-line-number="276"></td>
-        <td id="LC276" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L277" class="blob-num js-line-number" data-line-number="277"></td>
-        <td id="LC277" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L278" class="blob-num js-line-number" data-line-number="278"></td>
-        <td id="LC278" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">hasPrivateKeyProperty</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">obj</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L279" class="blob-num js-line-number" data-line-number="279"></td>
-        <td id="LC279" class="blob-code blob-code-inner js-file-line">  obj <span class="pl-k">=</span> obj <span class="pl-k">||</span> {};</td>
-      </tr>
-      <tr>
-        <td id="L280" class="blob-num js-line-number" data-line-number="280"></td>
-        <td id="LC280" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> (</td>
-      </tr>
-      <tr>
-        <td id="L281" class="blob-num js-line-number" data-line-number="281"></td>
-        <td id="LC281" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>n<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L282" class="blob-num js-line-number" data-line-number="282"></td>
-        <td id="LC282" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>e<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L283" class="blob-num js-line-number" data-line-number="283"></td>
-        <td id="LC283" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>d<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L284" class="blob-num js-line-number" data-line-number="284"></td>
-        <td id="LC284" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>p<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L285" class="blob-num js-line-number" data-line-number="285"></td>
-        <td id="LC285" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>q<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L286" class="blob-num js-line-number" data-line-number="286"></td>
-        <td id="LC286" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>dmp1<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L287" class="blob-num js-line-number" data-line-number="287"></td>
-        <td id="LC287" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>dmq1<span class="pl-pds">&#39;</span></span>) <span class="pl-k">&amp;&amp;</span></td>
-      </tr>
-      <tr>
-        <td id="L288" class="blob-num js-line-number" data-line-number="288"></td>
-        <td id="LC288" class="blob-code blob-code-inner js-file-line">    <span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>coeff<span class="pl-pds">&#39;</span></span>)</td>
-      </tr>
-      <tr>
-        <td id="L289" class="blob-num js-line-number" data-line-number="289"></td>
-        <td id="LC289" class="blob-code blob-code-inner js-file-line">  );</td>
-      </tr>
-      <tr>
-        <td id="L290" class="blob-num js-line-number" data-line-number="290"></td>
-        <td id="LC290" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L291" class="blob-num js-line-number" data-line-number="291"></td>
-        <td id="LC291" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L292" class="blob-num js-line-number" data-line-number="292"></td>
-        <td id="LC292" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L293" class="blob-num js-line-number" data-line-number="293"></td>
-        <td id="LC293" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Parse the properties of obj in the current rsa object. Obj should AT LEAST</span></td>
-      </tr>
-      <tr>
-        <td id="L294" class="blob-num js-line-number" data-line-number="294"></td>
-        <td id="LC294" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * include the modulus and public exponent (n, e) parameters.</span></td>
-      </tr>
-      <tr>
-        <td id="L295" class="blob-num js-line-number" data-line-number="295"></td>
-        <td id="LC295" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{Object}</span> <span class="pl-smi">obj</span> - the object containing rsa parameters</span></td>
-      </tr>
-      <tr>
-        <td id="L296" class="blob-num js-line-number" data-line-number="296"></td>
-        <td id="LC296" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@private</span></span></td>
-      </tr>
-      <tr>
-        <td id="L297" class="blob-num js-line-number" data-line-number="297"></td>
-        <td id="LC297" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L298" class="blob-num js-line-number" data-line-number="298"></td>
-        <td id="LC298" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">RSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">parsePropertiesFrom</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">obj</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L299" class="blob-num js-line-number" data-line-number="299"></td>
-        <td id="LC299" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">n</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">n</span>;</td>
-      </tr>
-      <tr>
-        <td id="L300" class="blob-num js-line-number" data-line-number="300"></td>
-        <td id="LC300" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">e</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">e</span>;</td>
-      </tr>
-      <tr>
-        <td id="L301" class="blob-num js-line-number" data-line-number="301"></td>
-        <td id="LC301" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L302" class="blob-num js-line-number" data-line-number="302"></td>
-        <td id="LC302" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (<span class="pl-smi">obj</span>.<span class="pl-en">hasOwnProperty</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>d<span class="pl-pds">&#39;</span></span>)) {</td>
-      </tr>
-      <tr>
-        <td id="L303" class="blob-num js-line-number" data-line-number="303"></td>
-        <td id="LC303" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">d</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">d</span>;</td>
-      </tr>
-      <tr>
-        <td id="L304" class="blob-num js-line-number" data-line-number="304"></td>
-        <td id="LC304" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">p</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">p</span>;</td>
-      </tr>
-      <tr>
-        <td id="L305" class="blob-num js-line-number" data-line-number="305"></td>
-        <td id="LC305" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">q</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">q</span>;</td>
-      </tr>
-      <tr>
-        <td id="L306" class="blob-num js-line-number" data-line-number="306"></td>
-        <td id="LC306" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">dmp1</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">dmp1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L307" class="blob-num js-line-number" data-line-number="307"></td>
-        <td id="LC307" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">dmq1</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">dmq1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L308" class="blob-num js-line-number" data-line-number="308"></td>
-        <td id="LC308" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">coeff</span> <span class="pl-k">=</span> <span class="pl-smi">obj</span>.<span class="pl-smi">coeff</span>;</td>
-      </tr>
-      <tr>
-        <td id="L309" class="blob-num js-line-number" data-line-number="309"></td>
-        <td id="LC309" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L310" class="blob-num js-line-number" data-line-number="310"></td>
-        <td id="LC310" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L311" class="blob-num js-line-number" data-line-number="311"></td>
-        <td id="LC311" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L312" class="blob-num js-line-number" data-line-number="312"></td>
-        <td id="LC312" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L313" class="blob-num js-line-number" data-line-number="313"></td>
-        <td id="LC313" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Create a new JSEncryptRSAKey that extends Tom Wu&#39;s RSA key object.</span></td>
-      </tr>
-      <tr>
-        <td id="L314" class="blob-num js-line-number" data-line-number="314"></td>
-        <td id="LC314" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * This object is just a decorator for parsing the key parameter</span></td>
-      </tr>
-      <tr>
-        <td id="L315" class="blob-num js-line-number" data-line-number="315"></td>
-        <td id="LC315" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{string|Object}</span> <span class="pl-smi">key</span> - The key in string format, or an object containing</span></td>
-      </tr>
-      <tr>
-        <td id="L316" class="blob-num js-line-number" data-line-number="316"></td>
-        <td id="LC316" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * the parameters needed to build a RSAKey object.</span></td>
-      </tr>
-      <tr>
-        <td id="L317" class="blob-num js-line-number" data-line-number="317"></td>
-        <td id="LC317" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@constructor</span></span></td>
-      </tr>
-      <tr>
-        <td id="L318" class="blob-num js-line-number" data-line-number="318"></td>
-        <td id="LC318" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L319" class="blob-num js-line-number" data-line-number="319"></td>
-        <td id="LC319" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-en">JSEncryptRSAKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">key</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L320" class="blob-num js-line-number" data-line-number="320"></td>
-        <td id="LC320" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Call the super constructor.</span></td>
-      </tr>
-      <tr>
-        <td id="L321" class="blob-num js-line-number" data-line-number="321"></td>
-        <td id="LC321" class="blob-code blob-code-inner js-file-line">  <span class="pl-smi">RSAKey</span>.<span class="pl-c1">call</span>(<span class="pl-c1">this</span>);</td>
-      </tr>
-      <tr>
-        <td id="L322" class="blob-num js-line-number" data-line-number="322"></td>
-        <td id="LC322" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> If a key key was provided.</span></td>
-      </tr>
-      <tr>
-        <td id="L323" class="blob-num js-line-number" data-line-number="323"></td>
-        <td id="LC323" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (key) {</td>
-      </tr>
-      <tr>
-        <td id="L324" class="blob-num js-line-number" data-line-number="324"></td>
-        <td id="LC324" class="blob-code blob-code-inner js-file-line">    <span class="pl-c"><span class="pl-c">//</span> If this is a string...</span></td>
-      </tr>
-      <tr>
-        <td id="L325" class="blob-num js-line-number" data-line-number="325"></td>
-        <td id="LC325" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (<span class="pl-k">typeof</span> key <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">&#39;</span>string<span class="pl-pds">&#39;</span></span>) {</td>
-      </tr>
-      <tr>
-        <td id="L326" class="blob-num js-line-number" data-line-number="326"></td>
-        <td id="LC326" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-en">parseKey</span>(key);</td>
-      </tr>
-      <tr>
-        <td id="L327" class="blob-num js-line-number" data-line-number="327"></td>
-        <td id="LC327" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L328" class="blob-num js-line-number" data-line-number="328"></td>
-        <td id="LC328" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">else</span> <span class="pl-k">if</span> (</td>
-      </tr>
-      <tr>
-        <td id="L329" class="blob-num js-line-number" data-line-number="329"></td>
-        <td id="LC329" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-en">hasPrivateKeyProperty</span>(key) <span class="pl-k">||</span></td>
-      </tr>
-      <tr>
-        <td id="L330" class="blob-num js-line-number" data-line-number="330"></td>
-        <td id="LC330" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-en">hasPublicKeyProperty</span>(key)</td>
-      </tr>
-      <tr>
-        <td id="L331" class="blob-num js-line-number" data-line-number="331"></td>
-        <td id="LC331" class="blob-code blob-code-inner js-file-line">    ) {</td>
-      </tr>
-      <tr>
-        <td id="L332" class="blob-num js-line-number" data-line-number="332"></td>
-        <td id="LC332" class="blob-code blob-code-inner js-file-line">      <span class="pl-c"><span class="pl-c">//</span> Set the values for the key.</span></td>
-      </tr>
-      <tr>
-        <td id="L333" class="blob-num js-line-number" data-line-number="333"></td>
-        <td id="LC333" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-en">parsePropertiesFrom</span>(key);</td>
-      </tr>
-      <tr>
-        <td id="L334" class="blob-num js-line-number" data-line-number="334"></td>
-        <td id="LC334" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L335" class="blob-num js-line-number" data-line-number="335"></td>
-        <td id="LC335" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L336" class="blob-num js-line-number" data-line-number="336"></td>
-        <td id="LC336" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L337" class="blob-num js-line-number" data-line-number="337"></td>
-        <td id="LC337" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L338" class="blob-num js-line-number" data-line-number="338"></td>
-        <td id="LC338" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> Derive from RSAKey.</span></td>
-      </tr>
-      <tr>
-        <td id="L339" class="blob-num js-line-number" data-line-number="339"></td>
-        <td id="LC339" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncryptRSAKey</span>.<span class="pl-c1">prototype</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">RSAKey</span>();</td>
-      </tr>
-      <tr>
-        <td id="L340" class="blob-num js-line-number" data-line-number="340"></td>
-        <td id="LC340" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L341" class="blob-num js-line-number" data-line-number="341"></td>
-        <td id="LC341" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> Reset the contructor.</span></td>
-      </tr>
-      <tr>
-        <td id="L342" class="blob-num js-line-number" data-line-number="342"></td>
-        <td id="LC342" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncryptRSAKey</span>.<span class="pl-c1">prototype</span>.<span class="pl-c1">constructor</span> <span class="pl-k">=</span> JSEncryptRSAKey;</td>
-      </tr>
-      <tr>
-        <td id="L343" class="blob-num js-line-number" data-line-number="343"></td>
-        <td id="LC343" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L344" class="blob-num js-line-number" data-line-number="344"></td>
-        <td id="LC344" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L345" class="blob-num js-line-number" data-line-number="345"></td>
-        <td id="LC345" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L346" class="blob-num js-line-number" data-line-number="346"></td>
-        <td id="LC346" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> *</span></td>
-      </tr>
-      <tr>
-        <td id="L347" class="blob-num js-line-number" data-line-number="347"></td>
-        <td id="LC347" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{Object}</span> <span class="pl-smi">[options <span class="pl-k">=</span> <span class="pl-s1">{}</span>]</span> - An object to customize JSEncrypt behaviour</span></td>
-      </tr>
-      <tr>
-        <td id="L348" class="blob-num js-line-number" data-line-number="348"></td>
-        <td id="LC348" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * possible parameters are:</span></td>
-      </tr>
-      <tr>
-        <td id="L349" class="blob-num js-line-number" data-line-number="349"></td>
-        <td id="LC349" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * - default_key_size        {number}  default: 1024 the key size in bit</span></td>
-      </tr>
-      <tr>
-        <td id="L350" class="blob-num js-line-number" data-line-number="350"></td>
-        <td id="LC350" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * - default_public_exponent {string}  default: &#39;010001&#39; the hexadecimal representation of the public exponent</span></td>
-      </tr>
-      <tr>
-        <td id="L351" class="blob-num js-line-number" data-line-number="351"></td>
-        <td id="LC351" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * - log                     {boolean} default: false whether log warn/error or not</span></td>
-      </tr>
-      <tr>
-        <td id="L352" class="blob-num js-line-number" data-line-number="352"></td>
-        <td id="LC352" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@constructor</span></span></td>
-      </tr>
-      <tr>
-        <td id="L353" class="blob-num js-line-number" data-line-number="353"></td>
-        <td id="LC353" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L354" class="blob-num js-line-number" data-line-number="354"></td>
-        <td id="LC354" class="blob-code blob-code-inner js-file-line"><span class="pl-k">var</span> <span class="pl-en">JSEncrypt</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">options</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L355" class="blob-num js-line-number" data-line-number="355"></td>
-        <td id="LC355" class="blob-code blob-code-inner js-file-line">  options <span class="pl-k">=</span> options <span class="pl-k">||</span> {};</td>
-      </tr>
-      <tr>
-        <td id="L356" class="blob-num js-line-number" data-line-number="356"></td>
-        <td id="LC356" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">default_key_size</span> <span class="pl-k">=</span> <span class="pl-c1">parseInt</span>(<span class="pl-smi">options</span>.<span class="pl-smi">default_key_size</span>) <span class="pl-k">||</span> <span class="pl-c1">1024</span>;</td>
-      </tr>
-      <tr>
-        <td id="L357" class="blob-num js-line-number" data-line-number="357"></td>
-        <td id="LC357" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">default_public_exponent</span> <span class="pl-k">=</span> <span class="pl-smi">options</span>.<span class="pl-smi">default_public_exponent</span> <span class="pl-k">||</span> <span class="pl-s"><span class="pl-pds">&#39;</span>010001<span class="pl-pds">&#39;</span></span>; <span class="pl-c"><span class="pl-c">//</span>65537 default openssl public exponent for rsa key type</span></td>
-      </tr>
-      <tr>
-        <td id="L358" class="blob-num js-line-number" data-line-number="358"></td>
-        <td id="LC358" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">log</span> <span class="pl-k">=</span> <span class="pl-smi">options</span>.<span class="pl-smi">log</span> <span class="pl-k">||</span> <span class="pl-c1">false</span>;</td>
-      </tr>
-      <tr>
-        <td id="L359" class="blob-num js-line-number" data-line-number="359"></td>
-        <td id="LC359" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> The private and public key.</span></td>
-      </tr>
-      <tr>
-        <td id="L360" class="blob-num js-line-number" data-line-number="360"></td>
-        <td id="LC360" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">key</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>;</td>
-      </tr>
-      <tr>
-        <td id="L361" class="blob-num js-line-number" data-line-number="361"></td>
-        <td id="LC361" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L362" class="blob-num js-line-number" data-line-number="362"></td>
-        <td id="LC362" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L363" class="blob-num js-line-number" data-line-number="363"></td>
-        <td id="LC363" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L364" class="blob-num js-line-number" data-line-number="364"></td>
-        <td id="LC364" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Method to set the rsa key parameter (one method is enough to set both the public</span></td>
-      </tr>
-      <tr>
-        <td id="L365" class="blob-num js-line-number" data-line-number="365"></td>
-        <td id="LC365" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * and the private key, since the private key contains the public key paramenters)</span></td>
-      </tr>
-      <tr>
-        <td id="L366" class="blob-num js-line-number" data-line-number="366"></td>
-        <td id="LC366" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Log a warning if logs are enabled</span></td>
-      </tr>
-      <tr>
-        <td id="L367" class="blob-num js-line-number" data-line-number="367"></td>
-        <td id="LC367" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{Object|string}</span> <span class="pl-smi">key</span> the pem encoded string or an object (with or without header/footer)</span></td>
-      </tr>
-      <tr>
-        <td id="L368" class="blob-num js-line-number" data-line-number="368"></td>
-        <td id="LC368" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L369" class="blob-num js-line-number" data-line-number="369"></td>
-        <td id="LC369" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L370" class="blob-num js-line-number" data-line-number="370"></td>
-        <td id="LC370" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">setKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">key</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L371" class="blob-num js-line-number" data-line-number="371"></td>
-        <td id="LC371" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (<span class="pl-c1">this</span>.<span class="pl-smi">log</span> <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">this</span>.<span class="pl-smi">key</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L372" class="blob-num js-line-number" data-line-number="372"></td>
-        <td id="LC372" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">console</span>.<span class="pl-c1">warn</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>A key was already set, overriding existing.<span class="pl-pds">&#39;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L373" class="blob-num js-line-number" data-line-number="373"></td>
-        <td id="LC373" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L374" class="blob-num js-line-number" data-line-number="374"></td>
-        <td id="LC374" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-smi">key</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">JSEncryptRSAKey</span>(key);</td>
-      </tr>
-      <tr>
-        <td id="L375" class="blob-num js-line-number" data-line-number="375"></td>
-        <td id="LC375" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L376" class="blob-num js-line-number" data-line-number="376"></td>
-        <td id="LC376" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L377" class="blob-num js-line-number" data-line-number="377"></td>
-        <td id="LC377" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L378" class="blob-num js-line-number" data-line-number="378"></td>
-        <td id="LC378" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Proxy method for setKey, for api compatibility</span></td>
-      </tr>
-      <tr>
-        <td id="L379" class="blob-num js-line-number" data-line-number="379"></td>
-        <td id="LC379" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@see</span> <span class="pl-en">setKey</span></span></td>
-      </tr>
-      <tr>
-        <td id="L380" class="blob-num js-line-number" data-line-number="380"></td>
-        <td id="LC380" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L381" class="blob-num js-line-number" data-line-number="381"></td>
-        <td id="LC381" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L382" class="blob-num js-line-number" data-line-number="382"></td>
-        <td id="LC382" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">setPrivateKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">privkey</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L383" class="blob-num js-line-number" data-line-number="383"></td>
-        <td id="LC383" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Create the key.</span></td>
-      </tr>
-      <tr>
-        <td id="L384" class="blob-num js-line-number" data-line-number="384"></td>
-        <td id="LC384" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-en">setKey</span>(privkey);</td>
-      </tr>
-      <tr>
-        <td id="L385" class="blob-num js-line-number" data-line-number="385"></td>
-        <td id="LC385" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L386" class="blob-num js-line-number" data-line-number="386"></td>
-        <td id="LC386" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L387" class="blob-num js-line-number" data-line-number="387"></td>
-        <td id="LC387" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L388" class="blob-num js-line-number" data-line-number="388"></td>
-        <td id="LC388" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Proxy method for setKey, for api compatibility</span></td>
-      </tr>
-      <tr>
-        <td id="L389" class="blob-num js-line-number" data-line-number="389"></td>
-        <td id="LC389" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@see</span> <span class="pl-en">setKey</span></span></td>
-      </tr>
-      <tr>
-        <td id="L390" class="blob-num js-line-number" data-line-number="390"></td>
-        <td id="LC390" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L391" class="blob-num js-line-number" data-line-number="391"></td>
-        <td id="LC391" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L392" class="blob-num js-line-number" data-line-number="392"></td>
-        <td id="LC392" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">setPublicKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">pubkey</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L393" class="blob-num js-line-number" data-line-number="393"></td>
-        <td id="LC393" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Sets the public key.</span></td>
-      </tr>
-      <tr>
-        <td id="L394" class="blob-num js-line-number" data-line-number="394"></td>
-        <td id="LC394" class="blob-code blob-code-inner js-file-line">  <span class="pl-c1">this</span>.<span class="pl-en">setKey</span>(pubkey);</td>
-      </tr>
-      <tr>
-        <td id="L395" class="blob-num js-line-number" data-line-number="395"></td>
-        <td id="LC395" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L396" class="blob-num js-line-number" data-line-number="396"></td>
-        <td id="LC396" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L397" class="blob-num js-line-number" data-line-number="397"></td>
-        <td id="LC397" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L398" class="blob-num js-line-number" data-line-number="398"></td>
-        <td id="LC398" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Proxy method for RSAKey object&#39;s decrypt, decrypt the string using the private</span></td>
-      </tr>
-      <tr>
-        <td id="L399" class="blob-num js-line-number" data-line-number="399"></td>
-        <td id="LC399" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * components of the rsa key object. Note that if the object was not set will be created</span></td>
-      </tr>
-      <tr>
-        <td id="L400" class="blob-num js-line-number" data-line-number="400"></td>
-        <td id="LC400" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * on the fly (by the getKey method) using the parameters passed in the JSEncrypt constructor</span></td>
-      </tr>
-      <tr>
-        <td id="L401" class="blob-num js-line-number" data-line-number="401"></td>
-        <td id="LC401" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{string}</span> <span class="pl-smi">string</span> base64 encoded crypted string to decrypt</span></td>
-      </tr>
-      <tr>
-        <td id="L402" class="blob-num js-line-number" data-line-number="402"></td>
-        <td id="LC402" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@return</span> <span class="pl-en">{string}</span> the decrypted string</span></td>
-      </tr>
-      <tr>
-        <td id="L403" class="blob-num js-line-number" data-line-number="403"></td>
-        <td id="LC403" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L404" class="blob-num js-line-number" data-line-number="404"></td>
-        <td id="LC404" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L405" class="blob-num js-line-number" data-line-number="405"></td>
-        <td id="LC405" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">decrypt</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">string</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L406" class="blob-num js-line-number" data-line-number="406"></td>
-        <td id="LC406" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Return the decrypted string.</span></td>
-      </tr>
-      <tr>
-        <td id="L407" class="blob-num js-line-number" data-line-number="407"></td>
-        <td id="LC407" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">try</span> {</td>
-      </tr>
-      <tr>
-        <td id="L408" class="blob-num js-line-number" data-line-number="408"></td>
-        <td id="LC408" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-en">getKey</span>().<span class="pl-en">decrypt</span>(<span class="pl-en">b64tohex</span>(string));</td>
-      </tr>
-      <tr>
-        <td id="L409" class="blob-num js-line-number" data-line-number="409"></td>
-        <td id="LC409" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L410" class="blob-num js-line-number" data-line-number="410"></td>
-        <td id="LC410" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">catch</span> (ex) {</td>
-      </tr>
-      <tr>
-        <td id="L411" class="blob-num js-line-number" data-line-number="411"></td>
-        <td id="LC411" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">false</span>;</td>
-      </tr>
-      <tr>
-        <td id="L412" class="blob-num js-line-number" data-line-number="412"></td>
-        <td id="LC412" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L413" class="blob-num js-line-number" data-line-number="413"></td>
-        <td id="LC413" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L414" class="blob-num js-line-number" data-line-number="414"></td>
-        <td id="LC414" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L415" class="blob-num js-line-number" data-line-number="415"></td>
-        <td id="LC415" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L416" class="blob-num js-line-number" data-line-number="416"></td>
-        <td id="LC416" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Proxy method for RSAKey object&#39;s encrypt, encrypt the string using the public</span></td>
-      </tr>
-      <tr>
-        <td id="L417" class="blob-num js-line-number" data-line-number="417"></td>
-        <td id="LC417" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * components of the rsa key object. Note that if the object was not set will be created</span></td>
-      </tr>
-      <tr>
-        <td id="L418" class="blob-num js-line-number" data-line-number="418"></td>
-        <td id="LC418" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * on the fly (by the getKey method) using the parameters passed in the JSEncrypt constructor</span></td>
-      </tr>
-      <tr>
-        <td id="L419" class="blob-num js-line-number" data-line-number="419"></td>
-        <td id="LC419" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{string}</span> <span class="pl-smi">string</span> the string to encrypt</span></td>
-      </tr>
-      <tr>
-        <td id="L420" class="blob-num js-line-number" data-line-number="420"></td>
-        <td id="LC420" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@return</span> <span class="pl-en">{string}</span> the encrypted string encoded in base64</span></td>
-      </tr>
-      <tr>
-        <td id="L421" class="blob-num js-line-number" data-line-number="421"></td>
-        <td id="LC421" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L422" class="blob-num js-line-number" data-line-number="422"></td>
-        <td id="LC422" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L423" class="blob-num js-line-number" data-line-number="423"></td>
-        <td id="LC423" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">encrypt</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">string</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L424" class="blob-num js-line-number" data-line-number="424"></td>
-        <td id="LC424" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Return the encrypted string.</span></td>
-      </tr>
-      <tr>
-        <td id="L425" class="blob-num js-line-number" data-line-number="425"></td>
-        <td id="LC425" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">try</span> {</td>
-      </tr>
-      <tr>
-        <td id="L426" class="blob-num js-line-number" data-line-number="426"></td>
-        <td id="LC426" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-en">hex2b64</span>(<span class="pl-c1">this</span>.<span class="pl-en">getKey</span>().<span class="pl-en">encrypt</span>(string));</td>
-      </tr>
-      <tr>
-        <td id="L427" class="blob-num js-line-number" data-line-number="427"></td>
-        <td id="LC427" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L428" class="blob-num js-line-number" data-line-number="428"></td>
-        <td id="LC428" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">catch</span> (ex) {</td>
-      </tr>
-      <tr>
-        <td id="L429" class="blob-num js-line-number" data-line-number="429"></td>
-        <td id="LC429" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-c1">false</span>;</td>
-      </tr>
-      <tr>
-        <td id="L430" class="blob-num js-line-number" data-line-number="430"></td>
-        <td id="LC430" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L431" class="blob-num js-line-number" data-line-number="431"></td>
-        <td id="LC431" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L432" class="blob-num js-line-number" data-line-number="432"></td>
-        <td id="LC432" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L433" class="blob-num js-line-number" data-line-number="433"></td>
-        <td id="LC433" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L434" class="blob-num js-line-number" data-line-number="434"></td>
-        <td id="LC434" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Getter for the current JSEncryptRSAKey object. If it doesn&#39;t exists a new object</span></td>
-      </tr>
-      <tr>
-        <td id="L435" class="blob-num js-line-number" data-line-number="435"></td>
-        <td id="LC435" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * will be created and returned</span></td>
-      </tr>
-      <tr>
-        <td id="L436" class="blob-num js-line-number" data-line-number="436"></td>
-        <td id="LC436" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@param</span> <span class="pl-en">{callback}</span> <span class="pl-smi">[cb]</span> the callback to be called if we want the key to be generated</span></td>
-      </tr>
-      <tr>
-        <td id="L437" class="blob-num js-line-number" data-line-number="437"></td>
-        <td id="LC437" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * in an async fashion</span></td>
-      </tr>
-      <tr>
-        <td id="L438" class="blob-num js-line-number" data-line-number="438"></td>
-        <td id="LC438" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{JSEncryptRSAKey}</span> the JSEncryptRSAKey object</span></td>
-      </tr>
-      <tr>
-        <td id="L439" class="blob-num js-line-number" data-line-number="439"></td>
-        <td id="LC439" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L440" class="blob-num js-line-number" data-line-number="440"></td>
-        <td id="LC440" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L441" class="blob-num js-line-number" data-line-number="441"></td>
-        <td id="LC441" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> (<span class="pl-smi">cb</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L442" class="blob-num js-line-number" data-line-number="442"></td>
-        <td id="LC442" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Only create new if it does not exist.</span></td>
-      </tr>
-      <tr>
-        <td id="L443" class="blob-num js-line-number" data-line-number="443"></td>
-        <td id="LC443" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-c1">this</span>.<span class="pl-smi">key</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L444" class="blob-num js-line-number" data-line-number="444"></td>
-        <td id="LC444" class="blob-code blob-code-inner js-file-line">    <span class="pl-c"><span class="pl-c">//</span> Get a new private key.</span></td>
-      </tr>
-      <tr>
-        <td id="L445" class="blob-num js-line-number" data-line-number="445"></td>
-        <td id="LC445" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">key</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">JSEncryptRSAKey</span>();</td>
-      </tr>
-      <tr>
-        <td id="L446" class="blob-num js-line-number" data-line-number="446"></td>
-        <td id="LC446" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">if</span> (cb <span class="pl-k">&amp;&amp;</span> {}.<span class="pl-smi">toString</span>.<span class="pl-c1">call</span>(cb) <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">&#39;</span>[object Function]<span class="pl-pds">&#39;</span></span>) {</td>
-      </tr>
-      <tr>
-        <td id="L447" class="blob-num js-line-number" data-line-number="447"></td>
-        <td id="LC447" class="blob-code blob-code-inner js-file-line">      <span class="pl-c1">this</span>.<span class="pl-smi">key</span>.<span class="pl-en">generateAsync</span>(<span class="pl-c1">this</span>.<span class="pl-smi">default_key_size</span>, <span class="pl-c1">this</span>.<span class="pl-smi">default_public_exponent</span>, cb);</td>
-      </tr>
-      <tr>
-        <td id="L448" class="blob-num js-line-number" data-line-number="448"></td>
-        <td id="LC448" class="blob-code blob-code-inner js-file-line">      <span class="pl-k">return</span>;</td>
-      </tr>
-      <tr>
-        <td id="L449" class="blob-num js-line-number" data-line-number="449"></td>
-        <td id="LC449" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L450" class="blob-num js-line-number" data-line-number="450"></td>
-        <td id="LC450" class="blob-code blob-code-inner js-file-line">    <span class="pl-c"><span class="pl-c">//</span> Generate the key.</span></td>
-      </tr>
-      <tr>
-        <td id="L451" class="blob-num js-line-number" data-line-number="451"></td>
-        <td id="LC451" class="blob-code blob-code-inner js-file-line">    <span class="pl-c1">this</span>.<span class="pl-smi">key</span>.<span class="pl-en">generate</span>(<span class="pl-c1">this</span>.<span class="pl-smi">default_key_size</span>, <span class="pl-c1">this</span>.<span class="pl-smi">default_public_exponent</span>);</td>
-      </tr>
-      <tr>
-        <td id="L452" class="blob-num js-line-number" data-line-number="452"></td>
-        <td id="LC452" class="blob-code blob-code-inner js-file-line">  }</td>
-      </tr>
-      <tr>
-        <td id="L453" class="blob-num js-line-number" data-line-number="453"></td>
-        <td id="LC453" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-smi">key</span>;</td>
-      </tr>
-      <tr>
-        <td id="L454" class="blob-num js-line-number" data-line-number="454"></td>
-        <td id="LC454" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L455" class="blob-num js-line-number" data-line-number="455"></td>
-        <td id="LC455" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L456" class="blob-num js-line-number" data-line-number="456"></td>
-        <td id="LC456" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L457" class="blob-num js-line-number" data-line-number="457"></td>
-        <td id="LC457" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Returns the pem encoded representation of the private key</span></td>
-      </tr>
-      <tr>
-        <td id="L458" class="blob-num js-line-number" data-line-number="458"></td>
-        <td id="LC458" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * If the key doesn&#39;t exists a new key will be created</span></td>
-      </tr>
-      <tr>
-        <td id="L459" class="blob-num js-line-number" data-line-number="459"></td>
-        <td id="LC459" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> pem encoded representation of the private key WITH header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L460" class="blob-num js-line-number" data-line-number="460"></td>
-        <td id="LC460" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L461" class="blob-num js-line-number" data-line-number="461"></td>
-        <td id="LC461" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L462" class="blob-num js-line-number" data-line-number="462"></td>
-        <td id="LC462" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPrivateKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L463" class="blob-num js-line-number" data-line-number="463"></td>
-        <td id="LC463" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Return the private representation of this key.</span></td>
-      </tr>
-      <tr>
-        <td id="L464" class="blob-num js-line-number" data-line-number="464"></td>
-        <td id="LC464" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-en">getKey</span>().<span class="pl-en">getPrivateKey</span>();</td>
-      </tr>
-      <tr>
-        <td id="L465" class="blob-num js-line-number" data-line-number="465"></td>
-        <td id="LC465" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L466" class="blob-num js-line-number" data-line-number="466"></td>
-        <td id="LC466" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L467" class="blob-num js-line-number" data-line-number="467"></td>
-        <td id="LC467" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L468" class="blob-num js-line-number" data-line-number="468"></td>
-        <td id="LC468" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Returns the pem encoded representation of the private key</span></td>
-      </tr>
-      <tr>
-        <td id="L469" class="blob-num js-line-number" data-line-number="469"></td>
-        <td id="LC469" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * If the key doesn&#39;t exists a new key will be created</span></td>
-      </tr>
-      <tr>
-        <td id="L470" class="blob-num js-line-number" data-line-number="470"></td>
-        <td id="LC470" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> pem encoded representation of the private key WITHOUT header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L471" class="blob-num js-line-number" data-line-number="471"></td>
-        <td id="LC471" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L472" class="blob-num js-line-number" data-line-number="472"></td>
-        <td id="LC472" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L473" class="blob-num js-line-number" data-line-number="473"></td>
-        <td id="LC473" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPrivateKeyB64</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L474" class="blob-num js-line-number" data-line-number="474"></td>
-        <td id="LC474" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Return the private representation of this key.</span></td>
-      </tr>
-      <tr>
-        <td id="L475" class="blob-num js-line-number" data-line-number="475"></td>
-        <td id="LC475" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-en">getKey</span>().<span class="pl-en">getPrivateBaseKeyB64</span>();</td>
-      </tr>
-      <tr>
-        <td id="L476" class="blob-num js-line-number" data-line-number="476"></td>
-        <td id="LC476" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L477" class="blob-num js-line-number" data-line-number="477"></td>
-        <td id="LC477" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L478" class="blob-num js-line-number" data-line-number="478"></td>
-        <td id="LC478" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L479" class="blob-num js-line-number" data-line-number="479"></td>
-        <td id="LC479" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L480" class="blob-num js-line-number" data-line-number="480"></td>
-        <td id="LC480" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Returns the pem encoded representation of the public key</span></td>
-      </tr>
-      <tr>
-        <td id="L481" class="blob-num js-line-number" data-line-number="481"></td>
-        <td id="LC481" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * If the key doesn&#39;t exists a new key will be created</span></td>
-      </tr>
-      <tr>
-        <td id="L482" class="blob-num js-line-number" data-line-number="482"></td>
-        <td id="LC482" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> pem encoded representation of the public key WITH header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L483" class="blob-num js-line-number" data-line-number="483"></td>
-        <td id="LC483" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L484" class="blob-num js-line-number" data-line-number="484"></td>
-        <td id="LC484" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L485" class="blob-num js-line-number" data-line-number="485"></td>
-        <td id="LC485" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPublicKey</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L486" class="blob-num js-line-number" data-line-number="486"></td>
-        <td id="LC486" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Return the private representation of this key.</span></td>
-      </tr>
-      <tr>
-        <td id="L487" class="blob-num js-line-number" data-line-number="487"></td>
-        <td id="LC487" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-en">getKey</span>().<span class="pl-en">getPublicKey</span>();</td>
-      </tr>
-      <tr>
-        <td id="L488" class="blob-num js-line-number" data-line-number="488"></td>
-        <td id="LC488" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L489" class="blob-num js-line-number" data-line-number="489"></td>
-        <td id="LC489" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L490" class="blob-num js-line-number" data-line-number="490"></td>
-        <td id="LC490" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/**</span></span></td>
-      </tr>
-      <tr>
-        <td id="L491" class="blob-num js-line-number" data-line-number="491"></td>
-        <td id="LC491" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * Returns the pem encoded representation of the public key</span></td>
-      </tr>
-      <tr>
-        <td id="L492" class="blob-num js-line-number" data-line-number="492"></td>
-        <td id="LC492" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * If the key doesn&#39;t exists a new key will be created</span></td>
-      </tr>
-      <tr>
-        <td id="L493" class="blob-num js-line-number" data-line-number="493"></td>
-        <td id="LC493" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@returns</span> <span class="pl-en">{string}</span> pem encoded representation of the public key WITHOUT header and footer</span></td>
-      </tr>
-      <tr>
-        <td id="L494" class="blob-num js-line-number" data-line-number="494"></td>
-        <td id="LC494" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * <span class="pl-k">@public</span></span></td>
-      </tr>
-      <tr>
-        <td id="L495" class="blob-num js-line-number" data-line-number="495"></td>
-        <td id="LC495" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> <span class="pl-c">*/</span></span></td>
-      </tr>
-      <tr>
-        <td id="L496" class="blob-num js-line-number" data-line-number="496"></td>
-        <td id="LC496" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">JSEncrypt</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">getPublicKeyB64</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {</td>
-      </tr>
-      <tr>
-        <td id="L497" class="blob-num js-line-number" data-line-number="497"></td>
-        <td id="LC497" class="blob-code blob-code-inner js-file-line">  <span class="pl-c"><span class="pl-c">//</span> Return the private representation of this key.</span></td>
-      </tr>
-      <tr>
-        <td id="L498" class="blob-num js-line-number" data-line-number="498"></td>
-        <td id="LC498" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-en">getKey</span>().<span class="pl-en">getPublicBaseKeyB64</span>();</td>
-      </tr>
-      <tr>
-        <td id="L499" class="blob-num js-line-number" data-line-number="499"></td>
-        <td id="LC499" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L500" class="blob-num js-line-number" data-line-number="500"></td>
-        <td id="LC500" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-</table>
-
-  <div class="BlobToolbar position-absolute js-file-line-actions dropdown js-menu-container js-select-menu d-none" aria-hidden="true">
-    <button class="btn-octicon ml-0 px-2 p-0 bg-white border border-gray-dark rounded-1 dropdown-toggle js-menu-target" id="js-file-line-action-button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Inline file action toolbar" aria-controls="inline-file-actions">
-      <svg aria-hidden="true" class="octicon" height="16" version="1.1" viewBox="0 0 13 4" width="14">
-        <g stroke="none" stroke-width="1" fill-rule="evenodd">
-            <g transform="translate(-1.000000, -6.000000)">
-                <path d="M2.5,9.5 C1.67157288,9.5 1,8.82842712 1,8 C1,7.17157288 1.67157288,6.5 2.5,6.5 C3.32842712,6.5 4,7.17157288 4,8 C4,8.82842712 3.32842712,9.5 2.5,9.5 Z M7.5,9.5 C6.67157288,9.5 6,8.82842712 6,8 C6,7.17157288 6.67157288,6.5 7.5,6.5 C8.32842712,6.5 9,7.17157288 9,8 C9,8.82842712 8.32842712,9.5 7.5,9.5 Z M12.5,9.5 C11.6715729,9.5 11,8.82842712 11,8 C11,7.17157288 11.6715729,6.5 12.5,6.5 C13.3284271,6.5 14,7.17157288 14,8 C14,8.82842712 13.3284271,9.5 12.5,9.5 Z"></path>
-            </g>
-        </g>
-      </svg>
-    </button>
-    <div class="dropdown-menu-content js-menu-content" id="inline-file-actions">
-      <ul class="BlobToolbar-dropdown dropdown-menu dropdown-menu-se mt-2">
-        <li><a class="js-zeroclipboard dropdown-item" style="cursor:pointer;" id="js-copy-lines" data-original-text="Copy lines">Copy lines</a></li>
-        <li><a class="js-zeroclipboard dropdown-item" id= "js-copy-permalink" style="cursor:pointer;" data-original-text="Copy permalink">Copy permalink</a></li>
-        <li><a href="/travist/jsencrypt/blame/e39ccaf7caeeee854591c705a907f64309ade7a0/src/jsencrypt.js" class="dropdown-item js-update-url-with-hash" id="js-view-git-blame">View git blame</a></li>
-          <li><a href="/travist/jsencrypt/issues/new" class="dropdown-item" id="js-new-issue">Open new issue</a></li>
-      </ul>
-    </div>
-  </div>
-
-  </div>
-
-  </div>
-
-  <button type="button" data-facebox="#jump-to-line" data-facebox-class="linejump" data-hotkey="l" class="d-none">Jump to Line</button>
-  <div id="jump-to-line" style="display:none">
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="" class="js-jump-to-line-form" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-      <input class="form-control linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line&hellip;" aria-label="Jump to line" autofocus>
-      <button type="submit" class="btn">Go</button>
-</form>  </div>
-
-  </div>
-  <div class="modal-backdrop js-touch-events"></div>
-</div>
-
-    </div>
-  </div>
-
-  </div>
-
-      
-<div class="footer container-lg px-3" role="contentinfo">
-  <div class="position-relative d-flex flex-justify-between py-6 mt-6 f6 text-gray border-top border-gray-light ">
-    <ul class="list-style-none d-flex flex-wrap ">
-      <li class="mr-3">&copy; 2017 <span title="0.22735s from unicorn-1390257882-nlvm8">GitHub</span>, Inc.</li>
-        <li class="mr-3"><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
-        <li class="mr-3"><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
-        <li class="mr-3"><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
-        <li class="mr-3"><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
-        <li><a href="https://help.github.com" data-ga-click="Footer, go to help, text:help">Help</a></li>
-    </ul>
-
-    <a href="https://github.com" aria-label="Homepage" class="footer-octicon" title="GitHub">
-      <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-</a>
-    <ul class="list-style-none d-flex flex-wrap ">
-        <li class="mr-3"><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact GitHub</a></li>
-      <li class="mr-3"><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
-      <li class="mr-3"><a href="https://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
-      <li class="mr-3"><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
-        <li class="mr-3"><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
-        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
-
-    </ul>
-  </div>
-</div>
-
-
-
-  <div id="ajax-error-message" class="ajax-error-message flash flash-error">
-    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
-    <button type="button" class="flash-close js-flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
-      <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-    </button>
-    You can't perform that action at this time.
-  </div>
-
-
-    
-    <script crossorigin="anonymous" integrity="sha256-8q4ohCjL4ztV3ECDYeIe1e5DMasRlfxtng0fybFEsEI=" src="https://assets-cdn.github.com/assets/frameworks-f2ae288428cbe33b55dc408361e21ed5ee4331ab1195fc6d9e0d1fc9b144b042.js"></script>
-    
-    <script async="async" crossorigin="anonymous" integrity="sha256-z++Hm3crDoqeaDOimGQpPvMd0jo6K12WjBGLJ6Vx3Vw=" src="https://assets-cdn.github.com/assets/github-cfef879b772b0e8a9e6833a29864293ef31dd23a3a2b5d968c118b27a571dd5c.js"></script>
-    
-    
-    
-    
-  <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner d-none">
-    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
-    <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
-    <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="">Reload</a> to refresh your session.</span>
-  </div>
-  <div class="facebox" id="facebox" style="display:none;">
-  <div class="facebox-popup">
-    <div class="facebox-content" role="dialog" aria-labelledby="facebox-header" aria-describedby="facebox-description">
-    </div>
-    <button type="button" class="facebox-close js-facebox-close" aria-label="Close modal">
-      <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-    </button>
-  </div>
-</div>
-
-
-  </body>
-</html>
-
+/*! JSEncrypt v2.3.1 | https://npmcdn.com/jsencrypt@2.3.1/LICENSE.txt */
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['exports'], factory);
+  } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+    // Node, CommonJS-like
+    factory(module.exports);
+  } else {
+    factory(root);
+  }
+})(this, function (exports) {
+  // Copyright (c) 2005  Tom Wu
+// All Rights Reserved.
+// See "LICENSE" for details.
+
+// Basic JavaScript BN library - subset useful for RSA encryption.
+
+// Bits per digit
+var dbits;
+
+// JavaScript engine analysis
+var canary = 0xdeadbeefcafe;
+var j_lm = ((canary&0xffffff)==0xefcafe);
+
+// (public) Constructor
+function BigInteger(a,b,c) {
+  if(a != null)
+    if("number" == typeof a) this.fromNumber(a,b,c);
+    else if(b == null && "string" != typeof a) this.fromString(a,256);
+    else this.fromString(a,b);
+}
+
+// return new, unset BigInteger
+function nbi() { return new BigInteger(null); }
+
+// am: Compute w_j += (x*this_i), propagate carries,
+// c is initial carry, returns final carry.
+// c < 3*dvalue, x < 2*dvalue, this_i < dvalue
+// We need to select the fastest one that works in this environment.
+
+// am1: use a single mult and divide to get the high bits,
+// max digit bits should be 26 because
+// max internal value = 2*dvalue^2-2*dvalue (< 2^53)
+function am1(i,x,w,j,c,n) {
+  while(--n >= 0) {
+    var v = x*this[i++]+w[j]+c;
+    c = Math.floor(v/0x4000000);
+    w[j++] = v&0x3ffffff;
+  }
+  return c;
+}
+// am2 avoids a big mult-and-extract completely.
+// Max digit bits should be <= 30 because we do bitwise ops
+// on values up to 2*hdvalue^2-hdvalue-1 (< 2^31)
+function am2(i,x,w,j,c,n) {
+  var xl = x&0x7fff, xh = x>>15;
+  while(--n >= 0) {
+    var l = this[i]&0x7fff;
+    var h = this[i++]>>15;
+    var m = xh*l+h*xl;
+    l = xl*l+((m&0x7fff)<<15)+w[j]+(c&0x3fffffff);
+    c = (l>>>30)+(m>>>15)+xh*h+(c>>>30);
+    w[j++] = l&0x3fffffff;
+  }
+  return c;
+}
+// Alternately, set max digit bits to 28 since some
+// browsers slow down when dealing with 32-bit numbers.
+function am3(i,x,w,j,c,n) {
+  var xl = x&0x3fff, xh = x>>14;
+  while(--n >= 0) {
+    var l = this[i]&0x3fff;
+    var h = this[i++]>>14;
+    var m = xh*l+h*xl;
+    l = xl*l+((m&0x3fff)<<14)+w[j]+c;
+    c = (l>>28)+(m>>14)+xh*h;
+    w[j++] = l&0xfffffff;
+  }
+  return c;
+}
+if(j_lm && (navigator.appName == "Microsoft Internet Explorer")) {
+  BigInteger.prototype.am = am2;
+  dbits = 30;
+}
+else if(j_lm && (navigator.appName != "Netscape")) {
+  BigInteger.prototype.am = am1;
+  dbits = 26;
+}
+else { // Mozilla/Netscape seems to prefer am3
+  BigInteger.prototype.am = am3;
+  dbits = 28;
+}
+
+BigInteger.prototype.DB = dbits;
+BigInteger.prototype.DM = ((1<<dbits)-1);
+BigInteger.prototype.DV = (1<<dbits);
+
+var BI_FP = 52;
+BigInteger.prototype.FV = Math.pow(2,BI_FP);
+BigInteger.prototype.F1 = BI_FP-dbits;
+BigInteger.prototype.F2 = 2*dbits-BI_FP;
+
+// Digit conversions
+var BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
+var BI_RC = new Array();
+var rr,vv;
+rr = "0".charCodeAt(0);
+for(vv = 0; vv <= 9; ++vv) BI_RC[rr++] = vv;
+rr = "a".charCodeAt(0);
+for(vv = 10; vv < 36; ++vv) BI_RC[rr++] = vv;
+rr = "A".charCodeAt(0);
+for(vv = 10; vv < 36; ++vv) BI_RC[rr++] = vv;
+
+function int2char(n) { return BI_RM.charAt(n); }
+function intAt(s,i) {
+  var c = BI_RC[s.charCodeAt(i)];
+  return (c==null)?-1:c;
+}
+
+// (protected) copy this to r
+function bnpCopyTo(r) {
+  for(var i = this.t-1; i >= 0; --i) r[i] = this[i];
+  r.t = this.t;
+  r.s = this.s;
+}
+
+// (protected) set from integer value x, -DV <= x < DV
+function bnpFromInt(x) {
+  this.t = 1;
+  this.s = (x<0)?-1:0;
+  if(x > 0) this[0] = x;
+  else if(x < -1) this[0] = x+this.DV;
+  else this.t = 0;
+}
+
+// return bigint initialized to value
+function nbv(i) { var r = nbi(); r.fromInt(i); return r; }
+
+// (protected) set from string and radix
+function bnpFromString(s,b) {
+  var k;
+  if(b == 16) k = 4;
+  else if(b == 8) k = 3;
+  else if(b == 256) k = 8; // byte array
+  else if(b == 2) k = 1;
+  else if(b == 32) k = 5;
+  else if(b == 4) k = 2;
+  else { this.fromRadix(s,b); return; }
+  this.t = 0;
+  this.s = 0;
+  var i = s.length, mi = false, sh = 0;
+  while(--i >= 0) {
+    var x = (k==8)?s[i]&0xff:intAt(s,i);
+    if(x < 0) {
+      if(s.charAt(i) == "-") mi = true;
+      continue;
+    }
+    mi = false;
+    if(sh == 0)
+      this[this.t++] = x;
+    else if(sh+k > this.DB) {
+      this[this.t-1] |= (x&((1<<(this.DB-sh))-1))<<sh;
+      this[this.t++] = (x>>(this.DB-sh));
+    }
+    else
+      this[this.t-1] |= x<<sh;
+    sh += k;
+    if(sh >= this.DB) sh -= this.DB;
+  }
+  if(k == 8 && (s[0]&0x80) != 0) {
+    this.s = -1;
+    if(sh > 0) this[this.t-1] |= ((1<<(this.DB-sh))-1)<<sh;
+  }
+  this.clamp();
+  if(mi) BigInteger.ZERO.subTo(this,this);
+}
+
+// (protected) clamp off excess high words
+function bnpClamp() {
+  var c = this.s&this.DM;
+  while(this.t > 0 && this[this.t-1] == c) --this.t;
+}
+
+// (public) return string representation in given radix
+function bnToString(b) {
+  if(this.s < 0) return "-"+this.negate().toString(b);
+  var k;
+  if(b == 16) k = 4;
+  else if(b == 8) k = 3;
+  else if(b == 2) k = 1;
+  else if(b == 32) k = 5;
+  else if(b == 4) k = 2;
+  else return this.toRadix(b);
+  var km = (1<<k)-1, d, m = false, r = "", i = this.t;
+  var p = this.DB-(i*this.DB)%k;
+  if(i-- > 0) {
+    if(p < this.DB && (d = this[i]>>p) > 0) { m = true; r = int2char(d); }
+    while(i >= 0) {
+      if(p < k) {
+        d = (this[i]&((1<<p)-1))<<(k-p);
+        d |= this[--i]>>(p+=this.DB-k);
+      }
+      else {
+        d = (this[i]>>(p-=k))&km;
+        if(p <= 0) { p += this.DB; --i; }
+      }
+      if(d > 0) m = true;
+      if(m) r += int2char(d);
+    }
+  }
+  return m?r:"0";
+}
+
+// (public) -this
+function bnNegate() { var r = nbi(); BigInteger.ZERO.subTo(this,r); return r; }
+
+// (public) |this|
+function bnAbs() { return (this.s<0)?this.negate():this; }
+
+// (public) return + if this > a, - if this < a, 0 if equal
+function bnCompareTo(a) {
+  var r = this.s-a.s;
+  if(r != 0) return r;
+  var i = this.t;
+  r = i-a.t;
+  if(r != 0) return (this.s<0)?-r:r;
+  while(--i >= 0) if((r=this[i]-a[i]) != 0) return r;
+  return 0;
+}
+
+// returns bit length of the integer x
+function nbits(x) {
+  var r = 1, t;
+  if((t=x>>>16) != 0) { x = t; r += 16; }
+  if((t=x>>8) != 0) { x = t; r += 8; }
+  if((t=x>>4) != 0) { x = t; r += 4; }
+  if((t=x>>2) != 0) { x = t; r += 2; }
+  if((t=x>>1) != 0) { x = t; r += 1; }
+  return r;
+}
+
+// (public) return the number of bits in "this"
+function bnBitLength() {
+  if(this.t <= 0) return 0;
+  return this.DB*(this.t-1)+nbits(this[this.t-1]^(this.s&this.DM));
+}
+
+// (protected) r = this << n*DB
+function bnpDLShiftTo(n,r) {
+  var i;
+  for(i = this.t-1; i >= 0; --i) r[i+n] = this[i];
+  for(i = n-1; i >= 0; --i) r[i] = 0;
+  r.t = this.t+n;
+  r.s = this.s;
+}
+
+// (protected) r = this >> n*DB
+function bnpDRShiftTo(n,r) {
+  for(var i = n; i < this.t; ++i) r[i-n] = this[i];
+  r.t = Math.max(this.t-n,0);
+  r.s = this.s;
+}
+
+// (protected) r = this << n
+function bnpLShiftTo(n,r) {
+  var bs = n%this.DB;
+  var cbs = this.DB-bs;
+  var bm = (1<<cbs)-1;
+  var ds = Math.floor(n/this.DB), c = (this.s<<bs)&this.DM, i;
+  for(i = this.t-1; i >= 0; --i) {
+    r[i+ds+1] = (this[i]>>cbs)|c;
+    c = (this[i]&bm)<<bs;
+  }
+  for(i = ds-1; i >= 0; --i) r[i] = 0;
+  r[ds] = c;
+  r.t = this.t+ds+1;
+  r.s = this.s;
+  r.clamp();
+}
+
+// (protected) r = this >> n
+function bnpRShiftTo(n,r) {
+  r.s = this.s;
+  var ds = Math.floor(n/this.DB);
+  if(ds >= this.t) { r.t = 0; return; }
+  var bs = n%this.DB;
+  var cbs = this.DB-bs;
+  var bm = (1<<bs)-1;
+  r[0] = this[ds]>>bs;
+  for(var i = ds+1; i < this.t; ++i) {
+    r[i-ds-1] |= (this[i]&bm)<<cbs;
+    r[i-ds] = this[i]>>bs;
+  }
+  if(bs > 0) r[this.t-ds-1] |= (this.s&bm)<<cbs;
+  r.t = this.t-ds;
+  r.clamp();
+}
+
+// (protected) r = this - a
+function bnpSubTo(a,r) {
+  var i = 0, c = 0, m = Math.min(a.t,this.t);
+  while(i < m) {
+    c += this[i]-a[i];
+    r[i++] = c&this.DM;
+    c >>= this.DB;
+  }
+  if(a.t < this.t) {
+    c -= a.s;
+    while(i < this.t) {
+      c += this[i];
+      r[i++] = c&this.DM;
+      c >>= this.DB;
+    }
+    c += this.s;
+  }
+  else {
+    c += this.s;
+    while(i < a.t) {
+      c -= a[i];
+      r[i++] = c&this.DM;
+      c >>= this.DB;
+    }
+    c -= a.s;
+  }
+  r.s = (c<0)?-1:0;
+  if(c < -1) r[i++] = this.DV+c;
+  else if(c > 0) r[i++] = c;
+  r.t = i;
+  r.clamp();
+}
+
+// (protected) r = this * a, r != this,a (HAC 14.12)
+// "this" should be the larger one if appropriate.
+function bnpMultiplyTo(a,r) {
+  var x = this.abs(), y = a.abs();
+  var i = x.t;
+  r.t = i+y.t;
+  while(--i >= 0) r[i] = 0;
+  for(i = 0; i < y.t; ++i) r[i+x.t] = x.am(0,y[i],r,i,0,x.t);
+  r.s = 0;
+  r.clamp();
+  if(this.s != a.s) BigInteger.ZERO.subTo(r,r);
+}
+
+// (protected) r = this^2, r != this (HAC 14.16)
+function bnpSquareTo(r) {
+  var x = this.abs();
+  var i = r.t = 2*x.t;
+  while(--i >= 0) r[i] = 0;
+  for(i = 0; i < x.t-1; ++i) {
+    var c = x.am(i,x[i],r,2*i,0,1);
+    if((r[i+x.t]+=x.am(i+1,2*x[i],r,2*i+1,c,x.t-i-1)) >= x.DV) {
+      r[i+x.t] -= x.DV;
+      r[i+x.t+1] = 1;
+    }
+  }
+  if(r.t > 0) r[r.t-1] += x.am(i,x[i],r,2*i,0,1);
+  r.s = 0;
+  r.clamp();
+}
+
+// (protected) divide this by m, quotient and remainder to q, r (HAC 14.20)
+// r != q, this != m.  q or r may be null.
+function bnpDivRemTo(m,q,r) {
+  var pm = m.abs();
+  if(pm.t <= 0) return;
+  var pt = this.abs();
+  if(pt.t < pm.t) {
+    if(q != null) q.fromInt(0);
+    if(r != null) this.copyTo(r);
+    return;
+  }
+  if(r == null) r = nbi();
+  var y = nbi(), ts = this.s, ms = m.s;
+  var nsh = this.DB-nbits(pm[pm.t-1]);	// normalize modulus
+  if(nsh > 0) { pm.lShiftTo(nsh,y); pt.lShiftTo(nsh,r); }
+  else { pm.copyTo(y); pt.copyTo(r); }
+  var ys = y.t;
+  var y0 = y[ys-1];
+  if(y0 == 0) return;
+  var yt = y0*(1<<this.F1)+((ys>1)?y[ys-2]>>this.F2:0);
+  var d1 = this.FV/yt, d2 = (1<<this.F1)/yt, e = 1<<this.F2;
+  var i = r.t, j = i-ys, t = (q==null)?nbi():q;
+  y.dlShiftTo(j,t);
+  if(r.compareTo(t) >= 0) {
+    r[r.t++] = 1;
+    r.subTo(t,r);
+  }
+  BigInteger.ONE.dlShiftTo(ys,t);
+  t.subTo(y,y);	// "negative" y so we can replace sub with am later
+  while(y.t < ys) y[y.t++] = 0;
+  while(--j >= 0) {
+    // Estimate quotient digit
+    var qd = (r[--i]==y0)?this.DM:Math.floor(r[i]*d1+(r[i-1]+e)*d2);
+    if((r[i]+=y.am(0,qd,r,j,0,ys)) < qd) {	// Try it out
+      y.dlShiftTo(j,t);
+      r.subTo(t,r);
+      while(r[i] < --qd) r.subTo(t,r);
+    }
+  }
+  if(q != null) {
+    r.drShiftTo(ys,q);
+    if(ts != ms) BigInteger.ZERO.subTo(q,q);
+  }
+  r.t = ys;
+  r.clamp();
+  if(nsh > 0) r.rShiftTo(nsh,r);	// Denormalize remainder
+  if(ts < 0) BigInteger.ZERO.subTo(r,r);
+}
+
+// (public) this mod a
+function bnMod(a) {
+  var r = nbi();
+  this.abs().divRemTo(a,null,r);
+  if(this.s < 0 && r.compareTo(BigInteger.ZERO) > 0) a.subTo(r,r);
+  return r;
+}
+
+// Modular reduction using "classic" algorithm
+function Classic(m) { this.m = m; }
+function cConvert(x) {
+  if(x.s < 0 || x.compareTo(this.m) >= 0) return x.mod(this.m);
+  else return x;
+}
+function cRevert(x) { return x; }
+function cReduce(x) { x.divRemTo(this.m,null,x); }
+function cMulTo(x,y,r) { x.multiplyTo(y,r); this.reduce(r); }
+function cSqrTo(x,r) { x.squareTo(r); this.reduce(r); }
+
+Classic.prototype.convert = cConvert;
+Classic.prototype.revert = cRevert;
+Classic.prototype.reduce = cReduce;
+Classic.prototype.mulTo = cMulTo;
+Classic.prototype.sqrTo = cSqrTo;
+
+// (protected) return "-1/this % 2^DB"; useful for Mont. reduction
+// justification:
+//         xy == 1 (mod m)
+//         xy =  1+km
+//   xy(2-xy) = (1+km)(1-km)
+// x[y(2-xy)] = 1-k^2m^2
+// x[y(2-xy)] == 1 (mod m^2)
+// if y is 1/x mod m, then y(2-xy) is 1/x mod m^2
+// should reduce x and y(2-xy) by m^2 at each step to keep size bounded.
+// JS multiply "overflows" differently from C/C++, so care is needed here.
+function bnpInvDigit() {
+  if(this.t < 1) return 0;
+  var x = this[0];
+  if((x&1) == 0) return 0;
+  var y = x&3;		// y == 1/x mod 2^2
+  y = (y*(2-(x&0xf)*y))&0xf;	// y == 1/x mod 2^4
+  y = (y*(2-(x&0xff)*y))&0xff;	// y == 1/x mod 2^8
+  y = (y*(2-(((x&0xffff)*y)&0xffff)))&0xffff;	// y == 1/x mod 2^16
+  // last step - calculate inverse mod DV directly;
+  // assumes 16 < DB <= 32 and assumes ability to handle 48-bit ints
+  y = (y*(2-x*y%this.DV))%this.DV;		// y == 1/x mod 2^dbits
+  // we really want the negative inverse, and -DV < y < DV
+  return (y>0)?this.DV-y:-y;
+}
+
+// Montgomery reduction
+function Montgomery(m) {
+  this.m = m;
+  this.mp = m.invDigit();
+  this.mpl = this.mp&0x7fff;
+  this.mph = this.mp>>15;
+  this.um = (1<<(m.DB-15))-1;
+  this.mt2 = 2*m.t;
+}
+
+// xR mod m
+function montConvert(x) {
+  var r = nbi();
+  x.abs().dlShiftTo(this.m.t,r);
+  r.divRemTo(this.m,null,r);
+  if(x.s < 0 && r.compareTo(BigInteger.ZERO) > 0) this.m.subTo(r,r);
+  return r;
+}
+
+// x/R mod m
+function montRevert(x) {
+  var r = nbi();
+  x.copyTo(r);
+  this.reduce(r);
+  return r;
+}
+
+// x = x/R mod m (HAC 14.32)
+function montReduce(x) {
+  while(x.t <= this.mt2)	// pad x so am has enough room later
+    x[x.t++] = 0;
+  for(var i = 0; i < this.m.t; ++i) {
+    // faster way of calculating u0 = x[i]*mp mod DV
+    var j = x[i]&0x7fff;
+    var u0 = (j*this.mpl+(((j*this.mph+(x[i]>>15)*this.mpl)&this.um)<<15))&x.DM;
+    // use am to combine the multiply-shift-add into one call
+    j = i+this.m.t;
+    x[j] += this.m.am(0,u0,x,i,0,this.m.t);
+    // propagate carry
+    while(x[j] >= x.DV) { x[j] -= x.DV; x[++j]++; }
+  }
+  x.clamp();
+  x.drShiftTo(this.m.t,x);
+  if(x.compareTo(this.m) >= 0) x.subTo(this.m,x);
+}
+
+// r = "x^2/R mod m"; x != r
+function montSqrTo(x,r) { x.squareTo(r); this.reduce(r); }
+
+// r = "xy/R mod m"; x,y != r
+function montMulTo(x,y,r) { x.multiplyTo(y,r); this.reduce(r); }
+
+Montgomery.prototype.convert = montConvert;
+Montgomery.prototype.revert = montRevert;
+Montgomery.prototype.reduce = montReduce;
+Montgomery.prototype.mulTo = montMulTo;
+Montgomery.prototype.sqrTo = montSqrTo;
+
+// (protected) true iff this is even
+function bnpIsEven() { return ((this.t>0)?(this[0]&1):this.s) == 0; }
+
+// (protected) this^e, e < 2^32, doing sqr and mul with "r" (HAC 14.79)
+function bnpExp(e,z) {
+  if(e > 0xffffffff || e < 1) return BigInteger.ONE;
+  var r = nbi(), r2 = nbi(), g = z.convert(this), i = nbits(e)-1;
+  g.copyTo(r);
+  while(--i >= 0) {
+    z.sqrTo(r,r2);
+    if((e&(1<<i)) > 0) z.mulTo(r2,g,r);
+    else { var t = r; r = r2; r2 = t; }
+  }
+  return z.revert(r);
+}
+
+// (public) this^e % m, 0 <= e < 2^32
+function bnModPowInt(e,m) {
+  var z;
+  if(e < 256 || m.isEven()) z = new Classic(m); else z = new Montgomery(m);
+  return this.exp(e,z);
+}
+
+// protected
+BigInteger.prototype.copyTo = bnpCopyTo;
+BigInteger.prototype.fromInt = bnpFromInt;
+BigInteger.prototype.fromString = bnpFromString;
+BigInteger.prototype.clamp = bnpClamp;
+BigInteger.prototype.dlShiftTo = bnpDLShiftTo;
+BigInteger.prototype.drShiftTo = bnpDRShiftTo;
+BigInteger.prototype.lShiftTo = bnpLShiftTo;
+BigInteger.prototype.rShiftTo = bnpRShiftTo;
+BigInteger.prototype.subTo = bnpSubTo;
+BigInteger.prototype.multiplyTo = bnpMultiplyTo;
+BigInteger.prototype.squareTo = bnpSquareTo;
+BigInteger.prototype.divRemTo = bnpDivRemTo;
+BigInteger.prototype.invDigit = bnpInvDigit;
+BigInteger.prototype.isEven = bnpIsEven;
+BigInteger.prototype.exp = bnpExp;
+
+// public
+BigInteger.prototype.toString = bnToString;
+BigInteger.prototype.negate = bnNegate;
+BigInteger.prototype.abs = bnAbs;
+BigInteger.prototype.compareTo = bnCompareTo;
+BigInteger.prototype.bitLength = bnBitLength;
+BigInteger.prototype.mod = bnMod;
+BigInteger.prototype.modPowInt = bnModPowInt;
+
+// "constants"
+BigInteger.ZERO = nbv(0);
+BigInteger.ONE = nbv(1);
+
+// Copyright (c) 2005-2009  Tom Wu
+// All Rights Reserved.
+// See "LICENSE" for details.
+
+// Extended JavaScript BN functions, required for RSA private ops.
+
+// Version 1.1: new BigInteger("0", 10) returns "proper" zero
+// Version 1.2: square() API, isProbablePrime fix
+
+// (public)
+function bnClone() { var r = nbi(); this.copyTo(r); return r; }
+
+// (public) return value as integer
+function bnIntValue() {
+  if(this.s < 0) {
+    if(this.t == 1) return this[0]-this.DV;
+    else if(this.t == 0) return -1;
+  }
+  else if(this.t == 1) return this[0];
+  else if(this.t == 0) return 0;
+  // assumes 16 < DB < 32
+  return ((this[1]&((1<<(32-this.DB))-1))<<this.DB)|this[0];
+}
+
+// (public) return value as byte
+function bnByteValue() { return (this.t==0)?this.s:(this[0]<<24)>>24; }
+
+// (public) return value as short (assumes DB>=16)
+function bnShortValue() { return (this.t==0)?this.s:(this[0]<<16)>>16; }
+
+// (protected) return x s.t. r^x < DV
+function bnpChunkSize(r) { return Math.floor(Math.LN2*this.DB/Math.log(r)); }
+
+// (public) 0 if this == 0, 1 if this > 0
+function bnSigNum() {
+  if(this.s < 0) return -1;
+  else if(this.t <= 0 || (this.t == 1 && this[0] <= 0)) return 0;
+  else return 1;
+}
+
+// (protected) convert to radix string
+function bnpToRadix(b) {
+  if(b == null) b = 10;
+  if(this.signum() == 0 || b < 2 || b > 36) return "0";
+  var cs = this.chunkSize(b);
+  var a = Math.pow(b,cs);
+  var d = nbv(a), y = nbi(), z = nbi(), r = "";
+  this.divRemTo(d,y,z);
+  while(y.signum() > 0) {
+    r = (a+z.intValue()).toString(b).substr(1) + r;
+    y.divRemTo(d,y,z);
+  }
+  return z.intValue().toString(b) + r;
+}
+
+// (protected) convert from radix string
+function bnpFromRadix(s,b) {
+  this.fromInt(0);
+  if(b == null) b = 10;
+  var cs = this.chunkSize(b);
+  var d = Math.pow(b,cs), mi = false, j = 0, w = 0;
+  for(var i = 0; i < s.length; ++i) {
+    var x = intAt(s,i);
+    if(x < 0) {
+      if(s.charAt(i) == "-" && this.signum() == 0) mi = true;
+      continue;
+    }
+    w = b*w+x;
+    if(++j >= cs) {
+      this.dMultiply(d);
+      this.dAddOffset(w,0);
+      j = 0;
+      w = 0;
+    }
+  }
+  if(j > 0) {
+    this.dMultiply(Math.pow(b,j));
+    this.dAddOffset(w,0);
+  }
+  if(mi) BigInteger.ZERO.subTo(this,this);
+}
+
+// (protected) alternate constructor
+function bnpFromNumber(a,b,c) {
+  if("number" == typeof b) {
+    // new BigInteger(int,int,RNG)
+    if(a < 2) this.fromInt(1);
+    else {
+      this.fromNumber(a,c);
+      if(!this.testBit(a-1))	// force MSB set
+        this.bitwiseTo(BigInteger.ONE.shiftLeft(a-1),op_or,this);
+      if(this.isEven()) this.dAddOffset(1,0); // force odd
+      while(!this.isProbablePrime(b)) {
+        this.dAddOffset(2,0);
+        if(this.bitLength() > a) this.subTo(BigInteger.ONE.shiftLeft(a-1),this);
+      }
+    }
+  }
+  else {
+    // new BigInteger(int,RNG)
+    var x = new Array(), t = a&7;
+    x.length = (a>>3)+1;
+    b.nextBytes(x);
+    if(t > 0) x[0] &= ((1<<t)-1); else x[0] = 0;
+    this.fromString(x,256);
+  }
+}
+
+// (public) convert to bigendian byte array
+function bnToByteArray() {
+  var i = this.t, r = new Array();
+  r[0] = this.s;
+  var p = this.DB-(i*this.DB)%8, d, k = 0;
+  if(i-- > 0) {
+    if(p < this.DB && (d = this[i]>>p) != (this.s&this.DM)>>p)
+      r[k++] = d|(this.s<<(this.DB-p));
+    while(i >= 0) {
+      if(p < 8) {
+        d = (this[i]&((1<<p)-1))<<(8-p);
+        d |= this[--i]>>(p+=this.DB-8);
+      }
+      else {
+        d = (this[i]>>(p-=8))&0xff;
+        if(p <= 0) { p += this.DB; --i; }
+      }
+      if((d&0x80) != 0) d |= -256;
+      if(k == 0 && (this.s&0x80) != (d&0x80)) ++k;
+      if(k > 0 || d != this.s) r[k++] = d;
+    }
+  }
+  return r;
+}
+
+function bnEquals(a) { return(this.compareTo(a)==0); }
+function bnMin(a) { return(this.compareTo(a)<0)?this:a; }
+function bnMax(a) { return(this.compareTo(a)>0)?this:a; }
+
+// (protected) r = this op a (bitwise)
+function bnpBitwiseTo(a,op,r) {
+  var i, f, m = Math.min(a.t,this.t);
+  for(i = 0; i < m; ++i) r[i] = op(this[i],a[i]);
+  if(a.t < this.t) {
+    f = a.s&this.DM;
+    for(i = m; i < this.t; ++i) r[i] = op(this[i],f);
+    r.t = this.t;
+  }
+  else {
+    f = this.s&this.DM;
+    for(i = m; i < a.t; ++i) r[i] = op(f,a[i]);
+    r.t = a.t;
+  }
+  r.s = op(this.s,a.s);
+  r.clamp();
+}
+
+// (public) this & a
+function op_and(x,y) { return x&y; }
+function bnAnd(a) { var r = nbi(); this.bitwiseTo(a,op_and,r); return r; }
+
+// (public) this | a
+function op_or(x,y) { return x|y; }
+function bnOr(a) { var r = nbi(); this.bitwiseTo(a,op_or,r); return r; }
+
+// (public) this ^ a
+function op_xor(x,y) { return x^y; }
+function bnXor(a) { var r = nbi(); this.bitwiseTo(a,op_xor,r); return r; }
+
+// (public) this & ~a
+function op_andnot(x,y) { return x&~y; }
+function bnAndNot(a) { var r = nbi(); this.bitwiseTo(a,op_andnot,r); return r; }
+
+// (public) ~this
+function bnNot() {
+  var r = nbi();
+  for(var i = 0; i < this.t; ++i) r[i] = this.DM&~this[i];
+  r.t = this.t;
+  r.s = ~this.s;
+  return r;
+}
+
+// (public) this << n
+function bnShiftLeft(n) {
+  var r = nbi();
+  if(n < 0) this.rShiftTo(-n,r); else this.lShiftTo(n,r);
+  return r;
+}
+
+// (public) this >> n
+function bnShiftRight(n) {
+  var r = nbi();
+  if(n < 0) this.lShiftTo(-n,r); else this.rShiftTo(n,r);
+  return r;
+}
+
+// return index of lowest 1-bit in x, x < 2^31
+function lbit(x) {
+  if(x == 0) return -1;
+  var r = 0;
+  if((x&0xffff) == 0) { x >>= 16; r += 16; }
+  if((x&0xff) == 0) { x >>= 8; r += 8; }
+  if((x&0xf) == 0) { x >>= 4; r += 4; }
+  if((x&3) == 0) { x >>= 2; r += 2; }
+  if((x&1) == 0) ++r;
+  return r;
+}
+
+// (public) returns index of lowest 1-bit (or -1 if none)
+function bnGetLowestSetBit() {
+  for(var i = 0; i < this.t; ++i)
+    if(this[i] != 0) return i*this.DB+lbit(this[i]);
+  if(this.s < 0) return this.t*this.DB;
+  return -1;
+}
+
+// return number of 1 bits in x
+function cbit(x) {
+  var r = 0;
+  while(x != 0) { x &= x-1; ++r; }
+  return r;
+}
+
+// (public) return number of set bits
+function bnBitCount() {
+  var r = 0, x = this.s&this.DM;
+  for(var i = 0; i < this.t; ++i) r += cbit(this[i]^x);
+  return r;
+}
+
+// (public) true iff nth bit is set
+function bnTestBit(n) {
+  var j = Math.floor(n/this.DB);
+  if(j >= this.t) return(this.s!=0);
+  return((this[j]&(1<<(n%this.DB)))!=0);
+}
+
+// (protected) this op (1<<n)
+function bnpChangeBit(n,op) {
+  var r = BigInteger.ONE.shiftLeft(n);
+  this.bitwiseTo(r,op,r);
+  return r;
+}
+
+// (public) this | (1<<n)
+function bnSetBit(n) { return this.changeBit(n,op_or); }
+
+// (public) this & ~(1<<n)
+function bnClearBit(n) { return this.changeBit(n,op_andnot); }
+
+// (public) this ^ (1<<n)
+function bnFlipBit(n) { return this.changeBit(n,op_xor); }
+
+// (protected) r = this + a
+function bnpAddTo(a,r) {
+  var i = 0, c = 0, m = Math.min(a.t,this.t);
+  while(i < m) {
+    c += this[i]+a[i];
+    r[i++] = c&this.DM;
+    c >>= this.DB;
+  }
+  if(a.t < this.t) {
+    c += a.s;
+    while(i < this.t) {
+      c += this[i];
+      r[i++] = c&this.DM;
+      c >>= this.DB;
+    }
+    c += this.s;
+  }
+  else {
+    c += this.s;
+    while(i < a.t) {
+      c += a[i];
+      r[i++] = c&this.DM;
+      c >>= this.DB;
+    }
+    c += a.s;
+  }
+  r.s = (c<0)?-1:0;
+  if(c > 0) r[i++] = c;
+  else if(c < -1) r[i++] = this.DV+c;
+  r.t = i;
+  r.clamp();
+}
+
+// (public) this + a
+function bnAdd(a) { var r = nbi(); this.addTo(a,r); return r; }
+
+// (public) this - a
+function bnSubtract(a) { var r = nbi(); this.subTo(a,r); return r; }
+
+// (public) this * a
+function bnMultiply(a) { var r = nbi(); this.multiplyTo(a,r); return r; }
+
+// (public) this^2
+function bnSquare() { var r = nbi(); this.squareTo(r); return r; }
+
+// (public) this / a
+function bnDivide(a) { var r = nbi(); this.divRemTo(a,r,null); return r; }
+
+// (public) this % a
+function bnRemainder(a) { var r = nbi(); this.divRemTo(a,null,r); return r; }
+
+// (public) [this/a,this%a]
+function bnDivideAndRemainder(a) {
+  var q = nbi(), r = nbi();
+  this.divRemTo(a,q,r);
+  return new Array(q,r);
+}
+
+// (protected) this *= n, this >= 0, 1 < n < DV
+function bnpDMultiply(n) {
+  this[this.t] = this.am(0,n-1,this,0,0,this.t);
+  ++this.t;
+  this.clamp();
+}
+
+// (protected) this += n << w words, this >= 0
+function bnpDAddOffset(n,w) {
+  if(n == 0) return;
+  while(this.t <= w) this[this.t++] = 0;
+  this[w] += n;
+  while(this[w] >= this.DV) {
+    this[w] -= this.DV;
+    if(++w >= this.t) this[this.t++] = 0;
+    ++this[w];
+  }
+}
+
+// A "null" reducer
+function NullExp() {}
+function nNop(x) { return x; }
+function nMulTo(x,y,r) { x.multiplyTo(y,r); }
+function nSqrTo(x,r) { x.squareTo(r); }
+
+NullExp.prototype.convert = nNop;
+NullExp.prototype.revert = nNop;
+NullExp.prototype.mulTo = nMulTo;
+NullExp.prototype.sqrTo = nSqrTo;
+
+// (public) this^e
+function bnPow(e) { return this.exp(e,new NullExp()); }
+
+// (protected) r = lower n words of "this * a", a.t <= n
+// "this" should be the larger one if appropriate.
+function bnpMultiplyLowerTo(a,n,r) {
+  var i = Math.min(this.t+a.t,n);
+  r.s = 0; // assumes a,this >= 0
+  r.t = i;
+  while(i > 0) r[--i] = 0;
+  var j;
+  for(j = r.t-this.t; i < j; ++i) r[i+this.t] = this.am(0,a[i],r,i,0,this.t);
+  for(j = Math.min(a.t,n); i < j; ++i) this.am(0,a[i],r,i,0,n-i);
+  r.clamp();
+}
+
+// (protected) r = "this * a" without lower n words, n > 0
+// "this" should be the larger one if appropriate.
+function bnpMultiplyUpperTo(a,n,r) {
+  --n;
+  var i = r.t = this.t+a.t-n;
+  r.s = 0; // assumes a,this >= 0
+  while(--i >= 0) r[i] = 0;
+  for(i = Math.max(n-this.t,0); i < a.t; ++i)
+    r[this.t+i-n] = this.am(n-i,a[i],r,0,0,this.t+i-n);
+  r.clamp();
+  r.drShiftTo(1,r);
+}
+
+// Barrett modular reduction
+function Barrett(m) {
+  // setup Barrett
+  this.r2 = nbi();
+  this.q3 = nbi();
+  BigInteger.ONE.dlShiftTo(2*m.t,this.r2);
+  this.mu = this.r2.divide(m);
+  this.m = m;
+}
+
+function barrettConvert(x) {
+  if(x.s < 0 || x.t > 2*this.m.t) return x.mod(this.m);
+  else if(x.compareTo(this.m) < 0) return x;
+  else { var r = nbi(); x.copyTo(r); this.reduce(r); return r; }
+}
+
+function barrettRevert(x) { return x; }
+
+// x = x mod m (HAC 14.42)
+function barrettReduce(x) {
+  x.drShiftTo(this.m.t-1,this.r2);
+  if(x.t > this.m.t+1) { x.t = this.m.t+1; x.clamp(); }
+  this.mu.multiplyUpperTo(this.r2,this.m.t+1,this.q3);
+  this.m.multiplyLowerTo(this.q3,this.m.t+1,this.r2);
+  while(x.compareTo(this.r2) < 0) x.dAddOffset(1,this.m.t+1);
+  x.subTo(this.r2,x);
+  while(x.compareTo(this.m) >= 0) x.subTo(this.m,x);
+}
+
+// r = x^2 mod m; x != r
+function barrettSqrTo(x,r) { x.squareTo(r); this.reduce(r); }
+
+// r = x*y mod m; x,y != r
+function barrettMulTo(x,y,r) { x.multiplyTo(y,r); this.reduce(r); }
+
+Barrett.prototype.convert = barrettConvert;
+Barrett.prototype.revert = barrettRevert;
+Barrett.prototype.reduce = barrettReduce;
+Barrett.prototype.mulTo = barrettMulTo;
+Barrett.prototype.sqrTo = barrettSqrTo;
+
+// (public) this^e % m (HAC 14.85)
+function bnModPow(e,m) {
+  var i = e.bitLength(), k, r = nbv(1), z;
+  if(i <= 0) return r;
+  else if(i < 18) k = 1;
+  else if(i < 48) k = 3;
+  else if(i < 144) k = 4;
+  else if(i < 768) k = 5;
+  else k = 6;
+  if(i < 8)
+    z = new Classic(m);
+  else if(m.isEven())
+    z = new Barrett(m);
+  else
+    z = new Montgomery(m);
+
+  // precomputation
+  var g = new Array(), n = 3, k1 = k-1, km = (1<<k)-1;
+  g[1] = z.convert(this);
+  if(k > 1) {
+    var g2 = nbi();
+    z.sqrTo(g[1],g2);
+    while(n <= km) {
+      g[n] = nbi();
+      z.mulTo(g2,g[n-2],g[n]);
+      n += 2;
+    }
+  }
+
+  var j = e.t-1, w, is1 = true, r2 = nbi(), t;
+  i = nbits(e[j])-1;
+  while(j >= 0) {
+    if(i >= k1) w = (e[j]>>(i-k1))&km;
+    else {
+      w = (e[j]&((1<<(i+1))-1))<<(k1-i);
+      if(j > 0) w |= e[j-1]>>(this.DB+i-k1);
+    }
+
+    n = k;
+    while((w&1) == 0) { w >>= 1; --n; }
+    if((i -= n) < 0) { i += this.DB; --j; }
+    if(is1) {	// ret == 1, don't bother squaring or multiplying it
+      g[w].copyTo(r);
+      is1 = false;
+    }
+    else {
+      while(n > 1) { z.sqrTo(r,r2); z.sqrTo(r2,r); n -= 2; }
+      if(n > 0) z.sqrTo(r,r2); else { t = r; r = r2; r2 = t; }
+      z.mulTo(r2,g[w],r);
+    }
+
+    while(j >= 0 && (e[j]&(1<<i)) == 0) {
+      z.sqrTo(r,r2); t = r; r = r2; r2 = t;
+      if(--i < 0) { i = this.DB-1; --j; }
+    }
+  }
+  return z.revert(r);
+}
+
+// (public) gcd(this,a) (HAC 14.54)
+function bnGCD(a) {
+  var x = (this.s<0)?this.negate():this.clone();
+  var y = (a.s<0)?a.negate():a.clone();
+  if(x.compareTo(y) < 0) { var t = x; x = y; y = t; }
+  var i = x.getLowestSetBit(), g = y.getLowestSetBit();
+  if(g < 0) return x;
+  if(i < g) g = i;
+  if(g > 0) {
+    x.rShiftTo(g,x);
+    y.rShiftTo(g,y);
+  }
+  while(x.signum() > 0) {
+    if((i = x.getLowestSetBit()) > 0) x.rShiftTo(i,x);
+    if((i = y.getLowestSetBit()) > 0) y.rShiftTo(i,y);
+    if(x.compareTo(y) >= 0) {
+      x.subTo(y,x);
+      x.rShiftTo(1,x);
+    }
+    else {
+      y.subTo(x,y);
+      y.rShiftTo(1,y);
+    }
+  }
+  if(g > 0) y.lShiftTo(g,y);
+  return y;
+}
+
+// (protected) this % n, n < 2^26
+function bnpModInt(n) {
+  if(n <= 0) return 0;
+  var d = this.DV%n, r = (this.s<0)?n-1:0;
+  if(this.t > 0)
+    if(d == 0) r = this[0]%n;
+    else for(var i = this.t-1; i >= 0; --i) r = (d*r+this[i])%n;
+  return r;
+}
+
+// (public) 1/this % m (HAC 14.61)
+function bnModInverse(m) {
+  var ac = m.isEven();
+  if((this.isEven() && ac) || m.signum() == 0) return BigInteger.ZERO;
+  var u = m.clone(), v = this.clone();
+  var a = nbv(1), b = nbv(0), c = nbv(0), d = nbv(1);
+  while(u.signum() != 0) {
+    while(u.isEven()) {
+      u.rShiftTo(1,u);
+      if(ac) {
+        if(!a.isEven() || !b.isEven()) { a.addTo(this,a); b.subTo(m,b); }
+        a.rShiftTo(1,a);
+      }
+      else if(!b.isEven()) b.subTo(m,b);
+      b.rShiftTo(1,b);
+    }
+    while(v.isEven()) {
+      v.rShiftTo(1,v);
+      if(ac) {
+        if(!c.isEven() || !d.isEven()) { c.addTo(this,c); d.subTo(m,d); }
+        c.rShiftTo(1,c);
+      }
+      else if(!d.isEven()) d.subTo(m,d);
+      d.rShiftTo(1,d);
+    }
+    if(u.compareTo(v) >= 0) {
+      u.subTo(v,u);
+      if(ac) a.subTo(c,a);
+      b.subTo(d,b);
+    }
+    else {
+      v.subTo(u,v);
+      if(ac) c.subTo(a,c);
+      d.subTo(b,d);
+    }
+  }
+  if(v.compareTo(BigInteger.ONE) != 0) return BigInteger.ZERO;
+  if(d.compareTo(m) >= 0) return d.subtract(m);
+  if(d.signum() < 0) d.addTo(m,d); else return d;
+  if(d.signum() < 0) return d.add(m); else return d;
+}
+
+var lowprimes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293,307,311,313,317,331,337,347,349,353,359,367,373,379,383,389,397,401,409,419,421,431,433,439,443,449,457,461,463,467,479,487,491,499,503,509,521,523,541,547,557,563,569,571,577,587,593,599,601,607,613,617,619,631,641,643,647,653,659,661,673,677,683,691,701,709,719,727,733,739,743,751,757,761,769,773,787,797,809,811,821,823,827,829,839,853,857,859,863,877,881,883,887,907,911,919,929,937,941,947,953,967,971,977,983,991,997];
+var lplim = (1<<26)/lowprimes[lowprimes.length-1];
+
+// (public) test primality with certainty >= 1-.5^t
+function bnIsProbablePrime(t) {
+  var i, x = this.abs();
+  if(x.t == 1 && x[0] <= lowprimes[lowprimes.length-1]) {
+    for(i = 0; i < lowprimes.length; ++i)
+      if(x[0] == lowprimes[i]) return true;
+    return false;
+  }
+  if(x.isEven()) return false;
+  i = 1;
+  while(i < lowprimes.length) {
+    var m = lowprimes[i], j = i+1;
+    while(j < lowprimes.length && m < lplim) m *= lowprimes[j++];
+    m = x.modInt(m);
+    while(i < j) if(m%lowprimes[i++] == 0) return false;
+  }
+  return x.millerRabin(t);
+}
+
+// (protected) true if probably prime (HAC 4.24, Miller-Rabin)
+function bnpMillerRabin(t) {
+  var n1 = this.subtract(BigInteger.ONE);
+  var k = n1.getLowestSetBit();
+  if(k <= 0) return false;
+  var r = n1.shiftRight(k);
+  t = (t+1)>>1;
+  if(t > lowprimes.length) t = lowprimes.length;
+  var a = nbi();
+  for(var i = 0; i < t; ++i) {
+    //Pick bases at random, instead of starting at 2
+    a.fromInt(lowprimes[Math.floor(Math.random()*lowprimes.length)]);
+    var y = a.modPow(r,this);
+    if(y.compareTo(BigInteger.ONE) != 0 && y.compareTo(n1) != 0) {
+      var j = 1;
+      while(j++ < k && y.compareTo(n1) != 0) {
+        y = y.modPowInt(2,this);
+        if(y.compareTo(BigInteger.ONE) == 0) return false;
+      }
+      if(y.compareTo(n1) != 0) return false;
+    }
+  }
+  return true;
+}
+
+// protected
+BigInteger.prototype.chunkSize = bnpChunkSize;
+BigInteger.prototype.toRadix = bnpToRadix;
+BigInteger.prototype.fromRadix = bnpFromRadix;
+BigInteger.prototype.fromNumber = bnpFromNumber;
+BigInteger.prototype.bitwiseTo = bnpBitwiseTo;
+BigInteger.prototype.changeBit = bnpChangeBit;
+BigInteger.prototype.addTo = bnpAddTo;
+BigInteger.prototype.dMultiply = bnpDMultiply;
+BigInteger.prototype.dAddOffset = bnpDAddOffset;
+BigInteger.prototype.multiplyLowerTo = bnpMultiplyLowerTo;
+BigInteger.prototype.multiplyUpperTo = bnpMultiplyUpperTo;
+BigInteger.prototype.modInt = bnpModInt;
+BigInteger.prototype.millerRabin = bnpMillerRabin;
+
+// public
+BigInteger.prototype.clone = bnClone;
+BigInteger.prototype.intValue = bnIntValue;
+BigInteger.prototype.byteValue = bnByteValue;
+BigInteger.prototype.shortValue = bnShortValue;
+BigInteger.prototype.signum = bnSigNum;
+BigInteger.prototype.toByteArray = bnToByteArray;
+BigInteger.prototype.equals = bnEquals;
+BigInteger.prototype.min = bnMin;
+BigInteger.prototype.max = bnMax;
+BigInteger.prototype.and = bnAnd;
+BigInteger.prototype.or = bnOr;
+BigInteger.prototype.xor = bnXor;
+BigInteger.prototype.andNot = bnAndNot;
+BigInteger.prototype.not = bnNot;
+BigInteger.prototype.shiftLeft = bnShiftLeft;
+BigInteger.prototype.shiftRight = bnShiftRight;
+BigInteger.prototype.getLowestSetBit = bnGetLowestSetBit;
+BigInteger.prototype.bitCount = bnBitCount;
+BigInteger.prototype.testBit = bnTestBit;
+BigInteger.prototype.setBit = bnSetBit;
+BigInteger.prototype.clearBit = bnClearBit;
+BigInteger.prototype.flipBit = bnFlipBit;
+BigInteger.prototype.add = bnAdd;
+BigInteger.prototype.subtract = bnSubtract;
+BigInteger.prototype.multiply = bnMultiply;
+BigInteger.prototype.divide = bnDivide;
+BigInteger.prototype.remainder = bnRemainder;
+BigInteger.prototype.divideAndRemainder = bnDivideAndRemainder;
+BigInteger.prototype.modPow = bnModPow;
+BigInteger.prototype.modInverse = bnModInverse;
+BigInteger.prototype.pow = bnPow;
+BigInteger.prototype.gcd = bnGCD;
+BigInteger.prototype.isProbablePrime = bnIsProbablePrime;
+
+// JSBN-specific extension
+BigInteger.prototype.square = bnSquare;
+
+// BigInteger interfaces not implemented in jsbn:
+
+// BigInteger(int signum, byte[] magnitude)
+// double doubleValue()
+// float floatValue()
+// int hashCode()
+// long longValue()
+// static BigInteger valueOf(long val)
+
+// prng4.js - uses Arcfour as a PRNG
+
+function Arcfour() {
+  this.i = 0;
+  this.j = 0;
+  this.S = new Array();
+}
+
+// Initialize arcfour context from key, an array of ints, each from [0..255]
+function ARC4init(key) {
+  var i, j, t;
+  for(i = 0; i < 256; ++i)
+    this.S[i] = i;
+  j = 0;
+  for(i = 0; i < 256; ++i) {
+    j = (j + this.S[i] + key[i % key.length]) & 255;
+    t = this.S[i];
+    this.S[i] = this.S[j];
+    this.S[j] = t;
+  }
+  this.i = 0;
+  this.j = 0;
+}
+
+function ARC4next() {
+  var t;
+  this.i = (this.i + 1) & 255;
+  this.j = (this.j + this.S[this.i]) & 255;
+  t = this.S[this.i];
+  this.S[this.i] = this.S[this.j];
+  this.S[this.j] = t;
+  return this.S[(t + this.S[this.i]) & 255];
+}
+
+Arcfour.prototype.init = ARC4init;
+Arcfour.prototype.next = ARC4next;
+
+// Plug in your RNG constructor here
+function prng_newstate() {
+  return new Arcfour();
+}
+
+// Pool size must be a multiple of 4 and greater than 32.
+// An array of bytes the size of the pool will be passed to init()
+var rng_psize = 256;
+
+// Random number generator - requires a PRNG backend, e.g. prng4.js
+var rng_state;
+var rng_pool;
+var rng_pptr;
+
+// Initialize the pool with junk if needed.
+if(rng_pool == null) {
+  rng_pool = new Array();
+  rng_pptr = 0;
+  var t;
+  if(window.crypto && window.crypto.getRandomValues) {
+    // Extract entropy (2048 bits) from RNG if available
+    var z = new Uint32Array(256);
+    window.crypto.getRandomValues(z);
+    for (t = 0; t < z.length; ++t)
+      rng_pool[rng_pptr++] = z[t] & 255;
+  }
+
+  // Use mouse events for entropy, if we do not have enough entropy by the time
+  // we need it, entropy will be generated by Math.random.
+  var onMouseMoveListener = function(ev) {
+    this.count = this.count || 0;
+    if (this.count >= 256 || rng_pptr >= rng_psize) {
+      if (window.removeEventListener)
+        window.removeEventListener("mousemove", onMouseMoveListener, false);
+      else if (window.detachEvent)
+        window.detachEvent("onmousemove", onMouseMoveListener);
+      return;
+    }
+    try {
+      var mouseCoordinates = ev.x + ev.y;
+      rng_pool[rng_pptr++] = mouseCoordinates & 255;
+      this.count += 1;
+    } catch (e) {
+      // Sometimes Firefox will deny permission to access event properties for some reason. Ignore.
+    }
+  };
+  if (window.addEventListener)
+    window.addEventListener("mousemove", onMouseMoveListener, false);
+  else if (window.attachEvent)
+    window.attachEvent("onmousemove", onMouseMoveListener);
+
+}
+
+function rng_get_byte() {
+  if(rng_state == null) {
+    rng_state = prng_newstate();
+    // At this point, we may not have collected enough entropy.  If not, fall back to Math.random
+    while (rng_pptr < rng_psize) {
+      var random = Math.floor(65536 * Math.random());
+      rng_pool[rng_pptr++] = random & 255;
+    }
+    rng_state.init(rng_pool);
+    for(rng_pptr = 0; rng_pptr < rng_pool.length; ++rng_pptr)
+      rng_pool[rng_pptr] = 0;
+    rng_pptr = 0;
+  }
+  // TODO: allow reseeding after first request
+  return rng_state.next();
+}
+
+function rng_get_bytes(ba) {
+  var i;
+  for(i = 0; i < ba.length; ++i) ba[i] = rng_get_byte();
+}
+
+function SecureRandom() {}
+
+SecureRandom.prototype.nextBytes = rng_get_bytes;
+
+// Depends on jsbn.js and rng.js
+
+// Version 1.1: support utf-8 encoding in pkcs1pad2
+
+// convert a (hex) string to a bignum object
+function parseBigInt(str,r) {
+  return new BigInteger(str,r);
+}
+
+function linebrk(s,n) {
+  var ret = "";
+  var i = 0;
+  while(i + n < s.length) {
+    ret += s.substring(i,i+n) + "\n";
+    i += n;
+  }
+  return ret + s.substring(i,s.length);
+}
+
+function byte2Hex(b) {
+  if(b < 0x10)
+    return "0" + b.toString(16);
+  else
+    return b.toString(16);
+}
+
+// PKCS#1 (type 2, random) pad input string s to n bytes, and return a bigint
+function pkcs1pad2(s,n) {
+  if(n < s.length + 11) { // TODO: fix for utf-8
+    console.error("Message too long for RSA");
+    return null;
+  }
+  var ba = new Array();
+  var i = s.length - 1;
+  while(i >= 0 && n > 0) {
+    var c = s.charCodeAt(i--);
+    if(c < 128) { // encode using utf-8
+      ba[--n] = c;
+    }
+    else if((c > 127) && (c < 2048)) {
+      ba[--n] = (c & 63) | 128;
+      ba[--n] = (c >> 6) | 192;
+    }
+    else {
+      ba[--n] = (c & 63) | 128;
+      ba[--n] = ((c >> 6) & 63) | 128;
+      ba[--n] = (c >> 12) | 224;
+    }
+  }
+  ba[--n] = 0;
+  var rng = new SecureRandom();
+  var x = new Array();
+  while(n > 2) { // random non-zero pad
+    x[0] = 0;
+    while(x[0] == 0) rng.nextBytes(x);
+    ba[--n] = x[0];
+  }
+  ba[--n] = 2;
+  ba[--n] = 0;
+  return new BigInteger(ba);
+}
+
+// "empty" RSA key constructor
+function RSAKey() {
+  this.n = null;
+  this.e = 0;
+  this.d = null;
+  this.p = null;
+  this.q = null;
+  this.dmp1 = null;
+  this.dmq1 = null;
+  this.coeff = null;
+}
+
+// Set the public key fields N and e from hex strings
+function RSASetPublic(N,E) {
+  if(N != null && E != null && N.length > 0 && E.length > 0) {
+    this.n = parseBigInt(N,16);
+    this.e = parseInt(E,16);
+  }
+  else
+    console.error("Invalid RSA public key");
+}
+
+// Perform raw public operation on "x": return x^e (mod n)
+function RSADoPublic(x) {
+  return x.modPowInt(this.e, this.n);
+}
+
+// Return the PKCS#1 RSA encryption of "text" as an even-length hex string
+function RSAEncrypt(text) {
+  var m = pkcs1pad2(text,(this.n.bitLength()+7)>>3);
+  if(m == null) return null;
+  var c = this.doPublic(m);
+  if(c == null) return null;
+  var h = c.toString(16);
+  if((h.length & 1) == 0) return h; else return "0" + h;
+}
+
+// Return the PKCS#1 RSA encryption of "text" as a Base64-encoded string
+//function RSAEncryptB64(text) {
+//  var h = this.encrypt(text);
+//  if(h) return hex2b64(h); else return null;
+//}
+
+// protected
+RSAKey.prototype.doPublic = RSADoPublic;
+
+// public
+RSAKey.prototype.setPublic = RSASetPublic;
+RSAKey.prototype.encrypt = RSAEncrypt;
+//RSAKey.prototype.encrypt_b64 = RSAEncryptB64;
+
+// Depends on rsa.js and jsbn2.js
+
+// Version 1.1: support utf-8 decoding in pkcs1unpad2
+
+// Undo PKCS#1 (type 2, random) padding and, if valid, return the plaintext
+function pkcs1unpad2(d,n) {
+  var b = d.toByteArray();
+  var i = 0;
+  while(i < b.length && b[i] == 0) ++i;
+  if(b.length-i != n-1 || b[i] != 2)
+    return null;
+  ++i;
+  while(b[i] != 0)
+    if(++i >= b.length) return null;
+  var ret = "";
+  while(++i < b.length) {
+    var c = b[i] & 255;
+    if(c < 128) { // utf-8 decode
+      ret += String.fromCharCode(c);
+    }
+    else if((c > 191) && (c < 224)) {
+      ret += String.fromCharCode(((c & 31) << 6) | (b[i+1] & 63));
+      ++i;
+    }
+    else {
+      ret += String.fromCharCode(((c & 15) << 12) | ((b[i+1] & 63) << 6) | (b[i+2] & 63));
+      i += 2;
+    }
+  }
+  return ret;
+}
+
+// Set the private key fields N, e, and d from hex strings
+function RSASetPrivate(N,E,D) {
+  if(N != null && E != null && N.length > 0 && E.length > 0) {
+    this.n = parseBigInt(N,16);
+    this.e = parseInt(E,16);
+    this.d = parseBigInt(D,16);
+  }
+  else
+    console.error("Invalid RSA private key");
+}
+
+// Set the private key fields N, e, d and CRT params from hex strings
+function RSASetPrivateEx(N,E,D,P,Q,DP,DQ,C) {
+  if(N != null && E != null && N.length > 0 && E.length > 0) {
+    this.n = parseBigInt(N,16);
+    this.e = parseInt(E,16);
+    this.d = parseBigInt(D,16);
+    this.p = parseBigInt(P,16);
+    this.q = parseBigInt(Q,16);
+    this.dmp1 = parseBigInt(DP,16);
+    this.dmq1 = parseBigInt(DQ,16);
+    this.coeff = parseBigInt(C,16);
+  }
+  else
+    console.error("Invalid RSA private key");
+}
+
+// Generate a new random private key B bits long, using public expt E
+function RSAGenerate(B,E) {
+  var rng = new SecureRandom();
+  var qs = B>>1;
+  this.e = parseInt(E,16);
+  var ee = new BigInteger(E,16);
+  for(;;) {
+    for(;;) {
+      this.p = new BigInteger(B-qs,1,rng);
+      if(this.p.subtract(BigInteger.ONE).gcd(ee).compareTo(BigInteger.ONE) == 0 && this.p.isProbablePrime(10)) break;
+    }
+    for(;;) {
+      this.q = new BigInteger(qs,1,rng);
+      if(this.q.subtract(BigInteger.ONE).gcd(ee).compareTo(BigInteger.ONE) == 0 && this.q.isProbablePrime(10)) break;
+    }
+    if(this.p.compareTo(this.q) <= 0) {
+      var t = this.p;
+      this.p = this.q;
+      this.q = t;
+    }
+    var p1 = this.p.subtract(BigInteger.ONE);
+    var q1 = this.q.subtract(BigInteger.ONE);
+    var phi = p1.multiply(q1);
+    if(phi.gcd(ee).compareTo(BigInteger.ONE) == 0) {
+      this.n = this.p.multiply(this.q);
+      this.d = ee.modInverse(phi);
+      this.dmp1 = this.d.mod(p1);
+      this.dmq1 = this.d.mod(q1);
+      this.coeff = this.q.modInverse(this.p);
+      break;
+    }
+  }
+}
+
+// Perform raw private operation on "x": return x^d (mod n)
+function RSADoPrivate(x) {
+  if(this.p == null || this.q == null)
+    return x.modPow(this.d, this.n);
+
+  // TODO: re-calculate any missing CRT params
+  var xp = x.mod(this.p).modPow(this.dmp1, this.p);
+  var xq = x.mod(this.q).modPow(this.dmq1, this.q);
+
+  while(xp.compareTo(xq) < 0)
+    xp = xp.add(this.p);
+  return xp.subtract(xq).multiply(this.coeff).mod(this.p).multiply(this.q).add(xq);
+}
+
+// Return the PKCS#1 RSA decryption of "ctext".
+// "ctext" is an even-length hex string and the output is a plain string.
+function RSADecrypt(ctext) {
+  var c = parseBigInt(ctext, 16);
+  var m = this.doPrivate(c);
+  if(m == null) return null;
+  return pkcs1unpad2(m, (this.n.bitLength()+7)>>3);
+}
+
+// Return the PKCS#1 RSA decryption of "ctext".
+// "ctext" is a Base64-encoded string and the output is a plain string.
+//function RSAB64Decrypt(ctext) {
+//  var h = b64tohex(ctext);
+//  if(h) return this.decrypt(h); else return null;
+//}
+
+// protected
+RSAKey.prototype.doPrivate = RSADoPrivate;
+
+// public
+RSAKey.prototype.setPrivate = RSASetPrivate;
+RSAKey.prototype.setPrivateEx = RSASetPrivateEx;
+RSAKey.prototype.generate = RSAGenerate;
+RSAKey.prototype.decrypt = RSADecrypt;
+//RSAKey.prototype.b64_decrypt = RSAB64Decrypt;
+
+// Copyright (c) 2011  Kevin M Burns Jr.
+// All Rights Reserved.
+// See "LICENSE" for details.
+//
+// Extension to jsbn which adds facilities for asynchronous RSA key generation
+// Primarily created to avoid execution timeout on mobile devices
+//
+// http://www-cs-students.stanford.edu/~tjw/jsbn/
+//
+// ---
+
+(function(){
+
+// Generate a new random private key B bits long, using public expt E
+var RSAGenerateAsync = function (B, E, callback) {
+    //var rng = new SeededRandom();
+    var rng = new SecureRandom();
+    var qs = B >> 1;
+    this.e = parseInt(E, 16);
+    var ee = new BigInteger(E, 16);
+    var rsa = this;
+    // These functions have non-descript names because they were originally for(;;) loops.
+    // I don't know about cryptography to give them better names than loop1-4.
+    var loop1 = function() {
+        var loop4 = function() {
+            if (rsa.p.compareTo(rsa.q) <= 0) {
+                var t = rsa.p;
+                rsa.p = rsa.q;
+                rsa.q = t;
+            }
+            var p1 = rsa.p.subtract(BigInteger.ONE);
+            var q1 = rsa.q.subtract(BigInteger.ONE);
+            var phi = p1.multiply(q1);
+            if (phi.gcd(ee).compareTo(BigInteger.ONE) == 0) {
+                rsa.n = rsa.p.multiply(rsa.q);
+                rsa.d = ee.modInverse(phi);
+                rsa.dmp1 = rsa.d.mod(p1);
+                rsa.dmq1 = rsa.d.mod(q1);
+                rsa.coeff = rsa.q.modInverse(rsa.p);
+                setTimeout(function(){callback()},0); // escape
+            } else {
+                setTimeout(loop1,0);
+            }
+        };
+        var loop3 = function() {
+            rsa.q = nbi();
+            rsa.q.fromNumberAsync(qs, 1, rng, function(){
+                rsa.q.subtract(BigInteger.ONE).gcda(ee, function(r){
+                    if (r.compareTo(BigInteger.ONE) == 0 && rsa.q.isProbablePrime(10)) {
+                        setTimeout(loop4,0);
+                    } else {
+                        setTimeout(loop3,0);
+                    }
+                });
+            });
+        };
+        var loop2 = function() {
+            rsa.p = nbi();
+            rsa.p.fromNumberAsync(B - qs, 1, rng, function(){
+                rsa.p.subtract(BigInteger.ONE).gcda(ee, function(r){
+                    if (r.compareTo(BigInteger.ONE) == 0 && rsa.p.isProbablePrime(10)) {
+                        setTimeout(loop3,0);
+                    } else {
+                        setTimeout(loop2,0);
+                    }
+                });
+            });
+        };
+        setTimeout(loop2,0);
+    };
+    setTimeout(loop1,0);
+};
+RSAKey.prototype.generateAsync = RSAGenerateAsync;
+
+// Public API method
+var bnGCDAsync = function (a, callback) {
+    var x = (this.s < 0) ? this.negate() : this.clone();
+    var y = (a.s < 0) ? a.negate() : a.clone();
+    if (x.compareTo(y) < 0) {
+        var t = x;
+        x = y;
+        y = t;
+    }
+    var i = x.getLowestSetBit(),
+        g = y.getLowestSetBit();
+    if (g < 0) {
+        callback(x);
+        return;
+    }
+    if (i < g) g = i;
+    if (g > 0) {
+        x.rShiftTo(g, x);
+        y.rShiftTo(g, y);
+    }
+    // Workhorse of the algorithm, gets called 200 - 800 times per 512 bit keygen.
+    var gcda1 = function() {
+        if ((i = x.getLowestSetBit()) > 0){ x.rShiftTo(i, x); }
+        if ((i = y.getLowestSetBit()) > 0){ y.rShiftTo(i, y); }
+        if (x.compareTo(y) >= 0) {
+            x.subTo(y, x);
+            x.rShiftTo(1, x);
+        } else {
+            y.subTo(x, y);
+            y.rShiftTo(1, y);
+        }
+        if(!(x.signum() > 0)) {
+            if (g > 0) y.lShiftTo(g, y);
+            setTimeout(function(){callback(y)},0); // escape
+        } else {
+            setTimeout(gcda1,0);
+        }
+    };
+    setTimeout(gcda1,10);
+};
+BigInteger.prototype.gcda = bnGCDAsync;
+
+// (protected) alternate constructor
+var bnpFromNumberAsync = function (a,b,c,callback) {
+  if("number" == typeof b) {
+    if(a < 2) {
+        this.fromInt(1);
+    } else {
+      this.fromNumber(a,c);
+      if(!this.testBit(a-1)){
+        this.bitwiseTo(BigInteger.ONE.shiftLeft(a-1),op_or,this);
+      }
+      if(this.isEven()) {
+        this.dAddOffset(1,0);
+      }
+      var bnp = this;
+      var bnpfn1 = function(){
+        bnp.dAddOffset(2,0);
+        if(bnp.bitLength() > a) bnp.subTo(BigInteger.ONE.shiftLeft(a-1),bnp);
+        if(bnp.isProbablePrime(b)) {
+            setTimeout(function(){callback()},0); // escape
+        } else {
+            setTimeout(bnpfn1,0);
+        }
+      };
+      setTimeout(bnpfn1,0);
+    }
+  } else {
+    var x = new Array(), t = a&7;
+    x.length = (a>>3)+1;
+    b.nextBytes(x);
+    if(t > 0) x[0] &= ((1<<t)-1); else x[0] = 0;
+    this.fromString(x,256);
+  }
+};
+BigInteger.prototype.fromNumberAsync = bnpFromNumberAsync;
+
+})();
+var b64map="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+var b64pad="=";
+
+function hex2b64(h) {
+  var i;
+  var c;
+  var ret = "";
+  for(i = 0; i+3 <= h.length; i+=3) {
+    c = parseInt(h.substring(i,i+3),16);
+    ret += b64map.charAt(c >> 6) + b64map.charAt(c & 63);
+  }
+  if(i+1 == h.length) {
+    c = parseInt(h.substring(i,i+1),16);
+    ret += b64map.charAt(c << 2);
+  }
+  else if(i+2 == h.length) {
+    c = parseInt(h.substring(i,i+2),16);
+    ret += b64map.charAt(c >> 2) + b64map.charAt((c & 3) << 4);
+  }
+  while((ret.length & 3) > 0) ret += b64pad;
+  return ret;
+}
+
+// convert a base64 string to hex
+function b64tohex(s) {
+  var ret = ""
+  var i;
+  var k = 0; // b64 state, 0-3
+  var slop;
+  for(i = 0; i < s.length; ++i) {
+    if(s.charAt(i) == b64pad) break;
+    v = b64map.indexOf(s.charAt(i));
+    if(v < 0) continue;
+    if(k == 0) {
+      ret += int2char(v >> 2);
+      slop = v & 3;
+      k = 1;
+    }
+    else if(k == 1) {
+      ret += int2char((slop << 2) | (v >> 4));
+      slop = v & 0xf;
+      k = 2;
+    }
+    else if(k == 2) {
+      ret += int2char(slop);
+      ret += int2char(v >> 2);
+      slop = v & 3;
+      k = 3;
+    }
+    else {
+      ret += int2char((slop << 2) | (v >> 4));
+      ret += int2char(v & 0xf);
+      k = 0;
+    }
+  }
+  if(k == 1)
+    ret += int2char(slop << 2);
+  return ret;
+}
+
+// convert a base64 string to a byte/number array
+function b64toBA(s) {
+  //piggyback on b64tohex for now, optimize later
+  var h = b64tohex(s);
+  var i;
+  var a = new Array();
+  for(i = 0; 2*i < h.length; ++i) {
+    a[i] = parseInt(h.substring(2*i,2*i+2),16);
+  }
+  return a;
+}
+
+/*! asn1-1.0.2.js (c) 2013 Kenji Urushima | kjur.github.com/jsrsasign/license
+ */
+
+var JSX = JSX || {};
+JSX.env = JSX.env || {};
+
+var L = JSX, OP = Object.prototype, FUNCTION_TOSTRING = '[object Function]',ADD = ["toString", "valueOf"];
+
+JSX.env.parseUA = function(agent) {
+
+    var numberify = function(s) {
+        var c = 0;
+        return parseFloat(s.replace(/\./g, function() {
+            return (c++ == 1) ? '' : '.';
+        }));
+    },
+
+    nav = navigator,
+    o = {
+        ie: 0,
+        opera: 0,
+        gecko: 0,
+        webkit: 0,
+        chrome: 0,
+        mobile: null,
+        air: 0,
+        ipad: 0,
+        iphone: 0,
+        ipod: 0,
+        ios: null,
+        android: 0,
+        webos: 0,
+        caja: nav && nav.cajaVersion,
+        secure: false,
+        os: null
+
+    },
+
+    ua = agent || (navigator && navigator.userAgent),
+    loc = window && window.location,
+    href = loc && loc.href,
+    m;
+
+    o.secure = href && (href.toLowerCase().indexOf("https") === 0);
+
+    if (ua) {
+
+        if ((/windows|win32/i).test(ua)) {
+            o.os = 'windows';
+        } else if ((/macintosh/i).test(ua)) {
+            o.os = 'macintosh';
+        } else if ((/rhino/i).test(ua)) {
+            o.os = 'rhino';
+        }
+        if ((/KHTML/).test(ua)) {
+            o.webkit = 1;
+        }
+        m = ua.match(/AppleWebKit\/([^\s]*)/);
+        if (m && m[1]) {
+            o.webkit = numberify(m[1]);
+            if (/ Mobile\//.test(ua)) {
+                o.mobile = 'Apple'; // iPhone or iPod Touch
+                m = ua.match(/OS ([^\s]*)/);
+                if (m && m[1]) {
+                    m = numberify(m[1].replace('_', '.'));
+                }
+                o.ios = m;
+                o.ipad = o.ipod = o.iphone = 0;
+                m = ua.match(/iPad|iPod|iPhone/);
+                if (m && m[0]) {
+                    o[m[0].toLowerCase()] = o.ios;
+                }
+            } else {
+                m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/);
+                if (m) {
+                    o.mobile = m[0];
+                }
+                if (/webOS/.test(ua)) {
+                    o.mobile = 'WebOS';
+                    m = ua.match(/webOS\/([^\s]*);/);
+                    if (m && m[1]) {
+                        o.webos = numberify(m[1]);
+                    }
+                }
+                if (/ Android/.test(ua)) {
+                    o.mobile = 'Android';
+                    m = ua.match(/Android ([^\s]*);/);
+                    if (m && m[1]) {
+                        o.android = numberify(m[1]);
+                    }
+                }
+            }
+            m = ua.match(/Chrome\/([^\s]*)/);
+            if (m && m[1]) {
+                o.chrome = numberify(m[1]); // Chrome
+            } else {
+                m = ua.match(/AdobeAIR\/([^\s]*)/);
+                if (m) {
+                    o.air = m[0]; // Adobe AIR 1.0 or better
+                }
+            }
+        }
+        if (!o.webkit) {
+            m = ua.match(/Opera[\s\/]([^\s]*)/);
+            if (m && m[1]) {
+                o.opera = numberify(m[1]);
+                m = ua.match(/Version\/([^\s]*)/);
+                if (m && m[1]) {
+                    o.opera = numberify(m[1]); // opera 10+
+                }
+                m = ua.match(/Opera Mini[^;]*/);
+                if (m) {
+                    o.mobile = m[0]; // ex: Opera Mini/2.0.4509/1316
+                }
+            } else { // not opera or webkit
+                m = ua.match(/MSIE\s([^;]*)/);
+                if (m && m[1]) {
+                    o.ie = numberify(m[1]);
+                } else { // not opera, webkit, or ie
+                    m = ua.match(/Gecko\/([^\s]*)/);
+                    if (m) {
+                        o.gecko = 1; // Gecko detected, look for revision
+                        m = ua.match(/rv:([^\s\)]*)/);
+                        if (m && m[1]) {
+                            o.gecko = numberify(m[1]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return o;
+};
+
+JSX.env.ua = JSX.env.parseUA();
+
+JSX.isFunction = function(o) {
+    return (typeof o === 'function') || OP.toString.apply(o) === FUNCTION_TOSTRING;
+};
+
+JSX._IEEnumFix = (JSX.env.ua.ie) ? function(r, s) {
+    var i, fname, f;
+    for (i=0;i<ADD.length;i=i+1) {
+
+        fname = ADD[i];
+        f = s[fname];
+
+        if (L.isFunction(f) && f!=OP[fname]) {
+            r[fname]=f;
+        }
+    }
+} : function(){};
+
+JSX.extend = function(subc, superc, overrides) {
+    if (!superc||!subc) {
+        throw new Error("extend failed, please check that " +
+                        "all dependencies are included.");
+    }
+    var F = function() {}, i;
+    F.prototype=superc.prototype;
+    subc.prototype=new F();
+    subc.prototype.constructor=subc;
+    subc.superclass=superc.prototype;
+    if (superc.prototype.constructor == OP.constructor) {
+        superc.prototype.constructor=superc;
+    }
+
+    if (overrides) {
+        for (i in overrides) {
+            if (L.hasOwnProperty(overrides, i)) {
+                subc.prototype[i]=overrides[i];
+            }
+        }
+
+        L._IEEnumFix(subc.prototype, overrides);
+    }
+};
+
+/*
+ * asn1.js - ASN.1 DER encoder classes
+ *
+ * Copyright (c) 2013 Kenji Urushima (kenji.urushima@gmail.com)
+ *
+ * This software is licensed under the terms of the MIT License.
+ * http://kjur.github.com/jsrsasign/license
+ *
+ * The above copyright and license notice shall be 
+ * included in all copies or substantial portions of the Software.
+ */
+
+/**
+ * @fileOverview
+ * @name asn1-1.0.js
+ * @author Kenji Urushima kenji.urushima@gmail.com
+ * @version 1.0.2 (2013-May-30)
+ * @since 2.1
+ * @license <a href="http://kjur.github.io/jsrsasign/license/">MIT License</a>
+ */
+
+/** 
+ * kjur's class library name space
+ * <p>
+ * This name space provides following name spaces:
+ * <ul>
+ * <li>{@link KJUR.asn1} - ASN.1 primitive hexadecimal encoder</li>
+ * <li>{@link KJUR.asn1.x509} - ASN.1 structure for X.509 certificate and CRL</li>
+ * <li>{@link KJUR.crypto} - Java Cryptographic Extension(JCE) style MessageDigest/Signature 
+ * class and utilities</li>
+ * </ul>
+ * </p> 
+ * NOTE: Please ignore method summary and document of this namespace. This caused by a bug of jsdoc2.
+  * @name KJUR
+ * @namespace kjur's class library name space
+ */
+if (typeof KJUR == "undefined" || !KJUR) KJUR = {};
+
+/**
+ * kjur's ASN.1 class library name space
+ * <p>
+ * This is ITU-T X.690 ASN.1 DER encoder class library and
+ * class structure and methods is very similar to 
+ * org.bouncycastle.asn1 package of 
+ * well known BouncyCaslte Cryptography Library.
+ *
+ * <h4>PROVIDING ASN.1 PRIMITIVES</h4>
+ * Here are ASN.1 DER primitive classes.
+ * <ul>
+ * <li>{@link KJUR.asn1.DERBoolean}</li>
+ * <li>{@link KJUR.asn1.DERInteger}</li>
+ * <li>{@link KJUR.asn1.DERBitString}</li>
+ * <li>{@link KJUR.asn1.DEROctetString}</li>
+ * <li>{@link KJUR.asn1.DERNull}</li>
+ * <li>{@link KJUR.asn1.DERObjectIdentifier}</li>
+ * <li>{@link KJUR.asn1.DERUTF8String}</li>
+ * <li>{@link KJUR.asn1.DERNumericString}</li>
+ * <li>{@link KJUR.asn1.DERPrintableString}</li>
+ * <li>{@link KJUR.asn1.DERTeletexString}</li>
+ * <li>{@link KJUR.asn1.DERIA5String}</li>
+ * <li>{@link KJUR.asn1.DERUTCTime}</li>
+ * <li>{@link KJUR.asn1.DERGeneralizedTime}</li>
+ * <li>{@link KJUR.asn1.DERSequence}</li>
+ * <li>{@link KJUR.asn1.DERSet}</li>
+ * </ul>
+ *
+ * <h4>OTHER ASN.1 CLASSES</h4>
+ * <ul>
+ * <li>{@link KJUR.asn1.ASN1Object}</li>
+ * <li>{@link KJUR.asn1.DERAbstractString}</li>
+ * <li>{@link KJUR.asn1.DERAbstractTime}</li>
+ * <li>{@link KJUR.asn1.DERAbstractStructured}</li>
+ * <li>{@link KJUR.asn1.DERTaggedObject}</li>
+ * </ul>
+ * </p>
+ * NOTE: Please ignore method summary and document of this namespace. This caused by a bug of jsdoc2.
+ * @name KJUR.asn1
+ * @namespace
+ */
+if (typeof KJUR.asn1 == "undefined" || !KJUR.asn1) KJUR.asn1 = {};
+
+/**
+ * ASN1 utilities class
+ * @name KJUR.asn1.ASN1Util
+ * @classs ASN1 utilities class
+ * @since asn1 1.0.2
+ */
+KJUR.asn1.ASN1Util = new function() {
+    this.integerToByteHex = function(i) {
+	var h = i.toString(16);
+	if ((h.length % 2) == 1) h = '0' + h;
+	return h;
+    };
+    this.bigIntToMinTwosComplementsHex = function(bigIntegerValue) {
+	var h = bigIntegerValue.toString(16);
+	if (h.substr(0, 1) != '-') {
+	    if (h.length % 2 == 1) {
+		h = '0' + h;
+	    } else {
+		if (! h.match(/^[0-7]/)) {
+		    h = '00' + h;
+		}
+	    }
+	} else {
+	    var hPos = h.substr(1);
+	    var xorLen = hPos.length;
+	    if (xorLen % 2 == 1) {
+		xorLen += 1;
+	    } else {
+		if (! h.match(/^[0-7]/)) {
+		    xorLen += 2;
+		}
+	    }
+	    var hMask = '';
+	    for (var i = 0; i < xorLen; i++) {
+		hMask += 'f';
+	    }
+	    var biMask = new BigInteger(hMask, 16);
+	    var biNeg = biMask.xor(bigIntegerValue).add(BigInteger.ONE);
+	    h = biNeg.toString(16).replace(/^-/, '');
+	}
+	return h;
+    };
+    /**
+     * get PEM string from hexadecimal data and header string
+     * @name getPEMStringFromHex
+     * @memberOf KJUR.asn1.ASN1Util
+     * @function
+     * @param {String} dataHex hexadecimal string of PEM body
+     * @param {String} pemHeader PEM header string (ex. 'RSA PRIVATE KEY')
+     * @return {String} PEM formatted string of input data
+     * @description
+     * @example
+     * var pem  = KJUR.asn1.ASN1Util.getPEMStringFromHex('616161', 'RSA PRIVATE KEY');
+     * // value of pem will be:
+     * -----BEGIN PRIVATE KEY-----
+     * YWFh
+     * -----END PRIVATE KEY-----
+     */
+    this.getPEMStringFromHex = function(dataHex, pemHeader) {
+	var dataWA = CryptoJS.enc.Hex.parse(dataHex);
+	var dataB64 = CryptoJS.enc.Base64.stringify(dataWA);
+	var pemBody = dataB64.replace(/(.{64})/g, "$1\r\n");
+        pemBody = pemBody.replace(/\r\n$/, '');
+	return "-----BEGIN " + pemHeader + "-----\r\n" + 
+               pemBody + 
+               "\r\n-----END " + pemHeader + "-----\r\n";
+    };
+};
+
+// ********************************************************************
+//  Abstract ASN.1 Classes
+// ********************************************************************
+
+// ********************************************************************
+
+/**
+ * base class for ASN.1 DER encoder object
+ * @name KJUR.asn1.ASN1Object
+ * @class base class for ASN.1 DER encoder object
+ * @property {Boolean} isModified flag whether internal data was changed
+ * @property {String} hTLV hexadecimal string of ASN.1 TLV
+ * @property {String} hT hexadecimal string of ASN.1 TLV tag(T)
+ * @property {String} hL hexadecimal string of ASN.1 TLV length(L)
+ * @property {String} hV hexadecimal string of ASN.1 TLV value(V)
+ * @description
+ */
+KJUR.asn1.ASN1Object = function() {
+    var isModified = true;
+    var hTLV = null;
+    var hT = '00'
+    var hL = '00';
+    var hV = '';
+
+    /**
+     * get hexadecimal ASN.1 TLV length(L) bytes from TLV value(V)
+     * @name getLengthHexFromValue
+     * @memberOf KJUR.asn1.ASN1Object
+     * @function
+     * @return {String} hexadecimal string of ASN.1 TLV length(L)
+     */
+    this.getLengthHexFromValue = function() {
+	if (typeof this.hV == "undefined" || this.hV == null) {
+	    throw "this.hV is null or undefined.";
+	}
+	if (this.hV.length % 2 == 1) {
+	    throw "value hex must be even length: n=" + hV.length + ",v=" + this.hV;
+	}
+	var n = this.hV.length / 2;
+	var hN = n.toString(16);
+	if (hN.length % 2 == 1) {
+	    hN = "0" + hN;
+	}
+	if (n < 128) {
+	    return hN;
+	} else {
+	    var hNlen = hN.length / 2;
+	    if (hNlen > 15) {
+		throw "ASN.1 length too long to represent by 8x: n = " + n.toString(16);
+	    }
+	    var head = 128 + hNlen;
+	    return head.toString(16) + hN;
+	}
+    };
+
+    /**
+     * get hexadecimal string of ASN.1 TLV bytes
+     * @name getEncodedHex
+     * @memberOf KJUR.asn1.ASN1Object
+     * @function
+     * @return {String} hexadecimal string of ASN.1 TLV
+     */
+    this.getEncodedHex = function() {
+	if (this.hTLV == null || this.isModified) {
+	    this.hV = this.getFreshValueHex();
+	    this.hL = this.getLengthHexFromValue();
+	    this.hTLV = this.hT + this.hL + this.hV;
+	    this.isModified = false;
+	    //console.error("first time: " + this.hTLV);
+	}
+	return this.hTLV;
+    };
+
+    /**
+     * get hexadecimal string of ASN.1 TLV value(V) bytes
+     * @name getValueHex
+     * @memberOf KJUR.asn1.ASN1Object
+     * @function
+     * @return {String} hexadecimal string of ASN.1 TLV value(V) bytes
+     */
+    this.getValueHex = function() {
+	this.getEncodedHex();
+	return this.hV;
+    }
+
+    this.getFreshValueHex = function() {
+	return '';
+    };
+};
+
+// == BEGIN DERAbstractString ================================================
+/**
+ * base class for ASN.1 DER string classes
+ * @name KJUR.asn1.DERAbstractString
+ * @class base class for ASN.1 DER string classes
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @property {String} s internal string of value
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>str - specify initial ASN.1 value(V) by a string</li>
+ * <li>hex - specify initial ASN.1 value(V) by a hexadecimal string</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERAbstractString = function(params) {
+    KJUR.asn1.DERAbstractString.superclass.constructor.call(this);
+    var s = null;
+    var hV = null;
+
+    /**
+     * get string value of this string object
+     * @name getString
+     * @memberOf KJUR.asn1.DERAbstractString
+     * @function
+     * @return {String} string value of this string object
+     */
+    this.getString = function() {
+	return this.s;
+    };
+
+    /**
+     * set value by a string
+     * @name setString
+     * @memberOf KJUR.asn1.DERAbstractString
+     * @function
+     * @param {String} newS value by a string to set
+     */
+    this.setString = function(newS) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.s = newS;
+	this.hV = stohex(this.s);
+    };
+
+    /**
+     * set value by a hexadecimal string
+     * @name setStringHex
+     * @memberOf KJUR.asn1.DERAbstractString
+     * @function
+     * @param {String} newHexString value by a hexadecimal string to set
+     */
+    this.setStringHex = function(newHexString) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.s = null;
+	this.hV = newHexString;
+    };
+
+    this.getFreshValueHex = function() {
+	return this.hV;
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['str'] != "undefined") {
+	    this.setString(params['str']);
+	} else if (typeof params['hex'] != "undefined") {
+	    this.setStringHex(params['hex']);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERAbstractString, KJUR.asn1.ASN1Object);
+// == END   DERAbstractString ================================================
+
+// == BEGIN DERAbstractTime ==================================================
+/**
+ * base class for ASN.1 DER Generalized/UTCTime class
+ * @name KJUR.asn1.DERAbstractTime
+ * @class base class for ASN.1 DER Generalized/UTCTime class
+ * @param {Array} params associative array of parameters (ex. {'str': '130430235959Z'})
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * @see KJUR.asn1.ASN1Object - superclass
+ */
+KJUR.asn1.DERAbstractTime = function(params) {
+    KJUR.asn1.DERAbstractTime.superclass.constructor.call(this);
+    var s = null;
+    var date = null;
+
+    // --- PRIVATE METHODS --------------------
+    this.localDateToUTC = function(d) {
+	utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+	var utcDate = new Date(utc);
+	return utcDate;
+    };
+
+    this.formatDate = function(dateObject, type) {
+	var pad = this.zeroPadding;
+	var d = this.localDateToUTC(dateObject);
+	var year = String(d.getFullYear());
+	if (type == 'utc') year = year.substr(2, 2);
+	var month = pad(String(d.getMonth() + 1), 2);
+	var day = pad(String(d.getDate()), 2);
+	var hour = pad(String(d.getHours()), 2);
+	var min = pad(String(d.getMinutes()), 2);
+	var sec = pad(String(d.getSeconds()), 2);
+	return year + month + day + hour + min + sec + 'Z';
+    };
+
+    this.zeroPadding = function(s, len) {
+	if (s.length >= len) return s;
+	return new Array(len - s.length + 1).join('0') + s;
+    };
+
+    // --- PUBLIC METHODS --------------------
+    /**
+     * get string value of this string object
+     * @name getString
+     * @memberOf KJUR.asn1.DERAbstractTime
+     * @function
+     * @return {String} string value of this time object
+     */
+    this.getString = function() {
+	return this.s;
+    };
+
+    /**
+     * set value by a string
+     * @name setString
+     * @memberOf KJUR.asn1.DERAbstractTime
+     * @function
+     * @param {String} newS value by a string to set such like "130430235959Z"
+     */
+    this.setString = function(newS) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.s = newS;
+	this.hV = stohex(this.s);
+    };
+
+    /**
+     * set value by a Date object
+     * @name setByDateValue
+     * @memberOf KJUR.asn1.DERAbstractTime
+     * @function
+     * @param {Integer} year year of date (ex. 2013)
+     * @param {Integer} month month of date between 1 and 12 (ex. 12)
+     * @param {Integer} day day of month
+     * @param {Integer} hour hours of date
+     * @param {Integer} min minutes of date
+     * @param {Integer} sec seconds of date
+     */
+    this.setByDateValue = function(year, month, day, hour, min, sec) {
+	var dateObject = new Date(Date.UTC(year, month - 1, day, hour, min, sec, 0));
+	this.setByDate(dateObject);
+    };
+
+    this.getFreshValueHex = function() {
+	return this.hV;
+    };
+};
+JSX.extend(KJUR.asn1.DERAbstractTime, KJUR.asn1.ASN1Object);
+// == END   DERAbstractTime ==================================================
+
+// == BEGIN DERAbstractStructured ============================================
+/**
+ * base class for ASN.1 DER structured class
+ * @name KJUR.asn1.DERAbstractStructured
+ * @class base class for ASN.1 DER structured class
+ * @property {Array} asn1Array internal array of ASN1Object
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * @see KJUR.asn1.ASN1Object - superclass
+ */
+KJUR.asn1.DERAbstractStructured = function(params) {
+    KJUR.asn1.DERAbstractString.superclass.constructor.call(this);
+    var asn1Array = null;
+
+    /**
+     * set value by array of ASN1Object
+     * @name setByASN1ObjectArray
+     * @memberOf KJUR.asn1.DERAbstractStructured
+     * @function
+     * @param {array} asn1ObjectArray array of ASN1Object to set
+     */
+    this.setByASN1ObjectArray = function(asn1ObjectArray) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.asn1Array = asn1ObjectArray;
+    };
+
+    /**
+     * append an ASN1Object to internal array
+     * @name appendASN1Object
+     * @memberOf KJUR.asn1.DERAbstractStructured
+     * @function
+     * @param {ASN1Object} asn1Object to add
+     */
+    this.appendASN1Object = function(asn1Object) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.asn1Array.push(asn1Object);
+    };
+
+    this.asn1Array = new Array();
+    if (typeof params != "undefined") {
+	if (typeof params['array'] != "undefined") {
+	    this.asn1Array = params['array'];
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERAbstractStructured, KJUR.asn1.ASN1Object);
+
+
+// ********************************************************************
+//  ASN.1 Object Classes
+// ********************************************************************
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER Boolean
+ * @name KJUR.asn1.DERBoolean
+ * @class class for ASN.1 DER Boolean
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * @see KJUR.asn1.ASN1Object - superclass
+ */
+KJUR.asn1.DERBoolean = function() {
+    KJUR.asn1.DERBoolean.superclass.constructor.call(this);
+    this.hT = "01";
+    this.hTLV = "0101ff";
+};
+JSX.extend(KJUR.asn1.DERBoolean, KJUR.asn1.ASN1Object);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER Integer
+ * @name KJUR.asn1.DERInteger
+ * @class class for ASN.1 DER Integer
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>int - specify initial ASN.1 value(V) by integer value</li>
+ * <li>bigint - specify initial ASN.1 value(V) by BigInteger object</li>
+ * <li>hex - specify initial ASN.1 value(V) by a hexadecimal string</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERInteger = function(params) {
+    KJUR.asn1.DERInteger.superclass.constructor.call(this);
+    this.hT = "02";
+
+    /**
+     * set value by Tom Wu's BigInteger object
+     * @name setByBigInteger
+     * @memberOf KJUR.asn1.DERInteger
+     * @function
+     * @param {BigInteger} bigIntegerValue to set
+     */
+    this.setByBigInteger = function(bigIntegerValue) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.hV = KJUR.asn1.ASN1Util.bigIntToMinTwosComplementsHex(bigIntegerValue);
+    };
+
+    /**
+     * set value by integer value
+     * @name setByInteger
+     * @memberOf KJUR.asn1.DERInteger
+     * @function
+     * @param {Integer} integer value to set
+     */
+    this.setByInteger = function(intValue) {
+	var bi = new BigInteger(String(intValue), 10);
+	this.setByBigInteger(bi);
+    };
+
+    /**
+     * set value by integer value
+     * @name setValueHex
+     * @memberOf KJUR.asn1.DERInteger
+     * @function
+     * @param {String} hexadecimal string of integer value
+     * @description
+     * <br/>
+     * NOTE: Value shall be represented by minimum octet length of
+     * two's complement representation.
+     */
+    this.setValueHex = function(newHexString) {
+	this.hV = newHexString;
+    };
+
+    this.getFreshValueHex = function() {
+	return this.hV;
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['bigint'] != "undefined") {
+	    this.setByBigInteger(params['bigint']);
+	} else if (typeof params['int'] != "undefined") {
+	    this.setByInteger(params['int']);
+	} else if (typeof params['hex'] != "undefined") {
+	    this.setValueHex(params['hex']);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERInteger, KJUR.asn1.ASN1Object);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER encoded BitString primitive
+ * @name KJUR.asn1.DERBitString
+ * @class class for ASN.1 DER encoded BitString primitive
+ * @extends KJUR.asn1.ASN1Object
+ * @description 
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>bin - specify binary string (ex. '10111')</li>
+ * <li>array - specify array of boolean (ex. [true,false,true,true])</li>
+ * <li>hex - specify hexadecimal string of ASN.1 value(V) including unused bits</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERBitString = function(params) {
+    KJUR.asn1.DERBitString.superclass.constructor.call(this);
+    this.hT = "03";
+
+    /**
+     * set ASN.1 value(V) by a hexadecimal string including unused bits
+     * @name setHexValueIncludingUnusedBits
+     * @memberOf KJUR.asn1.DERBitString
+     * @function
+     * @param {String} newHexStringIncludingUnusedBits
+     */
+    this.setHexValueIncludingUnusedBits = function(newHexStringIncludingUnusedBits) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.hV = newHexStringIncludingUnusedBits;
+    };
+
+    /**
+     * set ASN.1 value(V) by unused bit and hexadecimal string of value
+     * @name setUnusedBitsAndHexValue
+     * @memberOf KJUR.asn1.DERBitString
+     * @function
+     * @param {Integer} unusedBits
+     * @param {String} hValue
+     */
+    this.setUnusedBitsAndHexValue = function(unusedBits, hValue) {
+	if (unusedBits < 0 || 7 < unusedBits) {
+	    throw "unused bits shall be from 0 to 7: u = " + unusedBits;
+	}
+	var hUnusedBits = "0" + unusedBits;
+	this.hTLV = null;
+	this.isModified = true;
+	this.hV = hUnusedBits + hValue;
+    };
+
+    /**
+     * set ASN.1 DER BitString by binary string
+     * @name setByBinaryString
+     * @memberOf KJUR.asn1.DERBitString
+     * @function
+     * @param {String} binaryString binary value string (i.e. '10111')
+     * @description
+     * Its unused bits will be calculated automatically by length of 
+     * 'binaryValue'. <br/>
+     * NOTE: Trailing zeros '0' will be ignored.
+     */
+    this.setByBinaryString = function(binaryString) {
+	binaryString = binaryString.replace(/0+$/, '');
+	var unusedBits = 8 - binaryString.length % 8;
+	if (unusedBits == 8) unusedBits = 0;
+	for (var i = 0; i <= unusedBits; i++) {
+	    binaryString += '0';
+	}
+	var h = '';
+	for (var i = 0; i < binaryString.length - 1; i += 8) {
+	    var b = binaryString.substr(i, 8);
+	    var x = parseInt(b, 2).toString(16);
+	    if (x.length == 1) x = '0' + x;
+	    h += x;  
+	}
+	this.hTLV = null;
+	this.isModified = true;
+	this.hV = '0' + unusedBits + h;
+    };
+
+    /**
+     * set ASN.1 TLV value(V) by an array of boolean
+     * @name setByBooleanArray
+     * @memberOf KJUR.asn1.DERBitString
+     * @function
+     * @param {array} booleanArray array of boolean (ex. [true, false, true])
+     * @description
+     * NOTE: Trailing falses will be ignored.
+     */
+    this.setByBooleanArray = function(booleanArray) {
+	var s = '';
+	for (var i = 0; i < booleanArray.length; i++) {
+	    if (booleanArray[i] == true) {
+		s += '1';
+	    } else {
+		s += '0';
+	    }
+	}
+	this.setByBinaryString(s);
+    };
+
+    /**
+     * generate an array of false with specified length
+     * @name newFalseArray
+     * @memberOf KJUR.asn1.DERBitString
+     * @function
+     * @param {Integer} nLength length of array to generate
+     * @return {array} array of boolean faluse
+     * @description
+     * This static method may be useful to initialize boolean array.
+     */
+    this.newFalseArray = function(nLength) {
+	var a = new Array(nLength);
+	for (var i = 0; i < nLength; i++) {
+	    a[i] = false;
+	}
+	return a;
+    };
+
+    this.getFreshValueHex = function() {
+	return this.hV;
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['hex'] != "undefined") {
+	    this.setHexValueIncludingUnusedBits(params['hex']);
+	} else if (typeof params['bin'] != "undefined") {
+	    this.setByBinaryString(params['bin']);
+	} else if (typeof params['array'] != "undefined") {
+	    this.setByBooleanArray(params['array']);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERBitString, KJUR.asn1.ASN1Object);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER OctetString
+ * @name KJUR.asn1.DEROctetString
+ * @class class for ASN.1 DER OctetString
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @extends KJUR.asn1.DERAbstractString
+ * @description
+ * @see KJUR.asn1.DERAbstractString - superclass
+ */
+KJUR.asn1.DEROctetString = function(params) {
+    KJUR.asn1.DEROctetString.superclass.constructor.call(this, params);
+    this.hT = "04";
+};
+JSX.extend(KJUR.asn1.DEROctetString, KJUR.asn1.DERAbstractString);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER Null
+ * @name KJUR.asn1.DERNull
+ * @class class for ASN.1 DER Null
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * @see KJUR.asn1.ASN1Object - superclass
+ */
+KJUR.asn1.DERNull = function() {
+    KJUR.asn1.DERNull.superclass.constructor.call(this);
+    this.hT = "05";
+    this.hTLV = "0500";
+};
+JSX.extend(KJUR.asn1.DERNull, KJUR.asn1.ASN1Object);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER ObjectIdentifier
+ * @name KJUR.asn1.DERObjectIdentifier
+ * @class class for ASN.1 DER ObjectIdentifier
+ * @param {Array} params associative array of parameters (ex. {'oid': '2.5.4.5'})
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>oid - specify initial ASN.1 value(V) by a oid string (ex. 2.5.4.13)</li>
+ * <li>hex - specify initial ASN.1 value(V) by a hexadecimal string</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERObjectIdentifier = function(params) {
+    var itox = function(i) {
+	var h = i.toString(16);
+	if (h.length == 1) h = '0' + h;
+	return h;
+    };
+    var roidtox = function(roid) {
+	var h = '';
+	var bi = new BigInteger(roid, 10);
+	var b = bi.toString(2);
+	var padLen = 7 - b.length % 7;
+	if (padLen == 7) padLen = 0;
+	var bPad = '';
+	for (var i = 0; i < padLen; i++) bPad += '0';
+	b = bPad + b;
+	for (var i = 0; i < b.length - 1; i += 7) {
+	    var b8 = b.substr(i, 7);
+	    if (i != b.length - 7) b8 = '1' + b8;
+	    h += itox(parseInt(b8, 2));
+	}
+	return h;
+    }
+
+    KJUR.asn1.DERObjectIdentifier.superclass.constructor.call(this);
+    this.hT = "06";
+
+    /**
+     * set value by a hexadecimal string
+     * @name setValueHex
+     * @memberOf KJUR.asn1.DERObjectIdentifier
+     * @function
+     * @param {String} newHexString hexadecimal value of OID bytes
+     */
+    this.setValueHex = function(newHexString) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.s = null;
+	this.hV = newHexString;
+    };
+
+    /**
+     * set value by a OID string
+     * @name setValueOidString
+     * @memberOf KJUR.asn1.DERObjectIdentifier
+     * @function
+     * @param {String} oidString OID string (ex. 2.5.4.13)
+     */
+    this.setValueOidString = function(oidString) {
+	if (! oidString.match(/^[0-9.]+$/)) {
+	    throw "malformed oid string: " + oidString;
+	}
+	var h = '';
+	var a = oidString.split('.');
+	var i0 = parseInt(a[0]) * 40 + parseInt(a[1]);
+	h += itox(i0);
+	a.splice(0, 2);
+	for (var i = 0; i < a.length; i++) {
+	    h += roidtox(a[i]);
+	}
+	this.hTLV = null;
+	this.isModified = true;
+	this.s = null;
+	this.hV = h;
+    };
+
+    /**
+     * set value by a OID name
+     * @name setValueName
+     * @memberOf KJUR.asn1.DERObjectIdentifier
+     * @function
+     * @param {String} oidName OID name (ex. 'serverAuth')
+     * @since 1.0.1
+     * @description
+     * OID name shall be defined in 'KJUR.asn1.x509.OID.name2oidList'.
+     * Otherwise raise error.
+     */
+    this.setValueName = function(oidName) {
+	if (typeof KJUR.asn1.x509.OID.name2oidList[oidName] != "undefined") {
+	    var oid = KJUR.asn1.x509.OID.name2oidList[oidName];
+	    this.setValueOidString(oid);
+	} else {
+	    throw "DERObjectIdentifier oidName undefined: " + oidName;
+	}
+    };
+
+    this.getFreshValueHex = function() {
+	return this.hV;
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['oid'] != "undefined") {
+	    this.setValueOidString(params['oid']);
+	} else if (typeof params['hex'] != "undefined") {
+	    this.setValueHex(params['hex']);
+	} else if (typeof params['name'] != "undefined") {
+	    this.setValueName(params['name']);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERObjectIdentifier, KJUR.asn1.ASN1Object);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER UTF8String
+ * @name KJUR.asn1.DERUTF8String
+ * @class class for ASN.1 DER UTF8String
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @extends KJUR.asn1.DERAbstractString
+ * @description
+ * @see KJUR.asn1.DERAbstractString - superclass
+ */
+KJUR.asn1.DERUTF8String = function(params) {
+    KJUR.asn1.DERUTF8String.superclass.constructor.call(this, params);
+    this.hT = "0c";
+};
+JSX.extend(KJUR.asn1.DERUTF8String, KJUR.asn1.DERAbstractString);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER NumericString
+ * @name KJUR.asn1.DERNumericString
+ * @class class for ASN.1 DER NumericString
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @extends KJUR.asn1.DERAbstractString
+ * @description
+ * @see KJUR.asn1.DERAbstractString - superclass
+ */
+KJUR.asn1.DERNumericString = function(params) {
+    KJUR.asn1.DERNumericString.superclass.constructor.call(this, params);
+    this.hT = "12";
+};
+JSX.extend(KJUR.asn1.DERNumericString, KJUR.asn1.DERAbstractString);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER PrintableString
+ * @name KJUR.asn1.DERPrintableString
+ * @class class for ASN.1 DER PrintableString
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @extends KJUR.asn1.DERAbstractString
+ * @description
+ * @see KJUR.asn1.DERAbstractString - superclass
+ */
+KJUR.asn1.DERPrintableString = function(params) {
+    KJUR.asn1.DERPrintableString.superclass.constructor.call(this, params);
+    this.hT = "13";
+};
+JSX.extend(KJUR.asn1.DERPrintableString, KJUR.asn1.DERAbstractString);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER TeletexString
+ * @name KJUR.asn1.DERTeletexString
+ * @class class for ASN.1 DER TeletexString
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @extends KJUR.asn1.DERAbstractString
+ * @description
+ * @see KJUR.asn1.DERAbstractString - superclass
+ */
+KJUR.asn1.DERTeletexString = function(params) {
+    KJUR.asn1.DERTeletexString.superclass.constructor.call(this, params);
+    this.hT = "14";
+};
+JSX.extend(KJUR.asn1.DERTeletexString, KJUR.asn1.DERAbstractString);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER IA5String
+ * @name KJUR.asn1.DERIA5String
+ * @class class for ASN.1 DER IA5String
+ * @param {Array} params associative array of parameters (ex. {'str': 'aaa'})
+ * @extends KJUR.asn1.DERAbstractString
+ * @description
+ * @see KJUR.asn1.DERAbstractString - superclass
+ */
+KJUR.asn1.DERIA5String = function(params) {
+    KJUR.asn1.DERIA5String.superclass.constructor.call(this, params);
+    this.hT = "16";
+};
+JSX.extend(KJUR.asn1.DERIA5String, KJUR.asn1.DERAbstractString);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER UTCTime
+ * @name KJUR.asn1.DERUTCTime
+ * @class class for ASN.1 DER UTCTime
+ * @param {Array} params associative array of parameters (ex. {'str': '130430235959Z'})
+ * @extends KJUR.asn1.DERAbstractTime
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>str - specify initial ASN.1 value(V) by a string (ex.'130430235959Z')</li>
+ * <li>hex - specify initial ASN.1 value(V) by a hexadecimal string</li>
+ * <li>date - specify Date object.</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ * <h4>EXAMPLES</h4>
+ * @example
+ * var d1 = new KJUR.asn1.DERUTCTime();
+ * d1.setString('130430125959Z');
+ *
+ * var d2 = new KJUR.asn1.DERUTCTime({'str': '130430125959Z'});
+ *
+ * var d3 = new KJUR.asn1.DERUTCTime({'date': new Date(Date.UTC(2015, 0, 31, 0, 0, 0, 0))});
+ */
+KJUR.asn1.DERUTCTime = function(params) {
+    KJUR.asn1.DERUTCTime.superclass.constructor.call(this, params);
+    this.hT = "17";
+
+    /**
+     * set value by a Date object
+     * @name setByDate
+     * @memberOf KJUR.asn1.DERUTCTime
+     * @function
+     * @param {Date} dateObject Date object to set ASN.1 value(V)
+     */
+    this.setByDate = function(dateObject) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.date = dateObject;
+	this.s = this.formatDate(this.date, 'utc');
+	this.hV = stohex(this.s);
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['str'] != "undefined") {
+	    this.setString(params['str']);
+	} else if (typeof params['hex'] != "undefined") {
+	    this.setStringHex(params['hex']);
+	} else if (typeof params['date'] != "undefined") {
+	    this.setByDate(params['date']);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERUTCTime, KJUR.asn1.DERAbstractTime);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER GeneralizedTime
+ * @name KJUR.asn1.DERGeneralizedTime
+ * @class class for ASN.1 DER GeneralizedTime
+ * @param {Array} params associative array of parameters (ex. {'str': '20130430235959Z'})
+ * @extends KJUR.asn1.DERAbstractTime
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>str - specify initial ASN.1 value(V) by a string (ex.'20130430235959Z')</li>
+ * <li>hex - specify initial ASN.1 value(V) by a hexadecimal string</li>
+ * <li>date - specify Date object.</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERGeneralizedTime = function(params) {
+    KJUR.asn1.DERGeneralizedTime.superclass.constructor.call(this, params);
+    this.hT = "18";
+
+    /**
+     * set value by a Date object
+     * @name setByDate
+     * @memberOf KJUR.asn1.DERGeneralizedTime
+     * @function
+     * @param {Date} dateObject Date object to set ASN.1 value(V)
+     * @example
+     * When you specify UTC time, use 'Date.UTC' method like this:<br/>
+     * var o = new DERUTCTime();
+     * var date = new Date(Date.UTC(2015, 0, 31, 23, 59, 59, 0)); #2015JAN31 23:59:59
+     * o.setByDate(date);
+     */
+    this.setByDate = function(dateObject) {
+	this.hTLV = null;
+	this.isModified = true;
+	this.date = dateObject;
+	this.s = this.formatDate(this.date, 'gen');
+	this.hV = stohex(this.s);
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['str'] != "undefined") {
+	    this.setString(params['str']);
+	} else if (typeof params['hex'] != "undefined") {
+	    this.setStringHex(params['hex']);
+	} else if (typeof params['date'] != "undefined") {
+	    this.setByDate(params['date']);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERGeneralizedTime, KJUR.asn1.DERAbstractTime);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER Sequence
+ * @name KJUR.asn1.DERSequence
+ * @class class for ASN.1 DER Sequence
+ * @extends KJUR.asn1.DERAbstractStructured
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>array - specify array of ASN1Object to set elements of content</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERSequence = function(params) {
+    KJUR.asn1.DERSequence.superclass.constructor.call(this, params);
+    this.hT = "30";
+    this.getFreshValueHex = function() {
+	var h = '';
+	for (var i = 0; i < this.asn1Array.length; i++) {
+	    var asn1Obj = this.asn1Array[i];
+	    h += asn1Obj.getEncodedHex();
+	}
+	this.hV = h;
+	return this.hV;
+    };
+};
+JSX.extend(KJUR.asn1.DERSequence, KJUR.asn1.DERAbstractStructured);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER Set
+ * @name KJUR.asn1.DERSet
+ * @class class for ASN.1 DER Set
+ * @extends KJUR.asn1.DERAbstractStructured
+ * @description
+ * <br/>
+ * As for argument 'params' for constructor, you can specify one of
+ * following properties:
+ * <ul>
+ * <li>array - specify array of ASN1Object to set elements of content</li>
+ * </ul>
+ * NOTE: 'params' can be omitted.
+ */
+KJUR.asn1.DERSet = function(params) {
+    KJUR.asn1.DERSet.superclass.constructor.call(this, params);
+    this.hT = "31";
+    this.getFreshValueHex = function() {
+	var a = new Array();
+	for (var i = 0; i < this.asn1Array.length; i++) {
+	    var asn1Obj = this.asn1Array[i];
+	    a.push(asn1Obj.getEncodedHex());
+	}
+	a.sort();
+	this.hV = a.join('');
+	return this.hV;
+    };
+};
+JSX.extend(KJUR.asn1.DERSet, KJUR.asn1.DERAbstractStructured);
+
+// ********************************************************************
+/**
+ * class for ASN.1 DER TaggedObject
+ * @name KJUR.asn1.DERTaggedObject
+ * @class class for ASN.1 DER TaggedObject
+ * @extends KJUR.asn1.ASN1Object
+ * @description
+ * <br/>
+ * Parameter 'tagNoNex' is ASN.1 tag(T) value for this object.
+ * For example, if you find '[1]' tag in a ASN.1 dump, 
+ * 'tagNoHex' will be 'a1'.
+ * <br/>
+ * As for optional argument 'params' for constructor, you can specify *ANY* of
+ * following properties:
+ * <ul>
+ * <li>explicit - specify true if this is explicit tag otherwise false 
+ *     (default is 'true').</li>
+ * <li>tag - specify tag (default is 'a0' which means [0])</li>
+ * <li>obj - specify ASN1Object which is tagged</li>
+ * </ul>
+ * @example
+ * d1 = new KJUR.asn1.DERUTF8String({'str':'a'});
+ * d2 = new KJUR.asn1.DERTaggedObject({'obj': d1});
+ * hex = d2.getEncodedHex();
+ */
+KJUR.asn1.DERTaggedObject = function(params) {
+    KJUR.asn1.DERTaggedObject.superclass.constructor.call(this);
+    this.hT = "a0";
+    this.hV = '';
+    this.isExplicit = true;
+    this.asn1Object = null;
+
+    /**
+     * set value by an ASN1Object
+     * @name setString
+     * @memberOf KJUR.asn1.DERTaggedObject
+     * @function
+     * @param {Boolean} isExplicitFlag flag for explicit/implicit tag
+     * @param {Integer} tagNoHex hexadecimal string of ASN.1 tag
+     * @param {ASN1Object} asn1Object ASN.1 to encapsulate
+     */
+    this.setASN1Object = function(isExplicitFlag, tagNoHex, asn1Object) {
+	this.hT = tagNoHex;
+	this.isExplicit = isExplicitFlag;
+	this.asn1Object = asn1Object;
+	if (this.isExplicit) {
+	    this.hV = this.asn1Object.getEncodedHex();
+	    this.hTLV = null;
+	    this.isModified = true;
+	} else {
+	    this.hV = null;
+	    this.hTLV = asn1Object.getEncodedHex();
+	    this.hTLV = this.hTLV.replace(/^../, tagNoHex);
+	    this.isModified = false;
+	}
+    };
+
+    this.getFreshValueHex = function() {
+	return this.hV;
+    };
+
+    if (typeof params != "undefined") {
+	if (typeof params['tag'] != "undefined") {
+	    this.hT = params['tag'];
+	}
+	if (typeof params['explicit'] != "undefined") {
+	    this.isExplicit = params['explicit'];
+	}
+	if (typeof params['obj'] != "undefined") {
+	    this.asn1Object = params['obj'];
+	    this.setASN1Object(this.isExplicit, this.hT, this.asn1Object);
+	}
+    }
+};
+JSX.extend(KJUR.asn1.DERTaggedObject, KJUR.asn1.ASN1Object);
+// Hex JavaScript decoder
+// Copyright (c) 2008-2013 Lapo Luchini <lapo@lapo.it>
+
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+/*jshint browser: true, strict: true, immed: true, latedef: true, undef: true, regexdash: false */
+(function (undefined) {
+"use strict";
+
+var Hex = {},
+    decoder;
+
+Hex.decode = function(a) {
+    var i;
+    if (decoder === undefined) {
+        var hex = "0123456789ABCDEF",
+            ignore = " \f\n\r\t\u00A0\u2028\u2029";
+        decoder = [];
+        for (i = 0; i < 16; ++i)
+            decoder[hex.charAt(i)] = i;
+        hex = hex.toLowerCase();
+        for (i = 10; i < 16; ++i)
+            decoder[hex.charAt(i)] = i;
+        for (i = 0; i < ignore.length; ++i)
+            decoder[ignore.charAt(i)] = -1;
+    }
+    var out = [],
+        bits = 0,
+        char_count = 0;
+    for (i = 0; i < a.length; ++i) {
+        var c = a.charAt(i);
+        if (c == '=')
+            break;
+        c = decoder[c];
+        if (c == -1)
+            continue;
+        if (c === undefined)
+            throw 'Illegal character at offset ' + i;
+        bits |= c;
+        if (++char_count >= 2) {
+            out[out.length] = bits;
+            bits = 0;
+            char_count = 0;
+        } else {
+            bits <<= 4;
+        }
+    }
+    if (char_count)
+        throw "Hex encoding incomplete: 4 bits missing";
+    return out;
+};
+
+// export globals
+window.Hex = Hex;
+})();
+// Base64 JavaScript decoder
+// Copyright (c) 2008-2013 Lapo Luchini <lapo@lapo.it>
+
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+/*jshint browser: true, strict: true, immed: true, latedef: true, undef: true, regexdash: false */
+(function (undefined) {
+"use strict";
+
+var Base64 = {},
+    decoder;
+
+Base64.decode = function (a) {
+    var i;
+    if (decoder === undefined) {
+        var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+            ignore = "= \f\n\r\t\u00A0\u2028\u2029";
+        decoder = [];
+        for (i = 0; i < 64; ++i)
+            decoder[b64.charAt(i)] = i;
+        for (i = 0; i < ignore.length; ++i)
+            decoder[ignore.charAt(i)] = -1;
+    }
+    var out = [];
+    var bits = 0, char_count = 0;
+    for (i = 0; i < a.length; ++i) {
+        var c = a.charAt(i);
+        if (c == '=')
+            break;
+        c = decoder[c];
+        if (c == -1)
+            continue;
+        if (c === undefined)
+            throw 'Illegal character at offset ' + i;
+        bits |= c;
+        if (++char_count >= 4) {
+            out[out.length] = (bits >> 16);
+            out[out.length] = (bits >> 8) & 0xFF;
+            out[out.length] = bits & 0xFF;
+            bits = 0;
+            char_count = 0;
+        } else {
+            bits <<= 6;
+        }
+    }
+    switch (char_count) {
+      case 1:
+        throw "Base64 encoding incomplete: at least 2 bits missing";
+      case 2:
+        out[out.length] = (bits >> 10);
+        break;
+      case 3:
+        out[out.length] = (bits >> 16);
+        out[out.length] = (bits >> 8) & 0xFF;
+        break;
+    }
+    return out;
+};
+
+Base64.re = /-----BEGIN [^-]+-----([A-Za-z0-9+\/=\s]+)-----END [^-]+-----|begin-base64[^\n]+\n([A-Za-z0-9+\/=\s]+)====/;
+Base64.unarmor = function (a) {
+    var m = Base64.re.exec(a);
+    if (m) {
+        if (m[1])
+            a = m[1];
+        else if (m[2])
+            a = m[2];
+        else
+            throw "RegExp out of sync";
+    }
+    return Base64.decode(a);
+};
+
+// export globals
+window.Base64 = Base64;
+})();
+// ASN.1 JavaScript decoder
+// Copyright (c) 2008-2013 Lapo Luchini <lapo@lapo.it>
+
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+/*jshint browser: true, strict: true, immed: true, latedef: true, undef: true, regexdash: false */
+/*global oids */
+(function (undefined) {
+"use strict";
+
+var hardLimit = 100,
+    ellipsis = "\u2026",
+    DOM = {
+        tag: function (tagName, className) {
+            var t = document.createElement(tagName);
+            t.className = className;
+            return t;
+        },
+        text: function (str) {
+            return document.createTextNode(str);
+        }
+    };
+
+function Stream(enc, pos) {
+    if (enc instanceof Stream) {
+        this.enc = enc.enc;
+        this.pos = enc.pos;
+    } else {
+        this.enc = enc;
+        this.pos = pos;
+    }
+}
+Stream.prototype.get = function (pos) {
+    if (pos === undefined)
+        pos = this.pos++;
+    if (pos >= this.enc.length)
+        throw 'Requesting byte offset ' + pos + ' on a stream of length ' + this.enc.length;
+    return this.enc[pos];
+};
+Stream.prototype.hexDigits = "0123456789ABCDEF";
+Stream.prototype.hexByte = function (b) {
+    return this.hexDigits.charAt((b >> 4) & 0xF) + this.hexDigits.charAt(b & 0xF);
+};
+Stream.prototype.hexDump = function (start, end, raw) {
+    var s = "";
+    for (var i = start; i < end; ++i) {
+        s += this.hexByte(this.get(i));
+        if (raw !== true)
+            switch (i & 0xF) {
+            case 0x7: s += "  "; break;
+            case 0xF: s += "\n"; break;
+            default:  s += " ";
+            }
+    }
+    return s;
+};
+Stream.prototype.parseStringISO = function (start, end) {
+    var s = "";
+    for (var i = start; i < end; ++i)
+        s += String.fromCharCode(this.get(i));
+    return s;
+};
+Stream.prototype.parseStringUTF = function (start, end) {
+    var s = "";
+    for (var i = start; i < end; ) {
+        var c = this.get(i++);
+        if (c < 128)
+            s += String.fromCharCode(c);
+        else if ((c > 191) && (c < 224))
+            s += String.fromCharCode(((c & 0x1F) << 6) | (this.get(i++) & 0x3F));
+        else
+            s += String.fromCharCode(((c & 0x0F) << 12) | ((this.get(i++) & 0x3F) << 6) | (this.get(i++) & 0x3F));
+    }
+    return s;
+};
+Stream.prototype.parseStringBMP = function (start, end) {
+    var str = ""
+    for (var i = start; i < end; i += 2) {
+        var high_byte = this.get(i);
+        var low_byte = this.get(i + 1);
+        str += String.fromCharCode( (high_byte << 8) + low_byte );
+    }
+
+    return str;
+};
+Stream.prototype.reTime = /^((?:1[89]|2\d)?\d\d)(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])([01]\d|2[0-3])(?:([0-5]\d)(?:([0-5]\d)(?:[.,](\d{1,3}))?)?)?(Z|[-+](?:[0]\d|1[0-2])([0-5]\d)?)?$/;
+Stream.prototype.parseTime = function (start, end) {
+    var s = this.parseStringISO(start, end),
+        m = this.reTime.exec(s);
+    if (!m)
+        return "Unrecognized time: " + s;
+    s = m[1] + "-" + m[2] + "-" + m[3] + " " + m[4];
+    if (m[5]) {
+        s += ":" + m[5];
+        if (m[6]) {
+            s += ":" + m[6];
+            if (m[7])
+                s += "." + m[7];
+        }
+    }
+    if (m[8]) {
+        s += " UTC";
+        if (m[8] != 'Z') {
+            s += m[8];
+            if (m[9])
+                s += ":" + m[9];
+        }
+    }
+    return s;
+};
+Stream.prototype.parseInteger = function (start, end) {
+    //TODO support negative numbers
+    var len = end - start;
+    if (len > 4) {
+        len <<= 3;
+        var s = this.get(start);
+        if (s === 0)
+            len -= 8;
+        else
+            while (s < 128) {
+                s <<= 1;
+                --len;
+            }
+        return "(" + len + " bit)";
+    }
+    var n = 0;
+    for (var i = start; i < end; ++i)
+        n = (n << 8) | this.get(i);
+    return n;
+};
+Stream.prototype.parseBitString = function (start, end) {
+    var unusedBit = this.get(start),
+        lenBit = ((end - start - 1) << 3) - unusedBit,
+        s = "(" + lenBit + " bit)";
+    if (lenBit <= 20) {
+        var skip = unusedBit;
+        s += " ";
+        for (var i = end - 1; i > start; --i) {
+            var b = this.get(i);
+            for (var j = skip; j < 8; ++j)
+                s += (b >> j) & 1 ? "1" : "0";
+            skip = 0;
+        }
+    }
+    return s;
+};
+Stream.prototype.parseOctetString = function (start, end) {
+    var len = end - start,
+        s = "(" + len + " byte) ";
+    if (len > hardLimit)
+        end = start + hardLimit;
+    for (var i = start; i < end; ++i)
+        s += this.hexByte(this.get(i)); //TODO: also try Latin1?
+    if (len > hardLimit)
+        s += ellipsis;
+    return s;
+};
+Stream.prototype.parseOID = function (start, end) {
+    var s = '',
+        n = 0,
+        bits = 0;
+    for (var i = start; i < end; ++i) {
+        var v = this.get(i);
+        n = (n << 7) | (v & 0x7F);
+        bits += 7;
+        if (!(v & 0x80)) { // finished
+            if (s === '') {
+                var m = n < 80 ? n < 40 ? 0 : 1 : 2;
+                s = m + "." + (n - m * 40);
+            } else
+                s += "." + ((bits >= 31) ? "bigint" : n);
+            n = bits = 0;
+        }
+    }
+    return s;
+};
+
+function ASN1(stream, header, length, tag, sub) {
+    this.stream = stream;
+    this.header = header;
+    this.length = length;
+    this.tag = tag;
+    this.sub = sub;
+}
+ASN1.prototype.typeName = function () {
+    if (this.tag === undefined)
+        return "unknown";
+    var tagClass = this.tag >> 6,
+        tagConstructed = (this.tag >> 5) & 1,
+        tagNumber = this.tag & 0x1F;
+    switch (tagClass) {
+    case 0: // universal
+        switch (tagNumber) {
+        case 0x00: return "EOC";
+        case 0x01: return "BOOLEAN";
+        case 0x02: return "INTEGER";
+        case 0x03: return "BIT_STRING";
+        case 0x04: return "OCTET_STRING";
+        case 0x05: return "NULL";
+        case 0x06: return "OBJECT_IDENTIFIER";
+        case 0x07: return "ObjectDescriptor";
+        case 0x08: return "EXTERNAL";
+        case 0x09: return "REAL";
+        case 0x0A: return "ENUMERATED";
+        case 0x0B: return "EMBEDDED_PDV";
+        case 0x0C: return "UTF8String";
+        case 0x10: return "SEQUENCE";
+        case 0x11: return "SET";
+        case 0x12: return "NumericString";
+        case 0x13: return "PrintableString"; // ASCII subset
+        case 0x14: return "TeletexString"; // aka T61String
+        case 0x15: return "VideotexString";
+        case 0x16: return "IA5String"; // ASCII
+        case 0x17: return "UTCTime";
+        case 0x18: return "GeneralizedTime";
+        case 0x19: return "GraphicString";
+        case 0x1A: return "VisibleString"; // ASCII subset
+        case 0x1B: return "GeneralString";
+        case 0x1C: return "UniversalString";
+        case 0x1E: return "BMPString";
+        default:   return "Universal_" + tagNumber.toString(16);
+        }
+    case 1: return "Application_" + tagNumber.toString(16);
+    case 2: return "[" + tagNumber + "]"; // Context
+    case 3: return "Private_" + tagNumber.toString(16);
+    }
+};
+ASN1.prototype.reSeemsASCII = /^[ -~]+$/;
+ASN1.prototype.content = function () {
+    if (this.tag === undefined)
+        return null;
+    var tagClass = this.tag >> 6,
+        tagNumber = this.tag & 0x1F,
+        content = this.posContent(),
+        len = Math.abs(this.length);
+    if (tagClass !== 0) { // universal
+        if (this.sub !== null)
+            return "(" + this.sub.length + " elem)";
+        //TODO: TRY TO PARSE ASCII STRING
+        var s = this.stream.parseStringISO(content, content + Math.min(len, hardLimit));
+        if (this.reSeemsASCII.test(s))
+            return s.substring(0, 2 * hardLimit) + ((s.length > 2 * hardLimit) ? ellipsis : "");
+        else
+            return this.stream.parseOctetString(content, content + len);
+    }
+    switch (tagNumber) {
+    case 0x01: // BOOLEAN
+        return (this.stream.get(content) === 0) ? "false" : "true";
+    case 0x02: // INTEGER
+        return this.stream.parseInteger(content, content + len);
+    case 0x03: // BIT_STRING
+        return this.sub ? "(" + this.sub.length + " elem)" :
+            this.stream.parseBitString(content, content + len);
+    case 0x04: // OCTET_STRING
+        return this.sub ? "(" + this.sub.length + " elem)" :
+            this.stream.parseOctetString(content, content + len);
+    //case 0x05: // NULL
+    case 0x06: // OBJECT_IDENTIFIER
+        return this.stream.parseOID(content, content + len);
+    //case 0x07: // ObjectDescriptor
+    //case 0x08: // EXTERNAL
+    //case 0x09: // REAL
+    //case 0x0A: // ENUMERATED
+    //case 0x0B: // EMBEDDED_PDV
+    case 0x10: // SEQUENCE
+    case 0x11: // SET
+        return "(" + this.sub.length + " elem)";
+    case 0x0C: // UTF8String
+        return this.stream.parseStringUTF(content, content + len);
+    case 0x12: // NumericString
+    case 0x13: // PrintableString
+    case 0x14: // TeletexString
+    case 0x15: // VideotexString
+    case 0x16: // IA5String
+    //case 0x19: // GraphicString
+    case 0x1A: // VisibleString
+    //case 0x1B: // GeneralString
+    //case 0x1C: // UniversalString
+        return this.stream.parseStringISO(content, content + len);
+    case 0x1E: // BMPString
+        return this.stream.parseStringBMP(content, content + len);
+    case 0x17: // UTCTime
+    case 0x18: // GeneralizedTime
+        return this.stream.parseTime(content, content + len);
+    }
+    return null;
+};
+ASN1.prototype.toString = function () {
+    return this.typeName() + "@" + this.stream.pos + "[header:" + this.header + ",length:" + this.length + ",sub:" + ((this.sub === null) ? 'null' : this.sub.length) + "]";
+};
+ASN1.prototype.print = function (indent) {
+    if (indent === undefined) indent = '';
+    document.writeln(indent + this);
+    if (this.sub !== null) {
+        indent += '  ';
+        for (var i = 0, max = this.sub.length; i < max; ++i)
+            this.sub[i].print(indent);
+    }
+};
+ASN1.prototype.toPrettyString = function (indent) {
+    if (indent === undefined) indent = '';
+    var s = indent + this.typeName() + " @" + this.stream.pos;
+    if (this.length >= 0)
+        s += "+";
+    s += this.length;
+    if (this.tag & 0x20)
+        s += " (constructed)";
+    else if (((this.tag == 0x03) || (this.tag == 0x04)) && (this.sub !== null))
+        s += " (encapsulates)";
+    s += "\n";
+    if (this.sub !== null) {
+        indent += '  ';
+        for (var i = 0, max = this.sub.length; i < max; ++i)
+            s += this.sub[i].toPrettyString(indent);
+    }
+    return s;
+};
+ASN1.prototype.toDOM = function () {
+    var node = DOM.tag("div", "node");
+    node.asn1 = this;
+    var head = DOM.tag("div", "head");
+    var s = this.typeName().replace(/_/g, " ");
+    head.innerHTML = s;
+    var content = this.content();
+    if (content !== null) {
+        content = String(content).replace(/</g, "&lt;");
+        var preview = DOM.tag("span", "preview");
+        preview.appendChild(DOM.text(content));
+        head.appendChild(preview);
+    }
+    node.appendChild(head);
+    this.node = node;
+    this.head = head;
+    var value = DOM.tag("div", "value");
+    s = "Offset: " + this.stream.pos + "<br/>";
+    s += "Length: " + this.header + "+";
+    if (this.length >= 0)
+        s += this.length;
+    else
+        s += (-this.length) + " (undefined)";
+    if (this.tag & 0x20)
+        s += "<br/>(constructed)";
+    else if (((this.tag == 0x03) || (this.tag == 0x04)) && (this.sub !== null))
+        s += "<br/>(encapsulates)";
+    //TODO if (this.tag == 0x03) s += "Unused bits: "
+    if (content !== null) {
+        s += "<br/>Value:<br/><b>" + content + "</b>";
+        if ((typeof oids === 'object') && (this.tag == 0x06)) {
+            var oid = oids[content];
+            if (oid) {
+                if (oid.d) s += "<br/>" + oid.d;
+                if (oid.c) s += "<br/>" + oid.c;
+                if (oid.w) s += "<br/>(warning!)";
+            }
+        }
+    }
+    value.innerHTML = s;
+    node.appendChild(value);
+    var sub = DOM.tag("div", "sub");
+    if (this.sub !== null) {
+        for (var i = 0, max = this.sub.length; i < max; ++i)
+            sub.appendChild(this.sub[i].toDOM());
+    }
+    node.appendChild(sub);
+    head.onclick = function () {
+        node.className = (node.className == "node collapsed") ? "node" : "node collapsed";
+    };
+    return node;
+};
+ASN1.prototype.posStart = function () {
+    return this.stream.pos;
+};
+ASN1.prototype.posContent = function () {
+    return this.stream.pos + this.header;
+};
+ASN1.prototype.posEnd = function () {
+    return this.stream.pos + this.header + Math.abs(this.length);
+};
+ASN1.prototype.fakeHover = function (current) {
+    this.node.className += " hover";
+    if (current)
+        this.head.className += " hover";
+};
+ASN1.prototype.fakeOut = function (current) {
+    var re = / ?hover/;
+    this.node.className = this.node.className.replace(re, "");
+    if (current)
+        this.head.className = this.head.className.replace(re, "");
+};
+ASN1.prototype.toHexDOM_sub = function (node, className, stream, start, end) {
+    if (start >= end)
+        return;
+    var sub = DOM.tag("span", className);
+    sub.appendChild(DOM.text(
+        stream.hexDump(start, end)));
+    node.appendChild(sub);
+};
+ASN1.prototype.toHexDOM = function (root) {
+    var node = DOM.tag("span", "hex");
+    if (root === undefined) root = node;
+    this.head.hexNode = node;
+    this.head.onmouseover = function () { this.hexNode.className = "hexCurrent"; };
+    this.head.onmouseout  = function () { this.hexNode.className = "hex"; };
+    node.asn1 = this;
+    node.onmouseover = function () {
+        var current = !root.selected;
+        if (current) {
+            root.selected = this.asn1;
+            this.className = "hexCurrent";
+        }
+        this.asn1.fakeHover(current);
+    };
+    node.onmouseout  = function () {
+        var current = (root.selected == this.asn1);
+        this.asn1.fakeOut(current);
+        if (current) {
+            root.selected = null;
+            this.className = "hex";
+        }
+    };
+    this.toHexDOM_sub(node, "tag", this.stream, this.posStart(), this.posStart() + 1);
+    this.toHexDOM_sub(node, (this.length >= 0) ? "dlen" : "ulen", this.stream, this.posStart() + 1, this.posContent());
+    if (this.sub === null)
+        node.appendChild(DOM.text(
+            this.stream.hexDump(this.posContent(), this.posEnd())));
+    else if (this.sub.length > 0) {
+        var first = this.sub[0];
+        var last = this.sub[this.sub.length - 1];
+        this.toHexDOM_sub(node, "intro", this.stream, this.posContent(), first.posStart());
+        for (var i = 0, max = this.sub.length; i < max; ++i)
+            node.appendChild(this.sub[i].toHexDOM(root));
+        this.toHexDOM_sub(node, "outro", this.stream, last.posEnd(), this.posEnd());
+    }
+    return node;
+};
+ASN1.prototype.toHexString = function (root) {
+    return this.stream.hexDump(this.posStart(), this.posEnd(), true);
+};
+ASN1.decodeLength = function (stream) {
+    var buf = stream.get(),
+        len = buf & 0x7F;
+    if (len == buf)
+        return len;
+    if (len > 3)
+        throw "Length over 24 bits not supported at position " + (stream.pos - 1);
+    if (len === 0)
+        return -1; // undefined
+    buf = 0;
+    for (var i = 0; i < len; ++i)
+        buf = (buf << 8) | stream.get();
+    return buf;
+};
+ASN1.hasContent = function (tag, len, stream) {
+    if (tag & 0x20) // constructed
+        return true;
+    if ((tag < 0x03) || (tag > 0x04))
+        return false;
+    var p = new Stream(stream);
+    if (tag == 0x03) p.get(); // BitString unused bits, must be in [0, 7]
+    var subTag = p.get();
+    if ((subTag >> 6) & 0x01) // not (universal or context)
+        return false;
+    try {
+        var subLength = ASN1.decodeLength(p);
+        return ((p.pos - stream.pos) + subLength == len);
+    } catch (exception) {
+        return false;
+    }
+};
+ASN1.decode = function (stream) {
+    if (!(stream instanceof Stream))
+        stream = new Stream(stream, 0);
+    var streamStart = new Stream(stream),
+        tag = stream.get(),
+        len = ASN1.decodeLength(stream),
+        header = stream.pos - streamStart.pos,
+        sub = null;
+    if (ASN1.hasContent(tag, len, stream)) {
+        // it has content, so we decode it
+        var start = stream.pos;
+        if (tag == 0x03) stream.get(); // skip BitString unused bits, must be in [0, 7]
+        sub = [];
+        if (len >= 0) {
+            // definite length
+            var end = start + len;
+            while (stream.pos < end)
+                sub[sub.length] = ASN1.decode(stream);
+            if (stream.pos != end)
+                throw "Content size is not correct for container starting at offset " + start;
+        } else {
+            // undefined length
+            try {
+                for (;;) {
+                    var s = ASN1.decode(stream);
+                    if (s.tag === 0)
+                        break;
+                    sub[sub.length] = s;
+                }
+                len = start - stream.pos;
+            } catch (e) {
+                throw "Exception while decoding undefined length content: " + e;
+            }
+        }
+    } else
+        stream.pos += len; // skip content
+    return new ASN1(streamStart, header, len, tag, sub);
+};
+ASN1.test = function () {
+    var test = [
+        { value: [0x27],                   expected: 0x27     },
+        { value: [0x81, 0xC9],             expected: 0xC9     },
+        { value: [0x83, 0xFE, 0xDC, 0xBA], expected: 0xFEDCBA }
+    ];
+    for (var i = 0, max = test.length; i < max; ++i) {
+        var pos = 0,
+            stream = new Stream(test[i].value, 0),
+            res = ASN1.decodeLength(stream);
+        if (res != test[i].expected)
+            document.write("In test[" + i + "] expected " + test[i].expected + " got " + res + "\n");
+    }
+};
+
+// export globals
+window.ASN1 = ASN1;
+})();
+/**
+ * Retrieve the hexadecimal value (as a string) of the current ASN.1 element
+ * @returns {string}
+ * @public
+ */
+ASN1.prototype.getHexStringValue = function () {
+  var hexString = this.toHexString();
+  var offset = this.header * 2;
+  var length = this.length * 2;
+  return hexString.substr(offset, length);
+};
+
+/**
+ * Method to parse a pem encoded string containing both a public or private key.
+ * The method will translate the pem encoded string in a der encoded string and
+ * will parse private key and public key parameters. This method accepts public key
+ * in the rsaencryption pkcs #1 format (oid: 1.2.840.113549.1.1.1).
+ *
+ * @todo Check how many rsa formats use the same format of pkcs #1.
+ *
+ * The format is defined as:
+ * PublicKeyInfo ::= SEQUENCE {
+ *   algorithm       AlgorithmIdentifier,
+ *   PublicKey       BIT STRING
+ * }
+ * Where AlgorithmIdentifier is:
+ * AlgorithmIdentifier ::= SEQUENCE {
+ *   algorithm       OBJECT IDENTIFIER,     the OID of the enc algorithm
+ *   parameters      ANY DEFINED BY algorithm OPTIONAL (NULL for PKCS #1)
+ * }
+ * and PublicKey is a SEQUENCE encapsulated in a BIT STRING
+ * RSAPublicKey ::= SEQUENCE {
+ *   modulus           INTEGER,  -- n
+ *   publicExponent    INTEGER   -- e
+ * }
+ * it's possible to examine the structure of the keys obtained from openssl using
+ * an asn.1 dumper as the one used here to parse the components: http://lapo.it/asn1js/
+ * @argument {string} pem the pem encoded string, can include the BEGIN/END header/footer
+ * @private
+ */
+RSAKey.prototype.parseKey = function (pem) {
+  try {
+    var modulus = 0;
+    var public_exponent = 0;
+    var reHex = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
+    var der = reHex.test(pem) ? Hex.decode(pem) : Base64.unarmor(pem);
+    var asn1 = ASN1.decode(der);
+
+    //Fixes a bug with OpenSSL 1.0+ private keys
+    if(asn1.sub.length === 3){
+        asn1 = asn1.sub[2].sub[0];
+    }
+    if (asn1.sub.length === 9) {
+
+      // Parse the private key.
+      modulus = asn1.sub[1].getHexStringValue(); //bigint
+      this.n = parseBigInt(modulus, 16);
+
+      public_exponent = asn1.sub[2].getHexStringValue(); //int
+      this.e = parseInt(public_exponent, 16);
+
+      var private_exponent = asn1.sub[3].getHexStringValue(); //bigint
+      this.d = parseBigInt(private_exponent, 16);
+
+      var prime1 = asn1.sub[4].getHexStringValue(); //bigint
+      this.p = parseBigInt(prime1, 16);
+
+      var prime2 = asn1.sub[5].getHexStringValue(); //bigint
+      this.q = parseBigInt(prime2, 16);
+
+      var exponent1 = asn1.sub[6].getHexStringValue(); //bigint
+      this.dmp1 = parseBigInt(exponent1, 16);
+
+      var exponent2 = asn1.sub[7].getHexStringValue(); //bigint
+      this.dmq1 = parseBigInt(exponent2, 16);
+
+      var coefficient = asn1.sub[8].getHexStringValue(); //bigint
+      this.coeff = parseBigInt(coefficient, 16);
+
+    }
+    else if (asn1.sub.length === 2) {
+
+      // Parse the public key.
+      var bit_string = asn1.sub[1];
+      var sequence = bit_string.sub[0];
+
+      modulus = sequence.sub[0].getHexStringValue();
+      this.n = parseBigInt(modulus, 16);
+      public_exponent = sequence.sub[1].getHexStringValue();
+      this.e = parseInt(public_exponent, 16);
+
+    }
+    else {
+      return false;
+    }
+    return true;
+  }
+  catch (ex) {
+    return false;
+  }
+};
+
+/**
+ * Translate rsa parameters in a hex encoded string representing the rsa key.
+ *
+ * The translation follow the ASN.1 notation :
+ * RSAPrivateKey ::= SEQUENCE {
+ *   version           Version,
+ *   modulus           INTEGER,  -- n
+ *   publicExponent    INTEGER,  -- e
+ *   privateExponent   INTEGER,  -- d
+ *   prime1            INTEGER,  -- p
+ *   prime2            INTEGER,  -- q
+ *   exponent1         INTEGER,  -- d mod (p1)
+ *   exponent2         INTEGER,  -- d mod (q-1)
+ *   coefficient       INTEGER,  -- (inverse of q) mod p
+ * }
+ * @returns {string}  DER Encoded String representing the rsa private key
+ * @private
+ */
+RSAKey.prototype.getPrivateBaseKey = function () {
+  var options = {
+    'array': [
+      new KJUR.asn1.DERInteger({'int': 0}),
+      new KJUR.asn1.DERInteger({'bigint': this.n}),
+      new KJUR.asn1.DERInteger({'int': this.e}),
+      new KJUR.asn1.DERInteger({'bigint': this.d}),
+      new KJUR.asn1.DERInteger({'bigint': this.p}),
+      new KJUR.asn1.DERInteger({'bigint': this.q}),
+      new KJUR.asn1.DERInteger({'bigint': this.dmp1}),
+      new KJUR.asn1.DERInteger({'bigint': this.dmq1}),
+      new KJUR.asn1.DERInteger({'bigint': this.coeff})
+    ]
+  };
+  var seq = new KJUR.asn1.DERSequence(options);
+  return seq.getEncodedHex();
+};
+
+/**
+ * base64 (pem) encoded version of the DER encoded representation
+ * @returns {string} pem encoded representation without header and footer
+ * @public
+ */
+RSAKey.prototype.getPrivateBaseKeyB64 = function () {
+  return hex2b64(this.getPrivateBaseKey());
+};
+
+/**
+ * Translate rsa parameters in a hex encoded string representing the rsa public key.
+ * The representation follow the ASN.1 notation :
+ * PublicKeyInfo ::= SEQUENCE {
+ *   algorithm       AlgorithmIdentifier,
+ *   PublicKey       BIT STRING
+ * }
+ * Where AlgorithmIdentifier is:
+ * AlgorithmIdentifier ::= SEQUENCE {
+ *   algorithm       OBJECT IDENTIFIER,     the OID of the enc algorithm
+ *   parameters      ANY DEFINED BY algorithm OPTIONAL (NULL for PKCS #1)
+ * }
+ * and PublicKey is a SEQUENCE encapsulated in a BIT STRING
+ * RSAPublicKey ::= SEQUENCE {
+ *   modulus           INTEGER,  -- n
+ *   publicExponent    INTEGER   -- e
+ * }
+ * @returns {string} DER Encoded String representing the rsa public key
+ * @private
+ */
+RSAKey.prototype.getPublicBaseKey = function () {
+  var options = {
+    'array': [
+      new KJUR.asn1.DERObjectIdentifier({'oid': '1.2.840.113549.1.1.1'}), //RSA Encryption pkcs #1 oid
+      new KJUR.asn1.DERNull()
+    ]
+  };
+  var first_sequence = new KJUR.asn1.DERSequence(options);
+
+  options = {
+    'array': [
+      new KJUR.asn1.DERInteger({'bigint': this.n}),
+      new KJUR.asn1.DERInteger({'int': this.e})
+    ]
+  };
+  var second_sequence = new KJUR.asn1.DERSequence(options);
+
+  options = {
+    'hex': '00' + second_sequence.getEncodedHex()
+  };
+  var bit_string = new KJUR.asn1.DERBitString(options);
+
+  options = {
+    'array': [
+      first_sequence,
+      bit_string
+    ]
+  };
+  var seq = new KJUR.asn1.DERSequence(options);
+  return seq.getEncodedHex();
+};
+
+/**
+ * base64 (pem) encoded version of the DER encoded representation
+ * @returns {string} pem encoded representation without header and footer
+ * @public
+ */
+RSAKey.prototype.getPublicBaseKeyB64 = function () {
+  return hex2b64(this.getPublicBaseKey());
+};
+
+/**
+ * wrap the string in block of width chars. The default value for rsa keys is 64
+ * characters.
+ * @param {string} str the pem encoded string without header and footer
+ * @param {Number} [width=64] - the length the string has to be wrapped at
+ * @returns {string}
+ * @private
+ */
+RSAKey.prototype.wordwrap = function (str, width) {
+  width = width || 64;
+  if (!str) {
+    return str;
+  }
+  var regex = '(.{1,' + width + '})( +|$\n?)|(.{1,' + width + '})';
+  return str.match(RegExp(regex, 'g')).join('\n');
+};
+
+/**
+ * Retrieve the pem encoded private key
+ * @returns {string} the pem encoded private key with header/footer
+ * @public
+ */
+RSAKey.prototype.getPrivateKey = function () {
+  var key = "-----BEGIN RSA PRIVATE KEY-----\n";
+  key += this.wordwrap(this.getPrivateBaseKeyB64()) + "\n";
+  key += "-----END RSA PRIVATE KEY-----";
+  return key;
+};
+
+/**
+ * Retrieve the pem encoded public key
+ * @returns {string} the pem encoded public key with header/footer
+ * @public
+ */
+RSAKey.prototype.getPublicKey = function () {
+  var key = "-----BEGIN PUBLIC KEY-----\n";
+  key += this.wordwrap(this.getPublicBaseKeyB64()) + "\n";
+  key += "-----END PUBLIC KEY-----";
+  return key;
+};
+
+/**
+ * Check if the object contains the necessary parameters to populate the rsa modulus
+ * and public exponent parameters.
+ * @param {Object} [obj={}] - An object that may contain the two public key
+ * parameters
+ * @returns {boolean} true if the object contains both the modulus and the public exponent
+ * properties (n and e)
+ * @todo check for types of n and e. N should be a parseable bigInt object, E should
+ * be a parseable integer number
+ * @private
+ */
+RSAKey.prototype.hasPublicKeyProperty = function (obj) {
+  obj = obj || {};
+  return (
+    obj.hasOwnProperty('n') &&
+    obj.hasOwnProperty('e')
+  );
+};
+
+/**
+ * Check if the object contains ALL the parameters of an RSA key.
+ * @param {Object} [obj={}] - An object that may contain nine rsa key
+ * parameters
+ * @returns {boolean} true if the object contains all the parameters needed
+ * @todo check for types of the parameters all the parameters but the public exponent
+ * should be parseable bigint objects, the public exponent should be a parseable integer number
+ * @private
+ */
+RSAKey.prototype.hasPrivateKeyProperty = function (obj) {
+  obj = obj || {};
+  return (
+    obj.hasOwnProperty('n') &&
+    obj.hasOwnProperty('e') &&
+    obj.hasOwnProperty('d') &&
+    obj.hasOwnProperty('p') &&
+    obj.hasOwnProperty('q') &&
+    obj.hasOwnProperty('dmp1') &&
+    obj.hasOwnProperty('dmq1') &&
+    obj.hasOwnProperty('coeff')
+  );
+};
+
+/**
+ * Parse the properties of obj in the current rsa object. Obj should AT LEAST
+ * include the modulus and public exponent (n, e) parameters.
+ * @param {Object} obj - the object containing rsa parameters
+ * @private
+ */
+RSAKey.prototype.parsePropertiesFrom = function (obj) {
+  this.n = obj.n;
+  this.e = obj.e;
+
+  if (obj.hasOwnProperty('d')) {
+    this.d = obj.d;
+    this.p = obj.p;
+    this.q = obj.q;
+    this.dmp1 = obj.dmp1;
+    this.dmq1 = obj.dmq1;
+    this.coeff = obj.coeff;
+  }
+};
+
+/**
+ * Create a new JSEncryptRSAKey that extends Tom Wu's RSA key object.
+ * This object is just a decorator for parsing the key parameter
+ * @param {string|Object} key - The key in string format, or an object containing
+ * the parameters needed to build a RSAKey object.
+ * @constructor
+ */
+var JSEncryptRSAKey = function (key) {
+  // Call the super constructor.
+  RSAKey.call(this);
+  // If a key key was provided.
+  if (key) {
+    // If this is a string...
+    if (typeof key === 'string') {
+      this.parseKey(key);
+    }
+    else if (
+      this.hasPrivateKeyProperty(key) ||
+      this.hasPublicKeyProperty(key)
+    ) {
+      // Set the values for the key.
+      this.parsePropertiesFrom(key);
+    }
+  }
+};
+
+// Derive from RSAKey.
+JSEncryptRSAKey.prototype = new RSAKey();
+
+// Reset the contructor.
+JSEncryptRSAKey.prototype.constructor = JSEncryptRSAKey;
+
+
+/**
+ *
+ * @param {Object} [options = {}] - An object to customize JSEncrypt behaviour
+ * possible parameters are:
+ * - default_key_size        {number}  default: 1024 the key size in bit
+ * - default_public_exponent {string}  default: '010001' the hexadecimal representation of the public exponent
+ * - log                     {boolean} default: false whether log warn/error or not
+ * @constructor
+ */
+var JSEncrypt = function (options) {
+  options = options || {};
+  this.default_key_size = parseInt(options.default_key_size) || 1024;
+  this.default_public_exponent = options.default_public_exponent || '010001'; //65537 default openssl public exponent for rsa key type
+  this.log = options.log || false;
+  // The private and public key.
+  this.key = null;
+};
+
+/**
+ * Method to set the rsa key parameter (one method is enough to set both the public
+ * and the private key, since the private key contains the public key paramenters)
+ * Log a warning if logs are enabled
+ * @param {Object|string} key the pem encoded string or an object (with or without header/footer)
+ * @public
+ */
+JSEncrypt.prototype.setKey = function (key) {
+  if (this.log && this.key) {
+    console.warn('A key was already set, overriding existing.');
+  }
+  this.key = new JSEncryptRSAKey(key);
+};
+
+/**
+ * Proxy method for setKey, for api compatibility
+ * @see setKey
+ * @public
+ */
+JSEncrypt.prototype.setPrivateKey = function (privkey) {
+  // Create the key.
+  this.setKey(privkey);
+};
+
+/**
+ * Proxy method for setKey, for api compatibility
+ * @see setKey
+ * @public
+ */
+JSEncrypt.prototype.setPublicKey = function (pubkey) {
+  // Sets the public key.
+  this.setKey(pubkey);
+};
+
+/**
+ * Proxy method for RSAKey object's decrypt, decrypt the string using the private
+ * components of the rsa key object. Note that if the object was not set will be created
+ * on the fly (by the getKey method) using the parameters passed in the JSEncrypt constructor
+ * @param {string} string base64 encoded crypted string to decrypt
+ * @return {string} the decrypted string
+ * @public
+ */
+JSEncrypt.prototype.decrypt = function (string) {
+  // Return the decrypted string.
+  try {
+    return this.getKey().decrypt(b64tohex(string));
+  }
+  catch (ex) {
+    return false;
+  }
+};
+
+/**
+ * Proxy method for RSAKey object's encrypt, encrypt the string using the public
+ * components of the rsa key object. Note that if the object was not set will be created
+ * on the fly (by the getKey method) using the parameters passed in the JSEncrypt constructor
+ * @param {string} string the string to encrypt
+ * @return {string} the encrypted string encoded in base64
+ * @public
+ */
+JSEncrypt.prototype.encrypt = function (string) {
+  // Return the encrypted string.
+  try {
+    return hex2b64(this.getKey().encrypt(string));
+  }
+  catch (ex) {
+    return false;
+  }
+};
+
+/**
+ * Getter for the current JSEncryptRSAKey object. If it doesn't exists a new object
+ * will be created and returned
+ * @param {callback} [cb] the callback to be called if we want the key to be generated
+ * in an async fashion
+ * @returns {JSEncryptRSAKey} the JSEncryptRSAKey object
+ * @public
+ */
+JSEncrypt.prototype.getKey = function (cb) {
+  // Only create new if it does not exist.
+  if (!this.key) {
+    // Get a new private key.
+    this.key = new JSEncryptRSAKey();
+    if (cb && {}.toString.call(cb) === '[object Function]') {
+      this.key.generateAsync(this.default_key_size, this.default_public_exponent, cb);
+      return;
+    }
+    // Generate the key.
+    this.key.generate(this.default_key_size, this.default_public_exponent);
+  }
+  return this.key;
+};
+
+/**
+ * Returns the pem encoded representation of the private key
+ * If the key doesn't exists a new key will be created
+ * @returns {string} pem encoded representation of the private key WITH header and footer
+ * @public
+ */
+JSEncrypt.prototype.getPrivateKey = function () {
+  // Return the private representation of this key.
+  return this.getKey().getPrivateKey();
+};
+
+/**
+ * Returns the pem encoded representation of the private key
+ * If the key doesn't exists a new key will be created
+ * @returns {string} pem encoded representation of the private key WITHOUT header and footer
+ * @public
+ */
+JSEncrypt.prototype.getPrivateKeyB64 = function () {
+  // Return the private representation of this key.
+  return this.getKey().getPrivateBaseKeyB64();
+};
+
+
+/**
+ * Returns the pem encoded representation of the public key
+ * If the key doesn't exists a new key will be created
+ * @returns {string} pem encoded representation of the public key WITH header and footer
+ * @public
+ */
+JSEncrypt.prototype.getPublicKey = function () {
+  // Return the private representation of this key.
+  return this.getKey().getPublicKey();
+};
+
+/**
+ * Returns the pem encoded representation of the public key
+ * If the key doesn't exists a new key will be created
+ * @returns {string} pem encoded representation of the public key WITHOUT header and footer
+ * @public
+ */
+JSEncrypt.prototype.getPublicKeyB64 = function () {
+  // Return the private representation of this key.
+  return this.getKey().getPublicBaseKeyB64();
+};
+
+
+  JSEncrypt.version = '2.3.1';
+  exports.JSEncrypt = JSEncrypt;
+});

@@ -7,10 +7,88 @@ angular.module('App').controller('control_loginwithpass', function() {
 
 	loginWithPassSession.nglogin = function()
 	{
-		console.log(JSON.stringify(loginWithPassSession));
-		console.log(loginWithPassSession.countryCode);
-		loginwithpass(loginWithPassSession.countryCode,loginWithPassSession.countryCode+loginWithPassSession.phone,loginWithPassSession.password);
+		loginWithPassSession.getPublicKey();
 	};
+	
+	loginWithPassSession.getPublicKey=function()
+	{
+		ajaxGetRsaPublicKey(loginWithPassSession.countryCode,loginWithPassSession.countryCode+loginWithPassSession.phone,function success(result,authCode)
+		{
+			if(result==0)
+			{
+				loginWithPassSession.transid=authCode.transid;
+				loginWithPassSession.publicKey=authCode.publicKey;
+				loginWithPassSession.random = authCode.random;
+				loginWithPassSession.crcType = authCode.crcType;
+                
+				var encrypt = new JSEncrypt();
+				console.log("**************");
+				console.log(loginWithPassSession.random);
+				console.log(loginWithPassSession.password);
+				
+				 encrypt.setPublicKey(loginWithPassSession.publicKey);
+				 var encrypted = encrypt.encrypt(loginWithPassSession.random+loginWithPassSession.password);
+			
+				console.log(JSON.stringify(loginWithPassSession));
+				console.log(")))))))))))))))))))))");
+				console.log(encrypted);
+				console.log("((((((((((((((((((((((");
+				ajaxLoginWithPass(loginWithPassSession.transid,loginWithPassSession.countryCode,loginWithPassSession.countryCode+loginWithPassSession.phone,encrypted);
+
+			}
+		},
+		function error(xhr,testStatus){
+			
+		});		
+	};
+
+	
+	
+  });
+
+angular.module('App').controller('control_loginwithcode', function() {
+	var loginWithPassSession = this;
+	loginWithPassSession.countryCode="0086";
+	loginWithPassSession.phone="18612131415";
+	loginWithPassSession.password="password";	
+
+	loginWithPassSession.nglogin = function()
+	{
+		loginWithPassSession.getPublicKey();
+	};
+	
+	loginWithPassSession.getPublicKey=function()
+	{
+		ajaxGetRsaPublicKey(loginWithPassSession.countryCode,loginWithPassSession.countryCode+loginWithPassSession.phone,function success(result,authCode)
+		{
+			if(result==0)
+			{
+				loginWithPassSession.transid=authCode.transid;
+				loginWithPassSession.publicKey=authCode.publicKey;
+				loginWithPassSession.random = authCode.random;
+				loginWithPassSession.crcType = authCode.crcType;
+                
+				var encrypt = new JSEncrypt();
+				console.log("**************");
+				console.log(loginWithPassSession.random);
+				console.log(loginWithPassSession.password);
+				
+				 encrypt.setPublicKey(loginWithPassSession.publicKey);
+				 var encrypted = encrypt.encrypt(loginWithPassSession.random+loginWithPassSession.password);
+			
+				console.log(JSON.stringify(loginWithPassSession));
+				console.log(")))))))))))))))))))))");
+				console.log(encrypted);
+				console.log("((((((((((((((((((((((");
+				ajaxLoginWithPass(loginWithPassSession.transid,loginWithPassSession.countryCode,loginWithPassSession.countryCode+loginWithPassSession.phone,encrypted);
+
+			}
+		},
+		function error(xhr,testStatus){
+			
+		});		
+	};
+
 	
 	
   });
@@ -23,7 +101,10 @@ angular.module('App').controller('control_register', function() {
 
 	registerSession.register = function()
 	{
-		ajaxRegisterWithAuth(registerSession.countryCode,registerSession.countryCode+registerSession.phone,registerSession.password,registerSession.transid,registerSession.authcode);
+		 var encrypt = new JSEncrypt();
+		 encrypt.setPublicKey(registerSession.publicKey);
+		 var encrypted = encrypt.encrypt(registerSession.random+registerSession.password);
+		ajaxRegisterWithAuth(registerSession.countryCode,registerSession.countryCode+registerSession.phone,encrypted,registerSession.transid,registerSession.authcode);
 	};
 	registerSession.getAuthCode=function()
 	{
@@ -32,6 +113,10 @@ angular.module('App').controller('control_register', function() {
 			if(result==0)
 			{
 				registerSession.transid=authCode.transid;
+				registerSession.publicKey=authCode.publicKey;
+				registerSession.random = authCode.random;
+				registerSession.crcType = authCode.crcType;
+
 			}
 		},
 		function error(xhr,testStatus){

@@ -1,6 +1,8 @@
 package com.company.security.domain;
 
 import java.io.Serializable;
+import java.security.KeyPair;
+import java.security.PrivateKey;
 
 /**
  * 用户接入的各种上下文信息
@@ -8,6 +10,9 @@ import java.io.Serializable;
  *
  */
 public class AccessContext implements Serializable{
+	
+	private PrivateKey rsaPrivateKey;
+	
 	private String transid;
 	/**
 	 * 登录成功的用户静态信息
@@ -58,6 +63,17 @@ public class AccessContext implements Serializable{
 
 	public void setTransid(String transid) {
 		this.transid = transid;
+	}
+	
+	
+
+	
+	public PrivateKey getRsaPrivateKey() {
+		return rsaPrivateKey;
+	}
+
+	public void setRsaPrivateKey(PrivateKey rsaPrivateKey) {
+		this.rsaPrivateKey = rsaPrivateKey;
 	}
 
 	@Override

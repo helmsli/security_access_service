@@ -1,5 +1,9 @@
 package com.company.security.controller.rest;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import org.apache.commons.codec.binary.Base64;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.security.Const.LoginServiceConst;
+import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.AccessContext;
 import com.company.security.domain.RequestLogin;
 import com.company.security.domain.RequestModifyPassword;
@@ -23,6 +28,7 @@ import com.company.security.domain.sms.SmsContext;
 import com.company.security.domain.sms.AuthCode;
 import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
+import com.company.security.utils.RSAUtils;
 import com.xinwei.nnl.common.domain.ProcessResult;
 
 
@@ -49,7 +55,10 @@ public class UserLoginController {
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
-			
+			//设置秘钥
+			PrivateKey rsaPrivateKey = (PrivateKey) request.getSession().getAttribute(SessionKeyConst.Rsa_private_key);
+			accessContext.setRsaPrivateKey(rsaPrivateKey);
+			accessContext.setTransid(loginUserSession.getTransid());
 			//设置电话号码，transid，authcode
 			AuthCode authCode = new AuthCode();
 			authCode.setTransid(loginUserSession.getTransid());
@@ -72,12 +81,14 @@ public class UserLoginController {
 	 * @param loginUserSession -- phone,password
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/loginByPass")
-	public  ProcessResult loginByPass(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
+	@RequestMapping(method = {RequestMethod.POST,RequestMethod.GET},value = "/{countryCode}/loginByPass")
+	public  ProcessResult loginByPass(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
+			PrivateKey rsaPrivateKey = (PrivateKey) request.getSession().getAttribute(SessionKeyConst.Rsa_private_key);
+			accessContext.setRsaPrivateKey(rsaPrivateKey);
 			accessContext.setTransid(loginUserSession.getTransid());
 			accessContext.setLoginUserSession(loginUserSession);
 			int iRet= userLoginService.loginUserManual(accessContext, countryCode, loginUserSession.getLoginId(), loginUserSession.getPassword(),loginUserSession);
@@ -127,13 +138,24 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/getSmsValid")
-	public  ProcessResult getSmsValidCode(@RequestBody AuthCode AuthCode) {
+	public  ProcessResult getSmsValidCode(HttpServletRequest request,@RequestBody AuthCode authCode) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
-			AuthCode smsValidCode =AuthCode;
+			AuthCode smsValidCode =authCode;
+			//禁止客户端的transid
+			smsValidCode.setTransid("");
+			
 			SmsContext smsContext  = new SmsContext();
-			int iRet = smsValidCodeService.sendValidCodeBySms(smsContext, smsValidCode);
+			smsContext.setSmsValidCode(smsValidCode);
+			//申请随机数
+			int iRet = this.userLoginService.createRandom(smsContext, smsValidCode.getPhone());
+			//发送短信认证码
+			 iRet = smsValidCodeService.sendValidCodeBySms(smsContext, smsValidCode);
+			//构造秘钥
+			 String base64PublicKey = getBase64PublicKey(request,smsValidCode.getPhone());
+			smsContext.getSmsValidCode().setCrcType(AuthCode.CrcType_RSA);
+			smsContext.getSmsValidCode().setPublicKey(base64PublicKey);
 			processResult.setRetCode(iRet);
 			smsContext.getSmsValidCode().setAuthCode("");
 			processResult.setResponseInfo(smsContext.getSmsValidCode());
@@ -150,15 +172,78 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/getRandom")
-	public  ProcessResult getRandom(@RequestBody AuthCode AuthCode) {
+	public  ProcessResult getRandom(@RequestBody AuthCode authCode) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
-			AuthCode smsValidCode =AuthCode;
+			AuthCode smsValidCode =authCode;
 			SmsContext smsContext  = new SmsContext();
-			int iRet = this.userLoginService.getRandom(smsContext, smsValidCode.getPhone());
+			smsContext.setSmsValidCode(smsValidCode);
+			int iRet = this.userLoginService.createRandom(smsContext, smsValidCode.getPhone());
 			processResult.setRetCode(iRet);
 			processResult.setResponseInfo(smsContext.getSmsValidCode());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param phone
+	 * @return
+	 */
+	protected String getBase64PublicKey(HttpServletRequest request,String phone)
+	{
+		try {
+			PublicKey publicKey = (PublicKey)request.getSession().getAttribute(SessionKeyConst.Rsa_public_key);
+			if(publicKey==null)
+			{
+				KeyPair keyPair= this.userLoginService.getRsaInfo(phone);
+				if(keyPair==null)
+				{
+					keyPair= RSAUtils.generateKeyPair();
+				}
+				PrivateKey privateKey = keyPair.getPrivate();
+				publicKey = keyPair.getPublic();
+				request.getSession().setAttribute(SessionKeyConst.Rsa_private_key, privateKey);
+				request.getSession().setAttribute(SessionKeyConst.Rsa_public_key, publicKey);
+				
+			}
+			return Base64.encodeBase64String(publicKey.getEncoded());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	/**
+	 * 获取加密的公钥
+	 * @param request
+	 * @param AuthCode
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST,value = "/getRsaPubKey")
+	public  ProcessResult getRSaPubkey(HttpServletRequest request,@RequestBody AuthCode authCode) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AuthCode smsValidCode =authCode;
+			SmsContext smsContext  = new SmsContext();
+			smsContext.setSmsValidCode(authCode);
+			int iRet = this.userLoginService.createRandom(smsContext, smsValidCode.getPhone());
+			//用于加密的transid和随机数
+			//smsValidCode.setTransid(smsContext.getSmsValidCode().getTransid());
+			//smsValidCode.setSendSeqno(smsContext.getSmsValidCode().getAuthCode());
+			
+			String base64PublicKey = getBase64PublicKey(request,smsValidCode.getPhone());
+			//加密的公钥
+			smsValidCode.setPublicKey(base64PublicKey);
+			processResult.setRetCode(LoginServiceConst.RESULT_Success);
+			processResult.setResponseInfo(smsValidCode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

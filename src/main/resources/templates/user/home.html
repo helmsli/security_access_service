@@ -56,6 +56,46 @@
 						</div>
 						<!-- / .panel -->
 					</div>
+					 <!-- the login with code  -->
+					<div  ng-controller="control_loginwithcode as loginWithCodeSession" class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+						<div class="panel">
+							<div class="panel-heading">
+								<h5 class="panel-title">Login with password</h5>
+							</div>
+							<div class="panel-body">
+								<div class="row clearfix">
+		                            <div class="col-md-12">
+		                            	<form action="#" method="post" id="theForm" class="form-horizontal" >
+			                            	<div class="form-group">
+			                                	<label>Country Code：</label>
+			                                    <div class="form-line">
+			                                        <input type="text" class="form-control" ng-model="loginWithCodeSession.countryCode" placeholder="请输入区号" name="countryCode"   data-tip="请输入区号"/>
+			                                    </div>
+			                                </div>
+			                             	<div class="form-group">
+			                                    <label>Phone：</label>
+				                                <div class="form-line">
+				                                        <input type="text" class="form-control" ng-model="loginWithCodeSession.phone" placeholder="请输入全号码" name="userName"  data-tip="请输入号码" />
+				                                </div>
+			                                </div>
+			                                
+			                                <div class="form-group">
+			                                	<label>Password：</label>
+			                                    <div class="form-line">
+			                                        <input type="password" class="form-control" placeholder="请输入密码" ng-model="loginWithCodeSession.password" data-tip="请输入密码" />
+			                                    </div>
+			                                </div>
+			                                
+			                                <button type="button" class="btn btn-success waves-effect m-w-80" ng-click="loginWithCodeSession.nglogin()" >Login</button>
+			                         
+			                            </form>
+		                            </div>
+		                       </div>
+							</div>
+						</div>
+						<!-- / .panel -->
+					</div>
+					<!-- end of the login with code -->
 					<!-- the second -->
 					<div ng-controller="control_register as registerSession" class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
 						<div class="panel">
@@ -104,6 +144,57 @@
 						</div>
 						<!-- / .panel -->
 					</div>
+				    <!-- end of send -->
+				    <!-- the third -->
+					<div ng-controller="control_loginwithcode as registerSession" class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+						<div class="panel">
+							<div class="panel-heading">
+								<h5 class="panel-title">Register with code
+								</h5>
+							</div>
+							<div class="panel-body">
+								<div class="row clearfix">
+		                           <form action="#" method="post" id="theForm" class="form-horizontal" >
+			                            	<div class="form-group">
+			                                	<label>Country Code：</label>
+			                                    <div class="form-line">
+			                                        <input type="text" class="form-control" ng-model="registerSession.countryCode" placeholder="请输入区号" name="countryCode"   data-tip="请输入区号"/>
+			                                    </div>
+			                                </div>
+			                             	<div class="form-group">
+			                                    <label>Phone：</label>
+				                                <div class="form-line">
+				                                        <input type="text" class="form-control" ng-model="registerSession.phone" placeholder="请输入号码" name="userName"  data-tip="请输入号码" />
+				                                </div>
+			                                </div>
+			                                
+			                                <div class="form-group">
+			                                	<label>Password：</label>
+			                                    <div class="form-line">
+			                                        <input type="password" class="form-control" placeholder="请输入密码" ng-model="registerSession.password" data-tip="请输入密码" />
+			                                    </div>
+			                                </div>
+			                                
+			                                <div class="form-group">
+			                                    <label>authCode：</label>
+				                                <div class="form-line">
+				                                        <input type="text" class="form-control" ng-model="registerSession.authcode" placeholder="请输入认证码" name="userName"  data-tip="请输入短信认证码" />
+				                                </div>
+			                                </div>
+			                                <button type="button" class="btn btn-success waves-effect m-w-80" ng-click="registerSession.getAuthCode()" >get authCode</button>
+			                         
+			                                <button type="button" class="btn btn-success waves-effect m-w-80" ng-click="registerSession.register()" >Register</button>
+			                         
+			                            </form>
+		                                
+		                       </div>
+		                        <!-- end of row -->     
+		                  </div>
+						</div>
+						<!-- / .panel -->
+					</div>
+				    <!-- end of third -->
+				    
 				</div>
 				<!-- / .row -->
 			</div>
@@ -115,6 +206,7 @@
     <!--图片上传示例-->
    <script src="../../js/jquery/jquery-3.2.1.min.js"></script>
 	<script src="../../js/angular/angular.min.js"></script>
+	<script src="../../js/encrypt/jsencrypt.min.js"></script>
 	
 	<script src="../../js/test/ajax.js"></script>
 	<script src="../../js/test/userAjax.js"></script>

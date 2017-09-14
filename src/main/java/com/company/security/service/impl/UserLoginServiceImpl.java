@@ -1,6 +1,8 @@
 package com.company.security.service.impl;
 
 import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.util.Calendar;
 
 import javax.annotation.Resource;
 
@@ -21,6 +23,7 @@ import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
 import com.company.security.service.SecurityUserCacheService;
 import com.company.security.service.SecurityUserService;
+import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityUserAlgorithm;
 @Service("userLoginService")
 public class UserLoginServiceImpl implements IUserLoginService {
@@ -62,7 +65,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	 */
 	private long startNewuserId=0;
 	
-	
+	/**
+	 * 本地的Rsakey生成器
+	 */
+	private KeyPair rsaKeyPair = RSAUtils.generateKeyPair();
 	
 	/**
 	 * 本地初始化的userid，如果cache出错，会使用这个变量
@@ -169,10 +175,34 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	protected String getCorrentPassword(AccessContext accessContext, String phone,String dbPassword)
 	{
 		
-		String random = getRandom(phone,accessContext.getTransid());
-		String correctPassword = SecurityUserAlgorithm.EncoderByMd5(random, dbPassword);
+		//不用MD5加密，仅仅用随机数加密
+		//String random = getRandom(phone,accessContext.getTransid());
+		//String correctPassword = SecurityUserAlgorithm.EncoderByMd5(random, dbPassword);
+		return dbPassword;
+	}
+	/**
+	 * 从客户端发送的密码中获取正确的密码
+	 * @param accessContext
+	 * @param phone
+	 * @param dbPassword
+	 * @return
+	 */
+	protected String getPasswordFromRsa(AccessContext accessContext, String phone,String clientPassword)
+	{
 		
-		return correctPassword;
+		String random = getRandom(phone,accessContext.getTransid());
+		PrivateKey privateKey = accessContext.getRsaPrivateKey();
+		String allClientPassword = RSAUtils.decrypt(clientPassword, privateKey);
+		if(allClientPassword.startsWith(random))
+		{
+			String initClientPassword =  allClientPassword.substring(random.length());
+			String correctPassword = SecurityUserAlgorithm.EncoderByMd5(dbUserKey, initClientPassword);
+		    return correctPassword;
+		}
+		else
+		{
+			return allClientPassword;
+		}
 	}
 	
 	/**
@@ -195,9 +225,9 @@ public class UserLoginServiceImpl implements IUserLoginService {
 				return bRet;
 			}
 			String correctPassword = getCorrentPassword(accessContext,phone,loginUser.getPassword());
-		
+			String clientPassword  = getPasswordFromRsa(accessContext,phone,password);
 			//如果密码不相等
-			if(!correctPassword.equalsIgnoreCase(password))
+			if(!correctPassword.equalsIgnoreCase(clientPassword))
 			{
 				return LoginServiceConst.RESULT_Error_PasswordError;
 			}
@@ -335,10 +365,13 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		SecurityUser securityUser =new SecurityUser();
 		securityUser.setPhone(phone);
 		securityUser.setPhoneccode(countryCode);
-		securityUser.setPassword(password);
+		String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
+		securityUser.setPassword(clientPassword);
 		securityUser.setUserId(this.createUserId());
 		securityUser.setPhoneverified(securityUser.verified_Success);
 		accessContext.setLoginUserInfo(securityUser.getLoginUser());
+		
+		securityUser.setCreatetime(Calendar.getInstance().getTime());
 		iRet = userMainDbService.registerUserByPhone(securityUser);
 		return iRet;
 	}
@@ -385,8 +418,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			if(iRet!=LoginServiceConst.RESULT_Success)
 			{
 				return iRet;
-			}
-					
+			}					
 			LoginUser  loginUser = accessContext.getLoginUserInfo();
 			return baseLogin(accessContext,loginUser,loginUserSession);
 		} catch (Exception e) {
@@ -495,10 +527,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		String[] transInfo = StringUtils.split(retStr, SecurityUserCacheKeyService.Key_prefix_Split);
 		if(transInfo.length==2)
 		{
-			AuthCode authCode = new AuthCode();
+			AuthCode authCode = smsContext.getSmsValidCode();
 			authCode.setTransid(transInfo[0]);
-			authCode.setAuthCode(transInfo[1]);
-			smsContext.setSmsValidCode(authCode);
+			authCode.setRandom(transInfo[1]);
+			//smsContext.setSmsValidCode(authCode);
 			return 0;
 		}
 		return -1;
@@ -518,10 +550,9 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	}
 
 	@Override
-	public KeyPair getRsaInfo(SmsContext smsContext, String phone) {
-		// TODO Auto-generated method stub
-		
-		return null;
+	public KeyPair getRsaInfo(String phone) {
+		// TODO Auto-generated method stub	     
+		return this.rsaKeyPair;
 	}
 
 	

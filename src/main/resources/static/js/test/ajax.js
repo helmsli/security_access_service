@@ -27,7 +27,14 @@ function ajaxPost(serverUrl,postData,funSuccess,funError)
 	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 	    beforeSend:function(xhr){
 	        console.log(xhr)
-	        console.log('发送前')
+	        console.log('发送前');
+	        var transid = sessionStorage.getItem("transid");
+			if(transid)
+			{
+				xhr.setRequestHeader('userTransid', transid);
+			}
+	        //xhr.setRequestHeader('Accept', 'text/plain; charset=utf-8');
+	       // xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 	    },
 	    /*success:function(data,textStatus,jqXHR){
 	        console.log(data)
