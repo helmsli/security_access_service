@@ -468,8 +468,9 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		int iRet = smsValidCodeService.checkValidCodeBySms(smsContext, validCode);
 		if(iRet == LoginServiceConst.RESULT_Success)
 		{	
-			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,password);
-			boolean bRet= userMainDbService.resetPasswordByPhone(phone, password, encodeMd5);
+			String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
+			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,clientPassword);
+			boolean bRet= userMainDbService.resetPasswordByPhone(phone, clientPassword, encodeMd5);
 			if(bRet)
 			{
 				return LoginServiceConst.RESULT_Success;
@@ -489,8 +490,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		LoginUser loginUser = getLoginUser(phone);
 		if(loginUser!=null)
 		{
-			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,newPassword);
-			boolean bRet= userMainDbService.updatePassword(loginUser.getUserId(), newPassword, oldPassword, encodeMd5);
+			String clientNewPassword = this.getPasswordFromRsa(accessContext, phone, newPassword);
+			String clientOldPassword = this.getPasswordFromRsa(accessContext, phone, oldPassword);
+			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,clientNewPassword);
+			boolean bRet= userMainDbService.updatePassword(loginUser.getUserId(), clientNewPassword, clientOldPassword, encodeMd5);
 			if(bRet)
 			{
 				return LoginServiceConst.RESULT_Success;

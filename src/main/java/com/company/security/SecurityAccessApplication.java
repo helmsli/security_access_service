@@ -14,11 +14,11 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @Configuration
 @EnableAutoConfiguration
 //@EnableRedisHttpSession
-
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 86400*30)
+//@EnableRedisHttpSession 
 @ComponentScan ("com.company.security")
 @MapperScan ("com.company.security.mapper")
 @ImportResource ({ "classpath:hessian/hessian-client.xml", "classpath:hessian/hessian-server.xml" })
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 86400*30)
 public class SecurityAccessApplication {
 
 	public static void main(String[] args) {

@@ -52,6 +52,39 @@ let RESULT_Error_PhoneHaveRegister = 3003;
  */
 let RESULT_Error_ValidCode = 3004;
 
+
+/**
+ * 
+ * @param countryCode
+ * @param phone
+ * @param password
+ * @param successCallback
+ * @param errorCallback
+ * @returns
+ */
+function ajaxRegisterWithAuth(countryCode,phone,password,authTransid,authCode,successCallback,errorCallback)
+{
+	let serverUrl = getRootPath() + "/user/" + countryCode + "/registerByCode";
+    let data = {
+    		"transid":authTransid,
+    		 "authCode":authCode,
+    		"loginIdType":LoginIdType_phone,
+    		"loginId":countryCode+phone,
+    		"countryCode":countryCode,
+    		"password":password,
+    		"loginType":loginType_web
+    		};	
+    console.log(JSON.stringify(data));
+	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
+		console.log(data);
+		
+		//successCallback(loginUserSession);
+	},
+	function errorLogin(xhr,testStatus){
+		//errorCallback(xhr,testStatus);
+	});
+}
+
 /**
  * 对应服务器的 RequestLogin 类
  * @param countryCode -- 国家码，以00开头
@@ -69,7 +102,7 @@ function ajaxLoginWithPass(transid,countryCode,phone,password1,successCallback,e
     let data = {
     		"transid":transid,
     		"loginIdType":LoginIdType_phone,
-    		"loginId":phone,
+    		"loginId":countryCode+phone,
     		"countryCode":countryCode,
     		"password":password1,
     		"loginType":loginType_web
@@ -83,23 +116,58 @@ function ajaxLoginWithPass(transid,countryCode,phone,password1,successCallback,e
 		//errorCallback(xhr,testStatus);
 	});
 }
+
+/**
+ * 
+ * @param transid
+ * @param countryCode
+ * @param phone
+ * @param authCode --短信认证码
+ * @param successCallback
+ * @param errorCallback
+ * @returns
+ */
+function ajaxLoginWithAuthCode(transid,countryCode,phone,authCode,successCallback,errorCallback)
+{
+	let serverUrl = getRootPath() + "/user/" + countryCode + "/loginByAuthCode";
+	
+    let data = {
+    		"transid":transid,
+    		"loginIdType":LoginIdType_phone,
+    		"loginId":countryCode+phone,
+    		"countryCode":countryCode,
+    		"authCode":authCode,
+    		"loginType":loginType_web
+    		};	
+    console.log(JSON.stringify(data));
+	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
+		console.log(data);
+		//successCallback(loginUserSession);
+	},
+	function errorLogin(xhr,testStatus){
+		//errorCallback(xhr,testStatus);
+	});
+}
+
 /**
  * 
  * @param countryCode
  * @param phone
  * @param password
+ * @param authTransid
+ * @param authCode
  * @param successCallback
  * @param errorCallback
  * @returns
  */
-function ajaxRegisterWithAuth(countryCode,phone,password,authTransid,authCode,successCallback,errorCallback)
+function ajaxResetPassword(countryCode,phone,password,authTransid,authCode,successCallback,errorCallback)
 {
-	let serverUrl = getRootPath() + "/user/" + countryCode + "/registerByCode";
+	let serverUrl = getRootPath() + "/user/" + countryCode + "/resetPassByAuthCode";
     let data = {
     		"transid":authTransid,
     		 "authCode":authCode,
     		"loginIdType":LoginIdType_phone,
-    		"loginId":phone,
+    		"loginId":countryCode+phone,
     		"countryCode":countryCode,
     		"password":password,
     		"loginType":loginType_web
@@ -114,6 +182,31 @@ function ajaxRegisterWithAuth(countryCode,phone,password,authTransid,authCode,su
 		//errorCallback(xhr,testStatus);
 	});
 }
+
+
+function ajaxModifyPassword(countryCode,phone,oldPassword,newPassword,authTransid,successCallback,errorCallback)
+{
+	let serverUrl = getRootPath() + "/user/" + countryCode + "/modifyPassword";
+    let data = {
+    		"requestBody.transid":authTransid,
+    		"modifyKey":oldPassword,
+    		 "newPassword":newPassword,
+    		"loginIdType":LoginIdType_phone,
+    		"loginId":countryCode+phone,
+    		"countryCode":countryCode,    		
+    		"loginType":loginType_web
+    		};	
+    console.log(JSON.stringify(data));
+	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
+		console.log(data);
+		
+		//successCallback(loginUserSession);
+	},
+	function errorLogin(xhr,testStatus){
+		//errorCallback(xhr,testStatus);
+	});
+}
+
 /**
  * 请求短信认证码，
  * @param countryCode
@@ -127,7 +220,7 @@ function ajaxGetAuthCode(countryCode,phone,successCallback,errorCallback)
 {
 	let serverUrl = getRootPath() + "/user"+ "/getSmsValid";
     let data = {
-    		"phone":phone
+    		"phone":countryCode+phone
     		};	
     console.log(JSON.stringify(data));
 	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
@@ -151,7 +244,7 @@ function ajaxGetRsaPublicKey(countryCode,phone,successCallback,errorCallback)
 {
 	let serverUrl = getRootPath() + "/user"+ "/getRsaPubKey";
     let data = {
-    		"phone":phone
+    		"phone":countryCode+phone
     		};	
     console.log(JSON.stringify(data));
 	ajaxPost(serverUrl,data,function successLogin(data,textStatus){

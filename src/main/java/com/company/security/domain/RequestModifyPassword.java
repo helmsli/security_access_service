@@ -3,10 +3,11 @@ package com.company.security.domain;
 import com.company.security.domain.sms.AuthCode;
 
 public class RequestModifyPassword extends AuthCode{
+	
+	private String phone;
 	/**
 	 * 修改秘密是老的密码，短信认证码修改是输入短信认证码
 	 */
-	private String phone;
 	private String modifyKey;
 	private String newPassword;
 	public String getModifyKey() {

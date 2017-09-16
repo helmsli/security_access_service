@@ -257,12 +257,16 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/resetPassByAuthCode")
-	public  ProcessResult resetPassByAuthCode(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
+	public  ProcessResult resetPassByAuthCode(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
 		ProcessResult processResult =new ProcessResult();
 		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext = new AccessContext();
+			accessContext.setTransid(loginUserSession.getTransid());
+			PrivateKey privateKey=(PrivateKey)request.getSession().getAttribute(SessionKeyConst.Rsa_private_key);
+			
+			accessContext.setRsaPrivateKey(privateKey);
 			//构造短信认证码
 			AuthCode authCode = new AuthCode();
 			authCode.setPhone(loginUserSession.getLoginId());
@@ -285,13 +289,17 @@ public class UserLoginController {
 	 * @param requestTokenBody
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST,value = "/modifyPassword")
+	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/modifyPassword")
 	public  ProcessResult modifyPassword(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestTokenBody requestTokenBody) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
+			
 			RequestModifyPassword requestModifyPassword  =(RequestModifyPassword)requestTokenBody.getRequestBody();
+			accessContext.setTransid(requestModifyPassword.getTransid());
+			accessContext.setRsaPrivateKey((PrivateKey)request.getSession().getAttribute(SessionKeyConst.Rsa_private_key));
+		
 			//accessContext.setLoginUserSession(loginUserSession);
 			int iRet= userLoginService.modifyPasswrodByPhone(accessContext, requestModifyPassword.getPhone(), requestModifyPassword.getModifyKey(), requestModifyPassword.getNewPassword());
 			processResult.setRetCode(iRet);
