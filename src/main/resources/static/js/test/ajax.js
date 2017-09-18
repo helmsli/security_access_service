@@ -13,7 +13,8 @@ function getRootPath()
     let localhostPaht = curWwwPath.substring(0, pos);
     //获取带"/"的项目名，如：/uimcardprj
     let projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
-    return (localhostPaht + projectName);
+    //return (localhostPaht + projectName);
+    return (localhostPaht );
 }
 function ajaxPost(serverUrl,postData,funSuccess,funError)
 {
@@ -27,12 +28,18 @@ function ajaxPost(serverUrl,postData,funSuccess,funError)
 	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 	    beforeSend:function(xhr){
 	        console.log(xhr)
-	        console.log('发送前');
+	        
 	        var transid = sessionStorage.getItem("transid");
 			if(transid)
 			{
 				xhr.setRequestHeader('userTransid', transid);
 			}
+			let token = sessionStorage.getItem("token");
+			if(token)
+			{
+				xhr.setRequestHeader('token', token);
+			}
+			console.log('发送前：'+  transid + ":" + token);
 	        //xhr.setRequestHeader('Accept', 'text/plain; charset=utf-8');
 	       // xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
 	    },

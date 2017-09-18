@@ -29,7 +29,9 @@ import com.company.security.domain.sms.AuthCode;
 import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
 import com.company.security.utils.RSAUtils;
+import com.google.gson.Gson;
 import com.xinwei.nnl.common.domain.ProcessResult;
+import com.xinwei.nnl.common.util.JsonUtil;
 
 
 @RestController
@@ -290,13 +292,13 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/modifyPassword")
-	public  ProcessResult modifyPassword(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestTokenBody requestTokenBody) {
+	public  ProcessResult modifyPassword(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestModifyPassword requestModifyPassword) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
 			
-			RequestModifyPassword requestModifyPassword  =(RequestModifyPassword)requestTokenBody.getRequestBody();
+			//RequestModifyPassword requestModifyPassword  =	JsonUtil.fromJson(requestTokenBody.getRequestBody(),RequestModifyPassword.class);
 			accessContext.setTransid(requestModifyPassword.getTransid());
 			accessContext.setRsaPrivateKey((PrivateKey)request.getSession().getAttribute(SessionKeyConst.Rsa_private_key));
 		

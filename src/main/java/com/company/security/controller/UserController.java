@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/home")
 public class UserController {
 	@RequestMapping(method=RequestMethod.GET)
 	public String list(Model model) {

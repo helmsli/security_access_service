@@ -110,6 +110,16 @@ function ajaxLoginWithPass(transid,countryCode,phone,password1,successCallback,e
     console.log(JSON.stringify(data));
 	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
 		console.log(data);
+		if(data.retCode==0)
+		{
+			let loginSession = data.responseInfo;
+			console.log("***********************:" + loginSession.token + ":" + loginSession.transid);
+			
+			sessionStorage.setItem("token", loginSession.token);
+			sessionStorage.setItem("transid", loginSession.transid);
+			
+			
+		}
 		//successCallback(loginUserSession);
 	},
 	function errorLogin(xhr,testStatus){
@@ -142,6 +152,14 @@ function ajaxLoginWithAuthCode(transid,countryCode,phone,authCode,successCallbac
     console.log(JSON.stringify(data));
 	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
 		console.log(data);
+		if(data.retCode==0)
+		{
+			let loginSession = data.responseInfo;
+			sessionStorage.setItem("token", loginSession.token); 
+			sessionStorage.setItem("transid", loginSession.transid);
+			
+		}
+		
 		//successCallback(loginUserSession);
 	},
 	function errorLogin(xhr,testStatus){
@@ -188,11 +206,11 @@ function ajaxModifyPassword(countryCode,phone,oldPassword,newPassword,authTransi
 {
 	let serverUrl = getRootPath() + "/user/" + countryCode + "/modifyPassword";
     let data = {
-    		"requestBody.transid":authTransid,
+    		"transid":authTransid,
     		"modifyKey":oldPassword,
     		 "newPassword":newPassword,
     		"loginIdType":LoginIdType_phone,
-    		"loginId":countryCode+phone,
+    		"phone":countryCode+phone,
     		"countryCode":countryCode,    		
     		"loginType":loginType_web
     		};	

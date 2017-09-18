@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class RequestTokenBody implements Serializable{
 	private String token;
-	private Object requestBody;
+	private String requestBody;
 	public String getToken() {
 		return token;
 	}
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Object getRequestBody() {
+	public String getRequestBody() {
 		return requestBody;
 	}
-	public void setRequestBody(Object requestBody) {
+	public void setRequestBody(String requestBody) {
 		this.requestBody = requestBody;
 	}
 	@Override

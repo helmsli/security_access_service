@@ -4,7 +4,7 @@ import com.company.security.domain.sms.AuthCode;
 
 public class RequestModifyPassword extends AuthCode{
 	
-	private String phone;
+	//private String phone;
 	/**
 	 * 修改秘密是老的密码，短信认证码修改是输入短信认证码
 	 */
@@ -22,15 +22,17 @@ public class RequestModifyPassword extends AuthCode{
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
+	/*
 	public String getPhone() {
 		return phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	*/
 	@Override
 	public String toString() {
-		return "RequestModifyPassword [phone=" + phone + ", modifyKey=" + modifyKey + ", newPassword=" + newPassword
+		return "RequestModifyPassword [phone=" + this.getPhone() + ", modifyKey=" + modifyKey + ", newPassword=" + newPassword
 				+ "]" + super.toString();
 	} 
 	
