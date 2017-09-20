@@ -13,6 +13,8 @@ public class AccessContext implements Serializable{
 	
 	private PrivateKey rsaPrivateKey;
 	
+	private Object object;
+	
 	private String transid;
 	/**
 	 * 登录成功的用户静态信息
@@ -74,6 +76,15 @@ public class AccessContext implements Serializable{
 
 	public void setRsaPrivateKey(PrivateKey rsaPrivateKey) {
 		this.rsaPrivateKey = rsaPrivateKey;
+	}
+
+	
+	public Object getObject() {
+		return object;
+	}
+
+	public void setObject(Object object) {
+		this.object = object;
 	}
 
 	@Override

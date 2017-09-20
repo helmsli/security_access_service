@@ -93,6 +93,21 @@ public interface IUserLoginService {
 	 * @return
 	 */
 	public  KeyPair getRsaInfo(String phone); 
+	/**
+	 * 获取登录的用户信息
+	 * @param accessContext
+	 * @param phone
+	 * @return
+	 */
+	public	int   getUserInfo(AccessContext accessContext,String phone);
+	
+	/**
+	 * 修改用户基本信息，哪个字段不为空，修改哪个字段
+	 * @param accessContext
+	 * @param phone
+	 * @return
+	 */
+	public	int   modifyUserInfo(AccessContext accessContext,String phone);
 	
 	
 }

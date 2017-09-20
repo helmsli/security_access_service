@@ -24,6 +24,7 @@ import com.company.security.domain.AccessContext;
 import com.company.security.domain.RequestLogin;
 import com.company.security.domain.RequestModifyPassword;
 import com.company.security.domain.RequestTokenBody;
+import com.company.security.domain.SecurityUser;
 import com.company.security.domain.sms.SmsContext;
 import com.company.security.domain.sms.AuthCode;
 import com.company.security.service.ISmsValidCodeService;
@@ -313,4 +314,42 @@ public class UserLoginController {
 		return processResult;
 	}
 	
+	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/getUserInfo")
+	public  ProcessResult getUserInfo(HttpServletRequest request,@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			
+			int iRet = this.userLoginService.getUserInfo(accessContext,securityUser.getPhone());
+			processResult.setRetCode(iRet);
+			if(LoginServiceConst.RESULT_Success==iRet)
+			{
+				processResult.setResponseInfo(accessContext.getObject());	
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/modifyUserInfo")
+	public  ProcessResult modifyUserInfo(@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			accessContext.setObject(securityUser);
+			int iRet = this.userLoginService.modifyUserInfo(accessContext, securityUser.getPhone());
+			processResult.setRetCode(iRet);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
 }

@@ -558,6 +558,63 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		return this.rsaKeyPair;
 	}
 
+	@Override
+	public int getUserInfo(AccessContext accessContext, String phone) {
+		// TODO Auto-generated method stub
+		try {
+			SecurityUserService securityUserService =getSecurityService(phone);
+			SecurityUser securityUser = securityUserService.selectUserByPhone(phone);
+			if(securityUser!=null)
+			{
+				accessContext.setObject(securityUser);
+				return LoginServiceConst.RESULT_Success;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return LoginServiceConst.RESULT_Error_Fail;
+	}
+
+	@Override
+	public int modifyUserInfo(AccessContext accessContext, String phone) {
+		// TODO Auto-generated method stub
+		try {
+			SecurityUserService securityUserService =getSecurityService(phone);
+			SecurityUser securityUser = securityUserService.selectUserByPhone(phone);
+			SecurityUser modifySecurityUser = (SecurityUser)accessContext.getObject();
+			if(-1!=modifySecurityUser.getSex())
+			{
+				securityUser.setSex(modifySecurityUser.getSex());
+			}
+			if(null!=modifySecurityUser.getBirthday())
+			{
+				securityUser.setBirthday(modifySecurityUser.getBirthday());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getDisplayname()))
+			{
+				securityUser.setDisplayname(modifySecurityUser.getDisplayname());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getAvatar()))
+			{
+				securityUser.setAvatar(modifySecurityUser.getAvatar());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getHomeaddress()))
+			{
+				securityUser.setHomeaddress(modifySecurityUser.getHomeaddress());
+			}
+			int updateRows=this.userMainDbService.updateUserBasicInfo(securityUser);
+			if(updateRows==1)
+			{
+				return LoginServiceConst.RESULT_Success;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return LoginServiceConst.RESULT_Error_Fail;
+	}
+
 	
 			
 }

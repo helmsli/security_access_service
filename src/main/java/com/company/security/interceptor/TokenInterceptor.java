@@ -136,10 +136,11 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// TODO Auto-generated method stub
-		String requestUrl = request.getRequestURI(); 
+		String requestUrl = request.getRequestURI();		
+		//response.setHeader("Access-Control-Allow-Origin", "*");
 	    //todo: not redirect
-		//if(allowAccess(request))
-	    if(true)
+		if(allowAccess(request))
+	    //if(true)
 		{
 	    	System.out.print("return true");
 	    	return true;
