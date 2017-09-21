@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.service.SecurityUserCacheService;
@@ -398,5 +399,45 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 			return ret.substring(0, 3);
 		}
 		return String.valueOf(mobile_code);
+	}
+
+
+	@Override
+	public int putPublicKey(String phone, String transid, Object publicKey) {
+		// TODO Auto-generated method stub
+		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_public_key+phone , transid);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
+		opsForValue.set(transidkey, publicKey,300,TimeUnit.SECONDS);
+		return 0;
+	}
+
+
+	@Override
+	public Object getPublicKey(String phone, String transid) {
+		// TODO Auto-generated method stub
+		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_public_key+phone , transid);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
+		return opsForValue.get(transidkey);
+		
+	}
+
+
+	@Override
+	public int putPrivateKey(String phone, String transid, Object privateKey) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_private_key+phone , transid);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
+		opsForValue.set(transidkey, privateKey,300,TimeUnit.SECONDS);
+		return 0;
+	}
+
+
+	@Override
+	public Object getPrivateKey(String phone, String transid) {
+		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_private_key+phone , transid);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
+		return opsForValue.get(transidkey);
+		
 	}
 }

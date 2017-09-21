@@ -29,6 +29,7 @@ import com.company.security.domain.sms.SmsContext;
 import com.company.security.domain.sms.AuthCode;
 import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
+import com.company.security.service.SecurityUserCacheService;
 import com.company.security.utils.RSAUtils;
 import com.google.gson.Gson;
 import com.xinwei.nnl.common.domain.ProcessResult;
@@ -45,6 +46,9 @@ public class UserLoginController {
 	@Resource(name="smsValidCodeService")
 	private ISmsValidCodeService smsValidCodeService;
 	
+	@Resource(name="securityUserCacheService")
+	private SecurityUserCacheService securityUserCacheService;
+	
 	/**
 	 * 认证码注册
 	 * @param request
@@ -53,13 +57,13 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/registerByCode")
-	public  ProcessResult registerUserByCode(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
+	public  ProcessResult registerUserByCode(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
 			//设置秘钥
-			PrivateKey rsaPrivateKey = (PrivateKey) request.getSession().getAttribute(SessionKeyConst.Rsa_private_key);
+			PrivateKey rsaPrivateKey = this.getPrivatekey(loginUserSession.getTransid(), loginUserSession.getLoginId());
 			accessContext.setRsaPrivateKey(rsaPrivateKey);
 			accessContext.setTransid(loginUserSession.getTransid());
 			//设置电话号码，transid，authcode
@@ -85,12 +89,12 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = {RequestMethod.POST,RequestMethod.GET},value = "/{countryCode}/loginByPass")
-	public  ProcessResult loginByPass(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
+	public  ProcessResult loginByPass(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
-			PrivateKey rsaPrivateKey = (PrivateKey) request.getSession().getAttribute(SessionKeyConst.Rsa_private_key);
+			PrivateKey rsaPrivateKey = getPrivatekey(loginUserSession.getTransid(),loginUserSession.getLoginId());
 			accessContext.setRsaPrivateKey(rsaPrivateKey);
 			accessContext.setTransid(loginUserSession.getTransid());
 			accessContext.setLoginUserSession(loginUserSession);
@@ -141,7 +145,7 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/getSmsValid")
-	public  ProcessResult getSmsValidCode(HttpServletRequest request,@RequestBody AuthCode authCode) {
+	public  ProcessResult getSmsValidCode(@RequestBody AuthCode authCode) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
@@ -156,7 +160,7 @@ public class UserLoginController {
 			//发送短信认证码
 			 iRet = smsValidCodeService.sendValidCodeBySms(smsContext, smsValidCode);
 			//构造秘钥
-			 String base64PublicKey = getBase64PublicKey(request,smsValidCode.getPhone());
+			 String base64PublicKey = getBase64PublicKey(smsContext.getSmsValidCode().getTransid(),smsValidCode.getPhone());
 			smsContext.getSmsValidCode().setCrcType(AuthCode.CrcType_RSA);
 			smsContext.getSmsValidCode().setPublicKey(base64PublicKey);
 			processResult.setRetCode(iRet);
@@ -194,27 +198,36 @@ public class UserLoginController {
 	
 	/**
 	 * 
+	 * @param transid
+	 * @param phone
+	 * @return
+	 */
+	protected PrivateKey getPrivatekey(String transid,String phone)
+	{
+		PrivateKey privateKeyStr = (PrivateKey)this.securityUserCacheService.getPrivateKey(phone, transid);
+		return privateKeyStr;
+		
+	}
+	
+	/**
+	 * 
 	 * @param request
 	 * @param phone
 	 * @return
 	 */
-	protected String getBase64PublicKey(HttpServletRequest request,String phone)
+	protected String getBase64PublicKey(String transid,String phone)
 	{
 		try {
-			PublicKey publicKey = (PublicKey)request.getSession().getAttribute(SessionKeyConst.Rsa_public_key);
-			if(publicKey==null)
-			{
 				KeyPair keyPair= this.userLoginService.getRsaInfo(phone);
 				if(keyPair==null)
 				{
 					keyPair= RSAUtils.generateKeyPair();
 				}
 				PrivateKey privateKey = keyPair.getPrivate();
-				publicKey = keyPair.getPublic();
-				request.getSession().setAttribute(SessionKeyConst.Rsa_private_key, privateKey);
-				request.getSession().setAttribute(SessionKeyConst.Rsa_public_key, publicKey);
+				PublicKey publicKey = keyPair.getPublic();
+				//String privateKeyStr = Base64.encodeBase64String(privateKey.getEncoded());
+				this.securityUserCacheService.putPrivateKey(phone, transid, privateKey);
 				
-			}
 			return Base64.encodeBase64String(publicKey.getEncoded());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -230,7 +243,7 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/getRsaPubKey")
-	public  ProcessResult getRSaPubkey(HttpServletRequest request,@RequestBody AuthCode authCode) {
+	public  ProcessResult getRSaPubkey(@RequestBody AuthCode authCode) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
@@ -242,7 +255,7 @@ public class UserLoginController {
 			//smsValidCode.setTransid(smsContext.getSmsValidCode().getTransid());
 			//smsValidCode.setSendSeqno(smsContext.getSmsValidCode().getAuthCode());
 			
-			String base64PublicKey = getBase64PublicKey(request,smsValidCode.getPhone());
+			String base64PublicKey = getBase64PublicKey(smsValidCode.getTransid(),smsValidCode.getPhone());
 			//加密的公钥
 			smsValidCode.setPublicKey(base64PublicKey);
 			processResult.setRetCode(LoginServiceConst.RESULT_Success);
@@ -260,15 +273,14 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/resetPassByAuthCode")
-	public  ProcessResult resetPassByAuthCode(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
+	public  ProcessResult resetPassByAuthCode(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
 		ProcessResult processResult =new ProcessResult();
 		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext = new AccessContext();
 			accessContext.setTransid(loginUserSession.getTransid());
-			PrivateKey privateKey=(PrivateKey)request.getSession().getAttribute(SessionKeyConst.Rsa_private_key);
-			
+			PrivateKey privateKey=getPrivatekey(loginUserSession.getTransid(),loginUserSession.getLoginId());
 			accessContext.setRsaPrivateKey(privateKey);
 			//构造短信认证码
 			AuthCode authCode = new AuthCode();
@@ -293,7 +305,7 @@ public class UserLoginController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/modifyPassword")
-	public  ProcessResult modifyPassword(HttpServletRequest request,@PathVariable String countryCode,@RequestBody RequestModifyPassword requestModifyPassword) {
+	public  ProcessResult modifyPassword(@PathVariable String countryCode,@RequestBody RequestModifyPassword requestModifyPassword) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
@@ -301,7 +313,8 @@ public class UserLoginController {
 			
 			//RequestModifyPassword requestModifyPassword  =	JsonUtil.fromJson(requestTokenBody.getRequestBody(),RequestModifyPassword.class);
 			accessContext.setTransid(requestModifyPassword.getTransid());
-			accessContext.setRsaPrivateKey((PrivateKey)request.getSession().getAttribute(SessionKeyConst.Rsa_private_key));
+			PrivateKey privatekey = this.getPrivatekey(requestModifyPassword.getTransid(), requestModifyPassword.getPhone());
+			accessContext.setRsaPrivateKey(privatekey);
 		
 			//accessContext.setLoginUserSession(loginUserSession);
 			int iRet= userLoginService.modifyPasswrodByPhone(accessContext, requestModifyPassword.getPhone(), requestModifyPassword.getModifyKey(), requestModifyPassword.getNewPassword());
@@ -315,7 +328,7 @@ public class UserLoginController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/getUserInfo")
-	public  ProcessResult getUserInfo(HttpServletRequest request,@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
+	public  ProcessResult getUserInfo(@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
