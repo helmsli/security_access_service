@@ -11,6 +11,15 @@ import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 public class RSAUtils {
+	/**
+	 * redis key 
+	 */
+	public static final String Rsa_private_key = "_private_key";
+	public static final String Rsa_public_key = "_public_key";
+	/**
+	 * transid 中保存的id的长度
+	 */
+	public static final int Length_ServeridNode=4;
     public static final String RSA_ECB_PKCS1_PADDING = "RSA/ECB/PKCS1Padding";
 
     public static final int KEY_SIZE_2048 = 2048;

@@ -109,7 +109,12 @@
 			<artifactId>hessian</artifactId>
 			<version>4.0.38</version>
 		</dependency>
-		
+		<!-- 忽略thymeleaf对.html的内容严格校验 -->		
+		<dependency>  
+		       <groupId>net.sourceforge.nekohtml</groupId>  
+		       <artifactId>nekohtml</artifactId>  
+		       <version>1.9.22</version>  
+		</dependency>  
 
         <!--引入lib目录中的第三方包 -->
 		<dependency>

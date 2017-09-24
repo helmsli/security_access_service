@@ -130,31 +130,5 @@ public interface SecurityUserCacheService {
 	 */
 	public String getRandomByTransid(String loginId,String transid);
 	
-	/**
-	 * 
-	 * @param transid
-	 * @param publicKey
-	 * @return
-	 */
-	public int putPublicKey(String phone,String transid,Object publicKey);
-	/**
-	 * 
-	 * @param transid
-	 * @return
-	 */
-	public Object getPublicKey(String phone,String transid);
-	/**
-	 * 
-	 * @param transid
-	 * @param publicKey
-	 * @return
-	 */
-	public int putPrivateKey(String phone,String transid,Object privateKey);
-	/**
-	 * 
-	 * @param transid
-	 * @return
-	 */
-	public Object getPrivateKey(String phone,String transid);
-	
+		
 }

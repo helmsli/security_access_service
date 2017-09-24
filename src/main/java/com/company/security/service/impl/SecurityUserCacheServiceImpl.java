@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -14,8 +15,9 @@ import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.service.SecurityUserCacheService;
+import com.company.security.utils.RSAUtils;
 @Service("securityUserCacheService")
-public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService implements SecurityUserCacheService {
+public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService implements SecurityUserCacheService,InitializingBean {
 	
 	@Resource (name = "redisTemplate")
 	protected RedisTemplate<Object, Object> redisTemplate;
@@ -26,6 +28,8 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	@Value("${user.synReadDbSeconds}")  
 	private int synReadDbSeconds;
 	
+	@Value("${server.idnode}")  
+	private String serverNode;
 	/**
 	 * token在内存中失效的天数,仅仅时内存中保留的天数，不是token失效的天数
 	 */
@@ -383,7 +387,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	public String getTransId()
 	{
 		long transId =  System.currentTimeMillis()-1504369881000l;
-		return transId+"*"+getRandom4();
+		return serverNode + transId+"*"+getRandom4();
 	}
 	
 	/**
@@ -401,43 +405,14 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		return String.valueOf(mobile_code);
 	}
 
-
+	
 	@Override
-	public int putPublicKey(String phone, String transid, Object publicKey) {
+	public void afterPropertiesSet() throws Exception {
 		// TODO Auto-generated method stub
-		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_public_key+phone , transid);
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
-		opsForValue.set(transidkey, publicKey,300,TimeUnit.SECONDS);
-		return 0;
-	}
-
-
-	@Override
-	public Object getPublicKey(String phone, String transid) {
-		// TODO Auto-generated method stub
-		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_public_key+phone , transid);
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
-		return opsForValue.get(transidkey);
-		
-	}
-
-
-	@Override
-	public int putPrivateKey(String phone, String transid, Object privateKey) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_private_key+phone , transid);
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
-		opsForValue.set(transidkey, privateKey,300,TimeUnit.SECONDS);
-		return 0;
-	}
-
-
-	@Override
-	public Object getPrivateKey(String phone, String transid) {
-		String transidkey = this.getRandomkey(SessionKeyConst.Rsa_private_key+phone , transid);
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();		
-		return opsForValue.get(transidkey);
+		if(this.serverNode.length()!=RSAUtils.Length_ServeridNode)
+		{
+			throw new Exception("the length of server.idnode should be " + RSAUtils.Length_ServeridNode);
+		}
 		
 	}
 }

@@ -2,6 +2,8 @@ package com.company.security.service.impl;
 
 import org.springframework.util.StringUtils;
 
+import com.company.security.utils.SecurityConst;
+
 public class SecurityUserCacheKeyService {
 	
 	public static final String Key_prefix_LoginUser= "luser:";
@@ -10,7 +12,6 @@ public class SecurityUserCacheKeyService {
 	public static final String Key_prefix_lastModify= "lmodify:";
 	public static final String Key_prefix_UserLock= "lulock:";
 	public static final String Key_prefix_DeviceType= "luDType:";
-	public static final String Key_prefix_TokenExpired= "luExpir:";
 	public static final String Key_prefix_CreateUserid= "luserCreate:";
 	public static final String Key_prefix_RandId= "luserRand:";
 	
@@ -45,10 +46,7 @@ public class SecurityUserCacheKeyService {
 	}
 	public String getTokenAccessKey(String token)
 	{
-		StringBuilder str= new StringBuilder();
-		str.append(Key_prefix_TokenExpired);
-		str.append(token);
-		return str.toString();
+		return SecurityConst.getTokenRediskey(token);
 	}
 	
 	/**

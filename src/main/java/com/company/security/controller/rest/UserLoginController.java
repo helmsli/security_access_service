@@ -31,6 +31,7 @@ import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
 import com.company.security.service.SecurityUserCacheService;
 import com.company.security.utils.RSAUtils;
+import com.company.security.utils.SecurityKeyService;
 import com.google.gson.Gson;
 import com.xinwei.nnl.common.domain.ProcessResult;
 import com.xinwei.nnl.common.util.JsonUtil;
@@ -46,8 +47,8 @@ public class UserLoginController {
 	@Resource(name="smsValidCodeService")
 	private ISmsValidCodeService smsValidCodeService;
 	
-	@Resource(name="securityUserCacheService")
-	private SecurityUserCacheService securityUserCacheService;
+	@Resource(name="securityKeyService")
+	private SecurityKeyService securityKeyService;
 	
 	/**
 	 * 认证码注册
@@ -196,6 +197,29 @@ public class UserLoginController {
 		return processResult;
 	}
 	
+	
+	/**
+	 * 校验短信认证码
+	 * @param AuthCode
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/checkRandom")
+	public  ProcessResult checkRandom(@PathVariable String countryCode,@RequestBody AuthCode authCode) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_ValidCode);
+		try {
+			
+			SmsContext smsContext  = new SmsContext();		
+			int iRet = smsValidCodeService.checkValidCodeBySms(smsContext, authCode);
+			processResult.setRetCode(iRet);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
 	/**
 	 * 
 	 * @param transid
@@ -204,8 +228,7 @@ public class UserLoginController {
 	 */
 	protected PrivateKey getPrivatekey(String transid,String phone)
 	{
-		PrivateKey privateKeyStr = (PrivateKey)this.securityUserCacheService.getPrivateKey(phone, transid);
-		return privateKeyStr;
+		return securityKeyService.getPrivatekey(transid,phone);
 		
 	}
 	
@@ -218,16 +241,7 @@ public class UserLoginController {
 	protected String getBase64PublicKey(String transid,String phone)
 	{
 		try {
-				KeyPair keyPair= this.userLoginService.getRsaInfo(phone);
-				if(keyPair==null)
-				{
-					keyPair= RSAUtils.generateKeyPair();
-				}
-				PrivateKey privateKey = keyPair.getPrivate();
-				PublicKey publicKey = keyPair.getPublic();
-				//String privateKeyStr = Base64.encodeBase64String(privateKey.getEncoded());
-				this.securityUserCacheService.putPrivateKey(phone, transid, privateKey);
-				
+			PublicKey publicKey = securityKeyService.getPublickey(transid,phone);
 			return Base64.encodeBase64String(publicKey.getEncoded());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

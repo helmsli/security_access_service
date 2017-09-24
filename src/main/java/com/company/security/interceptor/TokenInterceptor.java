@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.company.security.service.SecurityUserCacheService;
+import com.company.security.utils.SecurityConst;
 @Service("tokenInterceptor")
 public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	//本届点允许访问
@@ -36,14 +40,15 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	@Value("${controller.onlyAuthAjax:0}")  
 	private int onlyAuthAjax;	
 	
-	@Value("${controller.loginUrl}")  
+	@Value("${controller.loginUrl:/home/login}")  
 	private String loginUrl;	
 	
 	@Value("${controller.urlWhiteListUserkey:registerByCode,loginByPass,loginByAuthCode,getSmsValid,getRandom,getRsaPubKey,resetPassByAuthCode}")  
 	private String urlWhiteListUserkey;
 	
-	@Resource(name="securityUserCacheService")
-	private SecurityUserCacheService securityUserCacheService;
+	@Resource (name = "redisTemplate")
+	protected RedisTemplate<Object, Object> redisTemplate;
+	
 	/**
 	 * 用户rest的白名单key
 	 */
@@ -74,13 +79,31 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	 */
 	protected boolean isAjaxRequest(HttpServletRequest request)
 	{
-		String ajaxRequest = request.getHeader("x-requested-with");
-	    if(ajaxRequest.contains("XMLHttpRequest"))
-	    {
-	    	return true;
-	    }
+		try {
+			String ajaxRequest = request.getHeader("x-requested-with");
+			if(ajaxRequest!=null && ajaxRequest.contains("XMLHttpRequest"))
+			{
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    return false;
 	}
+	
+	protected long getSessionAccessTime(String token)
+	{
+		String accessKey  =SecurityConst.getTokenRediskey(token);
+		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+		String accessTime = (String)(opsForValue.get(accessKey)); 
+		if(StringUtils.isEmpty(accessTime))
+		{
+			return 0;
+		}
+		return Long.parseLong(accessTime);
+	}
+	
 	/**
 	 * 判断是否允许方位兄台那个资源
 	 * @param request
@@ -90,7 +113,7 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	{
 		//绝大多数是有token的优先token
 		String token = request.getHeader("token");
-		long tokenTime = securityUserCacheService.getSessionAccessTime(token);
+		long tokenTime = getSessionAccessTime(token);
 		boolean isAuth = (tokenTime!=0);
 		if(isAuth)
 		{
