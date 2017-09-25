@@ -78,6 +78,7 @@
     <button type="button" onclick="stop()">停止上传</button>
     <button type="button" onclick="resumeWithToken()">Token恢复上传</button>
 	<button type="button" onclick="getAuthkey()">获取tokenKey</button>
+	<button type="button" onclick="playVideo()">播放视频</button>
     <hr />
     <select multiple="multiple" id="textarea" style="position:relative; width:620px; height:450px; vertical-align:top; border:1px solid #cccccc;"></select>
     <button type="button" onclick="clearLog()">清日志</button>
@@ -212,6 +213,10 @@
         }
     }
 
+    function playVideo(){
+    	
+    	
+    }
 	function getAuthkey(){
 		let list = uploader.listFiles();		
 		let aliyunVodInfo = {

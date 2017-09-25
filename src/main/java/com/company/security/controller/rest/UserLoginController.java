@@ -203,7 +203,7 @@ public class UserLoginController {
 	 * @param AuthCode
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/checkRandom")
+	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/checkAuthCode")
 	public  ProcessResult checkRandom(@PathVariable String countryCode,@RequestBody AuthCode authCode) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_ValidCode);

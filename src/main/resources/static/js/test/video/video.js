@@ -58,3 +58,36 @@ function ajaxReqUploadVideoList(aliyunVodInfoList,successCallback,serverUrl=null
 		successCallback(-1,null);
 	});
 }
+
+/**
+ * 视频播放请求授权
+ * @param vodPlayInfo
+ * @param successCallback
+ * @param serverUrl
+ * @returns
+*/ 
+function ajaxReqPlayVideo(vodPlayInfo,successCallback,serverUrl=null)
+{
+	if(serverUrl==null)
+	{
+		serverUrl = getRootPath() + "/vod/"  + "/requestPlayAuth";
+	}
+    let data =vodPlayInfo;
+    console.log(JSON.stringify(data));
+	ajaxPost(serverUrl,data,function successLogin(data,textStatus){
+		console.log(data);
+		if(data.retCode==0)
+		{
+			let playAuth = data.responseInfo;
+			//return [data.retCode,retAliyunVodInfo];
+			successCallback(data.retCode,playAuth);
+			return;
+		}
+		successCallback(data.retCode,null);
+	},
+	function errorLogin(xhr,testStatus){
+		//errorCallback(xhr,testStatus);
+		//return [-1,null];
+		successCallback(-1,null);
+	});
+}
