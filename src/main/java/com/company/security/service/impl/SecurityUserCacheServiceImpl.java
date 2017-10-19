@@ -320,7 +320,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		return (LoginUserSession)(opsForValue.get(tokenkey));
 	}
 
-	@Override
+	
 	public long getSessionAccessTime(String token) {
 		// TODO Auto-generated method stub
 		String accessKey  =this.getTokenAccessKey(token);
@@ -334,7 +334,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		
 	}
 
-	@Override
+	
 	public boolean setSessionAccessTime(String token, long accessTime,int duartionSeconds) {
 		//获取tokne的ken
 		String accessKey  =this.getTokenAccessKey(token);
@@ -344,7 +344,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		return true;
 	}
 
-	@Override
+	
 	public boolean delSessionAccessTime(String token) {
 		// TODO Auto-generated method stub
 		String accessKey  =this.getTokenAccessKey(token);

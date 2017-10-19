@@ -23,6 +23,7 @@ import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
 import com.company.security.service.SecurityUserCacheService;
 import com.company.security.service.SecurityUserService;
+import com.company.security.token.TokenService;
 import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityUserAlgorithm;
 @Service("userLoginService")
@@ -31,6 +32,11 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	private SecurityUserCacheService securityUserCacheService;
 	@Resource(name="userMainDbService")
 	private SecurityUserService userMainDbService;
+	
+	@Resource(name="tokenService")
+	private TokenService tokenService;
+	
+	
 	//读数据库
 	@Resource(name="userReadDbService")
 	private SecurityUserService userReadDbService;
@@ -258,7 +264,8 @@ public class UserLoginServiceImpl implements IUserLoginService {
 					LoginUserSession oldLoginSession = securityUserCacheService.getSessionInfo(loginUserSession.getLoginType(), loginUserSession.getUserId());
 					if(oldLoginSession!=null)
 					{
-						securityUserCacheService.delSessionAccessTime(oldLoginSession.getToken());
+					//	securityUserCacheService.delSessionAccessTime(oldLoginSession.getToken());
+						tokenService.delTokenInfo(oldLoginSession.getToken());
 					}
 					accessContext.setOldUserSession(oldLoginSession);
 		} catch (Exception e) {

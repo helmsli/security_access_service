@@ -19,14 +19,14 @@ public interface SecurityUserCacheService {
 	 * @param token
 	 * @return 0 -- 如果没有token数据返回0
 	 */
-	public long getSessionAccessTime(String token);
+	//public long getSessionAccessTime(String token);
 	
 	/**
 	 * 
 	 * @param token
 	 * @return
 	 */
-	public boolean delSessionAccessTime(String token);
+	//public boolean delSessionAccessTime(String token);
 	/**
 	 * 设置token过期时间
 	 * @param token
@@ -34,7 +34,7 @@ public interface SecurityUserCacheService {
 	 * @param duartionSeconds --内存中保留token的描述
 	 * @return
 	 */
-	public boolean setSessionAccessTime(String token,long accessTime,int duartionSeconds);
+	//public boolean setSessionAccessTime(String token,long accessTime,int duartionSeconds);
 	
 	/**
 	 * 设置session信息，负责将老的session信息清除

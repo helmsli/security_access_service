@@ -19,9 +19,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.company.security.service.SecurityUserCacheService;
+import com.company.security.token.TokenInfo;
+import com.company.security.token.TokenService;
 import com.company.security.utils.SecurityConst;
 @Service("tokenInterceptor")
 public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
+	
+	@Resource(name="tokenService")
+	private TokenService tokenService;
 	//本届点允许访问
 	private long WhiteList_Status_allow =1;
 	//本届点不允许访问
@@ -43,7 +48,7 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	@Value("${controller.loginUrl:/home/login}")  
 	private String loginUrl;	
 	
-	@Value("${controller.urlWhiteListUserkey:registerByCode,loginByPass,loginByAuthCode,getSmsValid,getRandom,getRsaPubKey,resetPassByAuthCode}")  
+	@Value("${controller.urlWhiteListUserkey:registerByCode,loginByPass,loginByAuthCode,getSmsValid,getRandom,getRsaPubKey,resetPassByAuthCode,checkAuthCode}")  
 	private String urlWhiteListUserkey;
 	
 	@Resource (name = "redisTemplate")
@@ -92,16 +97,10 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	    return false;
 	}
 	
-	protected long getSessionAccessTime(String token)
+	protected TokenInfo getSessionAccessTime(String token)
 	{
-		String accessKey  =SecurityConst.getTokenRediskey(token);
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		String accessTime = (String)(opsForValue.get(accessKey)); 
-		if(StringUtils.isEmpty(accessTime))
-		{
-			return 0;
-		}
-		return Long.parseLong(accessTime);
+		TokenInfo tokenInfo = tokenService.checkTokenInfo(token);
+		return tokenInfo;
 	}
 	
 	/**
@@ -113,8 +112,12 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	{
 		//绝大多数是有token的优先token
 		String token = request.getHeader("token");
-		long tokenTime = getSessionAccessTime(token);
-		boolean isAuth = (tokenTime!=0);
+		TokenInfo tokenInfo  = getSessionAccessTime(token);
+		boolean isAuth = (tokenInfo!=null);
+		if(isAuth)
+		{
+			request.setAttribute("tokenInfo", tokenInfo);
+		}
 		if(isAuth)
 		{
 			return true;
