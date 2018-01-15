@@ -30,6 +30,11 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	
 	@Value("${server.idnode}")  
 	private String serverNode;
+	
+	@Value("${user.cacheExpireHours:36}")  
+	private int userCacheExpireHours;
+	
+	
 	/**
 	 * token在内存中失效的天数,仅仅时内存中保留的天数，不是token失效的天数
 	 */
@@ -46,21 +51,21 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
 		try {
 			String userKey = this.getLoginUserkey(loginUser.getUserId());
-			opsForValue.set(userKey, loginUser);
+			opsForValue.set(userKey, loginUser,userCacheExpireHours,TimeUnit.HOURS);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			String emailkey = this.getEmailKey(loginUser.getEmail());
-			opsForValue.set(emailkey, new Long(loginUser.getUserId()));
+			opsForValue.set(emailkey, new Long(loginUser.getUserId()),userCacheExpireHours,TimeUnit.HOURS);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			String phoneKey = this.getPhoneKey(loginUser.getPhone());
-			opsForValue.set(phoneKey, new Long(loginUser.getUserId()));
+			opsForValue.set(phoneKey, new Long(loginUser.getUserId()),userCacheExpireHours,TimeUnit.HOURS);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

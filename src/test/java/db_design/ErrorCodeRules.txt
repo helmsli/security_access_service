@@ -5,3 +5,14 @@
 视频服务数据库:vodDb:[5001:5100]
 订单数据库:orderDb:[6001:6100]
 订单接入服务:order_access:[6101:7000]
+订单接入服务:order_access:[6101:7000]
+
+
+ID生成器服务:order_access:[9001:9500]
+用户订单中心:user_order_access:[10001:10100]
+
+课程中心接入服务：course_manager_service:[11001:11100]
+文件管理服务:course_manager_service:[11101:11200]
+
+支付系统：[11201:12000] weixinpay:[11201:11300]
+课程中心学员购买：[12100:12200] 

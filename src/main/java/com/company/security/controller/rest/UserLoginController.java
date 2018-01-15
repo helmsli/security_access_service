@@ -165,7 +165,8 @@ public class UserLoginController {
 			smsContext.getSmsValidCode().setCrcType(AuthCode.CrcType_RSA);
 			smsContext.getSmsValidCode().setPublicKey(base64PublicKey);
 			processResult.setRetCode(iRet);
-			smsContext.getSmsValidCode().setAuthCode("");
+			//todo:测试阶段，先返回给客户端，不用真的发送短信，用于测试
+			//smsContext.getSmsValidCode().setAuthCode("");
 			processResult.setResponseInfo(smsContext.getSmsValidCode());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

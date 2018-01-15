@@ -7,18 +7,18 @@ public class LoginUser implements Serializable{
 	/** 用户ID. */
 	private long userId;
 	/** 登录的用户名字.*/
-	private String loginname;
+	private String loginName;
 	
 	/** 显示名字. */
-	private String displayname;
+	private String displayName;
 	
 	/** 电话号码. 带国家码的号码，国家码开头是00*/
 	private String phone;
 
 	/** 电话号码国家码. */
-	private String phoneccode;
+	private String phoneCode;
 	/** 电话号码认证状态. */
-	private int phoneverified;
+	private int phoneVerified;
 	/** 头像地址. */
 	private String avatar;
 	/** 性别. */
@@ -27,13 +27,13 @@ public class LoginUser implements Serializable{
 	private String email;
 
 	/** 邮箱认证状态. */
-	private int emailverified;
+	private int emailVerified;
 
 	/** 密码. */
 	private String password;
 
 	/** 密码扩展字段. */
-	private String passwordext;
+	private String passwordExt;
 	
 	/** 账户状态. */
 	private int status;
@@ -47,17 +47,17 @@ public class LoginUser implements Serializable{
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public String getLoginname() {
-		return loginname;
+	public String getLoginName() {
+		return loginName;
 	}
-	public void setLoginname(String loginname) {
-		this.loginname = loginname;
+	public void setLoginName(String loginname) {
+		this.loginName = loginname;
 	}
-	public String getDisplayname() {
-		return displayname;
+	public String getDisplayName() {
+		return displayName;
 	}
-	public void setDisplayname(String displayname) {
-		this.displayname = displayname;
+	public void setDisplayName(String displayname) {
+		this.displayName = displayname;
 	}
 	public String getPhone() {
 		return phone;
@@ -65,17 +65,17 @@ public class LoginUser implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getPhoneccode() {
-		return phoneccode;
+	public String getPhoneCode() {
+		return phoneCode;
 	}
-	public void setPhoneccode(String phoneccode) {
-		this.phoneccode = phoneccode;
+	public void setPhoneCode(String phoneccode) {
+		this.phoneCode = phoneccode;
 	}
-	public int getPhoneverified() {
-		return phoneverified;
+	public int getPhoneVerified() {
+		return phoneVerified;
 	}
-	public void setPhoneverified(int phoneverified) {
-		this.phoneverified = phoneverified;
+	public void setPhoneVerified(int phoneverified) {
+		this.phoneVerified = phoneverified;
 	}
 	public String getAvatar() {
 		return avatar;
@@ -95,11 +95,11 @@ public class LoginUser implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getEmailverified() {
-		return emailverified;
+	public int getEmailVerified() {
+		return emailVerified;
 	}
-	public void setEmailverified(int emailverified) {
-		this.emailverified = emailverified;
+	public void setEmailVerified(int emailverified) {
+		this.emailVerified = emailverified;
 	}
 	public String getPassword() {
 		return password;
@@ -107,11 +107,11 @@ public class LoginUser implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getPasswordext() {
-		return passwordext;
+	public String getPasswordExt() {
+		return passwordExt;
 	}
-	public void setPasswordext(String passwordext) {
-		this.passwordext = passwordext;
+	public void setPasswordExt(String passwordext) {
+		this.passwordExt = passwordext;
 	}
 	public int getStatus() {
 		return status;
@@ -125,19 +125,19 @@ public class LoginUser implements Serializable{
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
-	
-	
-	
-	
-	
 	@Override
 	public String toString() {
-		return "LoginUser [userId=" + userId + ", loginname=" + loginname 
-				+ ", displayname=" + displayname + ", phone=" + phone + ", phoneccode=" + phoneccode
-				+ ", phoneverified=" + phoneverified + ", avatar=" + avatar + ", sex=" + sex + ", email=" + email
-				+ ", emailverified=" + emailverified + ", password=" + password + ", passwordext=" + passwordext
-				+ ", status=" + status + ", roles=" + roles + "]";
+		return "LoginUser [userId=" + userId + ", loginName=" + loginName + ", displayName=" + displayName + ", phone="
+				+ phone + ", phoneCode=" + phoneCode + ", phoneVerified=" + phoneVerified + ", avatar=" + avatar
+				+ ", sex=" + sex + ", email=" + email + ", emailVerified=" + emailVerified + ", password=" + password
+				+ ", passwordExt=" + passwordExt + ", status=" + status + ", roles=" + roles + "]";
 	}
+	
+	
+	
+	
+	
+	
 	
     
 	

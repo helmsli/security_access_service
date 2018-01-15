@@ -46,8 +46,11 @@ public class SmsValidCodeServiceImpl implements ISmsValidCodeService {
 		opsForValue.set(validKey, smsValidCode,smsValidCodeDurSeconds,TimeUnit.SECONDS);
 		smsContext.setAuthCode(smsValidCode.getAuthCode());
 		System.out.println(smsValidCode);
-		smsValidCode.setAuthCode("");
+		//todo:
+		//smsValidCode.setAuthCode("");
 		smsContext.setSmsValidCode(smsValidCode);
+		
+		//异步调用阿里大鱼服务发送短信；need to do;
 		return 0;
 	}
 
