@@ -6,6 +6,8 @@ import java.util.Calendar;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityUserAlgorithm;
 @Service("userLoginService")
 public class UserLoginServiceImpl implements IUserLoginService {
+	 private Logger logger = LoggerFactory.getLogger(getClass());
+	 
 	@Resource(name="securityUserCacheService")
 	private SecurityUserCacheService securityUserCacheService;
 	@Resource(name="userMainDbService")
@@ -207,7 +211,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		}
 		else
 		{
-			return allClientPassword;
+			return "";
 		}
 	}
 	
@@ -230,11 +234,16 @@ public class UserLoginServiceImpl implements IUserLoginService {
 				bRet = SecurityUserConst.RESULT_Error_PhoneExist;
 				return bRet;
 			}
+			logger.debug(loginUser.toString());
+			
 			String correctPassword = getCorrentPassword(accessContext,phone,loginUser.getPassword());
 			String clientPassword  = getPasswordFromRsa(accessContext,phone,password);
+			logger.debug(correctPassword + ":" +clientPassword);
+			
 			//如果密码不相等
 			if(!correctPassword.equalsIgnoreCase(clientPassword))
 			{
+				
 				return LoginServiceConst.RESULT_Error_PasswordError;
 			}
 			
@@ -371,14 +380,14 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		//更新数据库信息
 		SecurityUser securityUser =new SecurityUser();
 		securityUser.setPhone(phone);
-		securityUser.setPhoneccode(countryCode);
+		securityUser.setPhoneCode(countryCode);
 		String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
 		securityUser.setPassword(clientPassword);
 		securityUser.setUserId(this.createUserId());
-		securityUser.setPhoneverified(securityUser.verified_Success);
+		securityUser.setPhoneVerified(securityUser.verified_Success);
 		accessContext.setLoginUserInfo(securityUser.getLoginUser());
 		
-		securityUser.setCreatetime(Calendar.getInstance().getTime());
+		securityUser.setCreateTime(Calendar.getInstance().getTime());
 		iRet = userMainDbService.registerUserByPhone(securityUser);
 		return iRet;
 	}
@@ -476,6 +485,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		if(iRet == LoginServiceConst.RESULT_Success)
 		{	
 			String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
+			if(StringUtils.isEmpty(clientPassword))
+			{
+				return LoginServiceConst.RESULT_Error_ValidCode;
+			}
 			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,clientPassword);
 			boolean bRet= userMainDbService.resetPasswordByPhone(phone, clientPassword, encodeMd5);
 			if(bRet)
@@ -598,17 +611,17 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			{
 				securityUser.setBirthday(modifySecurityUser.getBirthday());
 			}
-			if(!StringUtils.isEmpty(modifySecurityUser.getDisplayname()))
+			if(!StringUtils.isEmpty(modifySecurityUser.getDisplayName()))
 			{
-				securityUser.setDisplayname(modifySecurityUser.getDisplayname());
+				securityUser.setDisplayName(modifySecurityUser.getDisplayName());
 			}
 			if(!StringUtils.isEmpty(modifySecurityUser.getAvatar()))
 			{
 				securityUser.setAvatar(modifySecurityUser.getAvatar());
 			}
-			if(!StringUtils.isEmpty(modifySecurityUser.getHomeaddress()))
+			if(!StringUtils.isEmpty(modifySecurityUser.getHomeAddress()))
 			{
-				securityUser.setHomeaddress(modifySecurityUser.getHomeaddress());
+				securityUser.setHomeAddress(modifySecurityUser.getHomeAddress());
 			}
 			int updateRows=this.userMainDbService.updateUserBasicInfo(securityUser);
 			if(updateRows==1)

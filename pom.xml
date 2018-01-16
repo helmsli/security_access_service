@@ -113,7 +113,7 @@
 			<artifactId>security_user_db</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/security_user_db-2.0.jar</systemPath>
+			<systemPath>${basedir}/lib/security_user_db-5.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.xinwei.nnl</groupId>
