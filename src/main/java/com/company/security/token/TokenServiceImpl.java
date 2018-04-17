@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -19,7 +21,10 @@ public class TokenServiceImpl implements TokenService{
 	
 	private int durationSeconds = 24*3600;
 	
-	@Value("${token.expireSeconds:1800}")  
+	 private Logger logger = LoggerFactory.getLogger(getClass());
+
+	 
+	@Value("${token.expireMillSeconds:1800000}")  
 	private int tokenExpireSeconds;
 	/**
 	 * 获取用户安全级别的token
@@ -38,9 +43,9 @@ public class TokenServiceImpl implements TokenService{
 		// TODO Auto-generated method stub
 		String accessKey  =getTokenAccessKey(token);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		tokenInfo.setCreateTime(System.currentTimeMillis());
-		opsForValue.set(accessKey, tokenInfo,duartionSeconds,TimeUnit.SECONDS);
-		this.durationSeconds = duartionSeconds;
+		//tokenInfo.setCreateTime(System.currentTimeMillis());
+		opsForValue.set(accessKey, String.valueOf(System.currentTimeMillis()),duartionSeconds,TimeUnit.SECONDS);
+		//this.durationSeconds = duartionSeconds;
 		return true;
 
 	}
@@ -50,22 +55,29 @@ public class TokenServiceImpl implements TokenService{
 		// TODO Auto-generated method stub
 		String accessKey  =getTokenAccessKey(token);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		TokenInfo tokenInfo = (TokenInfo)opsForValue.get(accessKey);
-		if(tokenInfo==null)
+		String createTime = (String)opsForValue.get(accessKey);
+		TokenInfo tokenInfo = null;
+		
+		if(createTime==null)
 		{
 			return null;
 		}
 		else
 		{
-			if(System.currentTimeMillis() - tokenInfo.getCreateTime()>tokenExpireSeconds)
+			tokenInfo = new TokenInfo();
+			long tokenCreateTime = Long.parseLong(createTime);
+			tokenInfo.setCreateTime(tokenCreateTime);
+			if(System.currentTimeMillis() - tokenCreateTime>tokenExpireSeconds)
 			{
 				return null;
 			}
-			if(System.currentTimeMillis() - tokenInfo.getCreateTime()>600)
+			if(System.currentTimeMillis() - tokenCreateTime>600000)
 			{
-				setTokenInfo(token,tokenInfo,durationSeconds);
+				
+				setTokenInfo(token,null,durationSeconds);
 			}
 		}
+	
 		return tokenInfo;
 	}
 
@@ -73,24 +85,35 @@ public class TokenServiceImpl implements TokenService{
 	public TokenInfo checkTokenInfo(String token) {
 		// TODO Auto-generated method stub
 		String accessKey  =getTokenAccessKey(token);
-		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		TokenInfo tokenInfo = (TokenInfo)opsForValue.get(accessKey);
-		if(tokenInfo==null)
-		{
-			return null;
-		}
-		else
-		{
-			if(System.currentTimeMillis() - tokenInfo.getCreateTime()>tokenExpireSeconds)
+		TokenInfo tokenInfo=null;
+		try {
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+			String createTime = (String)opsForValue.get(accessKey);
+			if(createTime==null)
 			{
+				logger.debug("token is null");
 				return null;
 			}
-			if(System.currentTimeMillis() - tokenInfo.getCreateTime()>600)
+			else
 			{
-				setTokenInfo(token,tokenInfo,durationSeconds);
+				tokenInfo = new TokenInfo();
+				tokenInfo.setCreateTime(Long.parseLong(createTime));
+				if(System.currentTimeMillis() - tokenInfo.getCreateTime()>tokenExpireSeconds)
+				{
+					logger.debug("token is expire:" + tokenInfo.getCreateTime());
+					return null;
+				}
+				if(System.currentTimeMillis() - tokenInfo.getCreateTime()>600)
+				{
+					setTokenInfo(token,tokenInfo,durationSeconds);
+				}
 			}
+			return tokenInfo;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return tokenInfo;
+		return null;
 	}
 	@Override
 	public boolean delTokenInfo(String token) {

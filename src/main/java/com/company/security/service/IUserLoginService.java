@@ -101,6 +101,10 @@ public interface IUserLoginService {
 	 */
 	public	int   getUserInfo(AccessContext accessContext,String phone);
 	
+	
+	
+	public	int   getUserInfoByUserId(AccessContext accessContext,String userId);
+	
 	/**
 	 * 修改用户基本信息，哪个字段不为空，修改哪个字段
 	 * @param accessContext

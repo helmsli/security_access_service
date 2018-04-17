@@ -149,6 +149,18 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		}
 	}
 	
+	protected SecurityUserService getSecurityService(long userId)
+	{
+		long lastModify = this.securityUserCacheService.getLastModifyTime(userId);
+		if(lastModify==0)
+		{
+			return this.userReadDbService;
+		}
+		else
+		{
+			return userMainDbService;
+		}
+	}
 	/**
 	 * 先从缓存中获取loginUser基本信息，如果不存在在从数据库获取
 	 * @return --null 用户不存在
@@ -234,7 +246,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 				bRet = SecurityUserConst.RESULT_Error_PhoneExist;
 				return bRet;
 			}
-			logger.debug(loginUser.toString());
+			logger.debug("loginuser:" + loginUser.toString());
 			
 			String correctPassword = getCorrentPassword(accessContext,phone,loginUser.getPassword());
 			String clientPassword  = getPasswordFromRsa(accessContext,phone,password);
@@ -579,6 +591,24 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	}
 
 	@Override
+	public int getUserInfoByUserId(AccessContext accessContext, String userId) {
+		// TODO Auto-generated method stub
+		try {
+			long lUserId= Long.parseLong(userId);
+			SecurityUserService securityUserService =getSecurityService(lUserId);
+			SecurityUser securityUser = securityUserService.selectUserById(lUserId);
+			if(securityUser!=null)
+			{
+				accessContext.setObject(securityUser);
+				return LoginServiceConst.RESULT_Success;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return LoginServiceConst.RESULT_Error_Fail;
+	}
+	@Override
 	public int getUserInfo(AccessContext accessContext, String phone) {
 		// TODO Auto-generated method stub
 		try {
@@ -623,6 +653,25 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			{
 				securityUser.setHomeAddress(modifySecurityUser.getHomeAddress());
 			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getBusinessAddress()))
+			{
+				securityUser.setBusinessAddress(modifySecurityUser.getBusinessAddress());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getEmail()))
+			{
+				securityUser.setEmail(modifySecurityUser.getEmail());
+			}
+			if(modifySecurityUser.getIdType()!=-1)
+			{
+				securityUser.setIdType(modifySecurityUser.getIdType());
+				if(!StringUtils.isEmpty(modifySecurityUser.getIdNo()))
+				{
+					securityUser.setIdNo(modifySecurityUser.getIdNo());
+				}
+				
+			}
+			
+			
 			int updateRows=this.userMainDbService.updateUserBasicInfo(securityUser);
 			if(updateRows==1)
 			{
@@ -634,6 +683,8 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		}
 		return LoginServiceConst.RESULT_Error_Fail;
 	}
+
+	
 
 	
 			

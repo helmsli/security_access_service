@@ -102,6 +102,12 @@ public class UserLoginController {
 			int iRet= userLoginService.loginUserManual(accessContext, countryCode, loginUserSession.getLoginId(), loginUserSession.getPassword(),loginUserSession);
 			processResult.setRetCode(iRet);
 			loginUserSession.setPassword("");
+			if(iRet==0)
+			{
+				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
+				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
+				accessContext.getLoginUserInfo().setPassword("");			
+			}
 			processResult.setResponseInfo(loginUserSession);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
@@ -132,6 +138,12 @@ public class UserLoginController {
 			int iRet= userLoginService.loginUserBySmsCode(accessContext, countryCode, loginUserSession.getLoginId(),loginUserSession,authCode);
 			processResult.setRetCode(iRet);
 			loginUserSession.setPassword("");
+			if(iRet==0)
+			{
+				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
+				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
+				accessContext.getLoginUserInfo().setPassword("");			
+			}
 			processResult.setResponseInfo(loginUserSession);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -350,6 +362,27 @@ public class UserLoginController {
 			AccessContext accessContext =new AccessContext();
 			
 			int iRet = this.userLoginService.getUserInfo(accessContext,securityUser.getPhone());
+			processResult.setRetCode(iRet);
+			if(LoginServiceConst.RESULT_Success==iRet)
+			{
+				processResult.setResponseInfo(accessContext.getObject());	
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST,value = "{routerId}/getUserInfoById")
+	public  ProcessResult getUserInfoById(@PathVariable String routerId,@RequestBody SecurityUser securityUser) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			
+			int iRet = this.userLoginService.getUserInfoByUserId(accessContext,String.valueOf(securityUser.getUserId()));
 			processResult.setRetCode(iRet);
 			if(LoginServiceConst.RESULT_Success==iRet)
 			{

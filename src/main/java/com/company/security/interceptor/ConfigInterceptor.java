@@ -26,6 +26,8 @@ public class ConfigInterceptor extends WebMvcConfigurerAdapter{
                 .allowedOrigins("*")  
                 .allowCredentials(true)  
                 .allowedMethods("GET", "POST", "DELETE", "PUT")  
+               // .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+               //         "Access-Control-Request-Headers")
                 .maxAge(3600);  
     }  
 }

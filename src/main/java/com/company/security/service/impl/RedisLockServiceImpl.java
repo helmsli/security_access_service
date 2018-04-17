@@ -95,5 +95,47 @@ public class RedisLockServiceImpl {
         	
         }
     }  
+
+	
+		
+	public String  getCommonTransLock(String key,long timeout,long lockExpireSecond){  
+		long registerHProcess = -1;
+        try{  
+            
+        	String lockKey = key;
+            long startTime = System.currentTimeMillis();  
+            while (true){
+            	String transValue = String.valueOf(System.currentTimeMillis());
+                
+            	if(redisTemplate.opsForValue().setIfAbsent(lockKey,transValue)){  
+                	redisTemplate.opsForValue().set(lockKey,transValue,lockExpireSecond,TimeUnit.SECONDS);  
+                	return transValue;  
+                }
+            	else
+            	{
+            		String reqTime = (String)redisTemplate.opsForValue().get(lockKey);
+            		if(System.currentTimeMillis()-Long.parseLong(reqTime)>=lockExpireSecond*1000)
+            		{
+            			redisTemplate.opsForValue().set(lockKey,transValue,lockExpireSecond,TimeUnit.SECONDS);  
+                    	return transValue;
+            		}
+            	}
+        
+                //如果没有获取到，并且已经超时
+                if(System.currentTimeMillis() - startTime > timeout){  
+                    return "";  
+                }  
+                //延迟一段时间
+                Thread.sleep(1000);  
+            }  
+        }catch (Exception e){  
+              e.printStackTrace();
+            return null;  
+        }  
+        finally
+        {
+        	
+        }
+    }  
 	
 }

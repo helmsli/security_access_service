@@ -17,6 +17,11 @@ public class RequestLogin extends LoginUserSession {
 	/** 短信认证码登录 */
 	private String authCode;	
 	
+	
+	private String avatar;
+	
+	private String displayName;
+	
 	public String getPassword() {
 		return password;
 	}
@@ -41,10 +46,25 @@ public class RequestLogin extends LoginUserSession {
 	public void setAuthCode(String authCode) {
 		this.authCode = authCode;
 	}
+	
+	
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 	@Override
 	public String toString() {
 		return "RequestLogin [transid=" + transid + ", password=" + password + ", countryCode=" + countryCode
-				+ ", authCode=" + authCode + "]"  + super.toString();
+				+ ", authCode=" + authCode + ", avatar=" + avatar + ", displayName=" + displayName + "]";
 	}
+	
     
 }

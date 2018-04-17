@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -34,7 +36,8 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	@Value("${user.cacheExpireHours:36}")  
 	private int userCacheExpireHours;
 	
-	
+	 private Logger logger = LoggerFactory.getLogger(getClass());
+
 	/**
 	 * token在内存中失效的天数,仅仅时内存中保留的天数，不是token失效的天数
 	 */
@@ -344,6 +347,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		//获取tokne的ken
 		String accessKey  =this.getTokenAccessKey(token);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+		logger.debug("set session:" + accessKey + ":" + String.valueOf(accessTime));
 		//判断token是否有效
 		opsForValue.set(accessKey, String.valueOf(accessTime),duartionSeconds,TimeUnit.SECONDS);
 		return true;
@@ -361,9 +365,42 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	public long createUserId(int numbers) {
 		// TODO Auto-generated method stub
 		String key = this.getCreateUserIdkey();
+		
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		Long retValue= opsForValue.increment(key, numbers);
-		return retValue.longValue() + 110000000;
+		long retValue= opsForValue.increment(key, numbers);
+		if(retValue<200000)
+		{
+			String lockSession="";
+			String lockKey ="userIdSet__lock";
+			try
+			{
+				 lockSession = this.redisLockService.getCommonTransLock(lockKey, 5000, 5000);
+				if(lockSession!=null&&lockSession!="")
+				{
+					long ll = System.currentTimeMillis() - 1523757177694L;
+					if(ll<=0)
+					{
+						ll =0;
+					}
+					ll = ll/1000;
+					return retValue = opsForValue.increment(key, ll);
+				}
+				return 0L;
+			}
+			catch(Exception e)
+			{
+				return 0L;
+			}
+			finally
+			{
+				redisLockService.releaseUserTransLock(lockKey, lockSession);
+			}
+		}
+		else
+		{
+			return retValue;
+		}
+		
 	}
 
 
