@@ -72,7 +72,7 @@ public class LoginUserSession implements Serializable{
 	
 	private String ip;
 	
-	
+	private String role;
 	
 	public Date getLoginTime() {
 		return loginTime;
@@ -136,6 +136,12 @@ public class LoginUserSession implements Serializable{
 	}
 	public void setLoginDeviceBrand(int loginDeviceBrand) {
 		this.loginDeviceBrand = loginDeviceBrand;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

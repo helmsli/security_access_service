@@ -106,6 +106,7 @@ public class UserLoginController {
 			{
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
+				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
 				accessContext.getLoginUserInfo().setPassword("");			
 			}
 			processResult.setResponseInfo(loginUserSession);
@@ -142,7 +143,8 @@ public class UserLoginController {
 			{
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
-				accessContext.getLoginUserInfo().setPassword("");			
+				accessContext.getLoginUserInfo().setPassword("");
+				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
 			}
 			processResult.setResponseInfo(loginUserSession);
 		} catch (Exception e) {
@@ -398,6 +400,23 @@ public class UserLoginController {
 	
 	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/modifyUserInfo")
 	public  ProcessResult modifyUserInfo(@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			accessContext.setObject(securityUser);
+			int iRet = this.userLoginService.modifyUserInfo(accessContext, securityUser.getPhone());
+			processResult.setRetCode(iRet);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/beTeacher")
+	public  ProcessResult beTeacher(@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
 		ProcessResult processResult =new ProcessResult();		
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {

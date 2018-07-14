@@ -661,6 +661,12 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			{
 				securityUser.setEmail(modifySecurityUser.getEmail());
 			}
+			
+			if(!StringUtils.isEmpty(modifySecurityUser.getRoles()))
+			{
+				securityUser.setRoles(modifySecurityUser.getRoles());
+			}
+			
 			if(modifySecurityUser.getIdType()!=-1)
 			{
 				securityUser.setIdType(modifySecurityUser.getIdType());
