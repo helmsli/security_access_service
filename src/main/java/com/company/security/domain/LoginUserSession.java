@@ -125,11 +125,12 @@ public class LoginUserSession implements Serializable{
 	public void setLoginIdType(int loginIdType) {
 		this.loginIdType = loginIdType;
 	}
+	
 	@Override
 	public String toString() {
 		return "LoginUserSession [loginType=" + loginType + ", loginIdType=" + loginIdType + ", loginId=" + loginId
-				+ ", userId=" + userId + ", token=" + token + ", loginTime=" + loginTime + ", loginDeviceType="
-				+ this.loginDeviceBrand + ", loginDeviceId=" + loginDeviceId + ", ip=" + ip + "]";
+				+ ", userId=" + userId + ", token=" + token + ", loginTime=" + loginTime + ", loginDeviceBrand="
+				+ loginDeviceBrand + ", loginDeviceId=" + loginDeviceId + ", ip=" + ip + ", role=" + role + "]";
 	}
 	public int getLoginDeviceBrand() {
 		return loginDeviceBrand;

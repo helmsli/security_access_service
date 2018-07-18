@@ -63,8 +63,10 @@ public class RequestLogin extends LoginUserSession {
 	@Override
 	public String toString() {
 		return "RequestLogin [transid=" + transid + ", password=" + password + ", countryCode=" + countryCode
-				+ ", authCode=" + authCode + ", avatar=" + avatar + ", displayName=" + displayName + "]";
+				+ ", authCode=" + authCode + ", avatar=" + avatar + ", displayName=" + displayName + ", toString()="
+				+ super.toString() + "]";
 	}
+	
 	
     
 }

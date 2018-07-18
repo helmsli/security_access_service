@@ -108,7 +108,6 @@ public class UserLoginController {
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
 				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
 				accessContext.getLoginUserInfo().setPassword("");
-				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
 				
 			}
 			processResult.setResponseInfo(loginUserSession);

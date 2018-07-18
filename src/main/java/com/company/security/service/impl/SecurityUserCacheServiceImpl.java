@@ -18,6 +18,7 @@ import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.service.SecurityUserCacheService;
 import com.company.security.utils.RSAUtils;
+import com.xinwei.nnl.common.util.JsonUtil;
 @Service("securityUserCacheService")
 public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService implements SecurityUserCacheService,InitializingBean {
 	
@@ -54,7 +55,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
 		try {
 			String userKey = this.getLoginUserkey(loginUser.getUserId());
-			opsForValue.set(userKey, loginUser,userCacheExpireHours,TimeUnit.HOURS);
+			opsForValue.set(userKey, JsonUtil.toJson(loginUser),userCacheExpireHours,TimeUnit.HOURS);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,8 +111,8 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		try {
 			String userKey = this.getLoginUserkey(userId);
 			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-			
-			LoginUser loginUser = (LoginUser)opsForValue.get(userKey);
+			String jsonStr = (String)opsForValue.get(userKey);;
+			LoginUser loginUser = JsonUtil.fromJson(jsonStr, LoginUser.class);
 			return loginUser;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -280,7 +281,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		//按照登录的渠道类型和用户ID构造用户登录的具体设备信息
 		String tokenkey = this.getTokenKey(loginUserSession.getLoginType(), loginUserSession.getUserId());
 		//所有的登录设备信息保留一个固定的时间
-		opsForValue.set(tokenkey, loginUserSession,tokenExpiredDays,TimeUnit.DAYS);
+		opsForValue.set(tokenkey, JsonUtil.toJson(loginUserSession),tokenExpiredDays,TimeUnit.DAYS);
 		//设置token信息
 		this.setSessionAccessTime(loginUserSession.getToken(), System.currentTimeMillis(), duartionSeconds);		
 		return true;
@@ -325,7 +326,8 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		// TODO Auto-generated method stub
 		String tokenkey = this.getTokenKey(loginType, userId);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		return (LoginUserSession)(opsForValue.get(tokenkey));
+		String jsonStr = (String)opsForValue.get(tokenkey);
+		return (LoginUserSession)(JsonUtil.fromJson(jsonStr, LoginUserSession.class));
 	}
 
 	
