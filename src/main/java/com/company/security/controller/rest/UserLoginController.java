@@ -107,7 +107,9 @@ public class UserLoginController {
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
 				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
-				accessContext.getLoginUserInfo().setPassword("");			
+				accessContext.getLoginUserInfo().setPassword("");
+				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
+				
 			}
 			processResult.setResponseInfo(loginUserSession);
 		} catch (Throwable e) {
