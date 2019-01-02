@@ -66,6 +66,15 @@ public interface SecurityUserCacheService {
 	 */
 	public LoginUser getBInfoByPhone(String phone);
 	
+	
+	/**
+	 * 
+	 * @param phone
+	 * @return
+	 */
+	public LoginUser getBInfoByUserName(String userName);
+	
+	
 	/**
 	 * 
 	 * @param email

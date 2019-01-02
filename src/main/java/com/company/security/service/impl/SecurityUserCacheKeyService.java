@@ -8,6 +8,7 @@ public class SecurityUserCacheKeyService {
 	
 	public static final String Key_prefix_LoginUser= "luser:";
 	public static final String Key_prefix_phone= "lphone:";
+	public static final String Key_prefix_userName= "luserName:";
 	public static final String Key_prefix_email= "lemail:";
 	public static final String Key_prefix_lastModify= "lmodify:";
 	public static final String Key_prefix_UserLock= "lulock:";
@@ -104,6 +105,19 @@ public class SecurityUserCacheKeyService {
 		}
 		throw new Exception("phone is null");
 	}
+	
+	public String getUserNameKey(String userName) throws Exception
+	{
+		if(!StringUtils.isEmpty(userName))
+		{
+			StringBuilder retStr = new StringBuilder();
+			retStr.append(Key_prefix_userName);
+			retStr.append(userName);
+			return retStr.toString();
+		}
+		throw new Exception("userName is null");
+	}
+	
 	/**
 	 * 
 	 * @param phone

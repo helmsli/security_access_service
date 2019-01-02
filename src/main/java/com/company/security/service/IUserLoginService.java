@@ -50,6 +50,17 @@ public interface IUserLoginService {
 	 */
 	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode);
 	
+	
+	/**
+	 * 将验证好的信息注册成为用户
+	 * @param accessContext
+	 * @param countryCode
+	 * @param phone
+	 * @return
+	 */
+	public int registerUserByUserName(AccessContext accessContext,String userName,String password,LoginUserSession loginUserSession);
+	
+	
 	/**
 	 * 
 	 * @param accessContext

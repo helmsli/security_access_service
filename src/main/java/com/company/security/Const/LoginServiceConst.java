@@ -23,4 +23,9 @@ public class LoginServiceConst {
 	 * 认证码错误
 	 */
 	public static final int RESULT_Error_ValidCode = RESULT_ERROR_START + 4;
+	
+	/**
+	 * 电话号码已经注册
+	 */
+	public static final int RESULT_Error_UserNameHaveRegister = RESULT_ERROR_START + 5;
 }

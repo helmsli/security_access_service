@@ -13,6 +13,10 @@ public class AuthCode implements Serializable{
 	//语音发送方式
 	public static final int SendType_voice = 2;
 	
+	//不需要发送
+	public static final int SendType_NoSend = 3;
+		
+	
 	/**加密方式，rsa*/
 	public static final int CrcType_RSA = 0;
 	
