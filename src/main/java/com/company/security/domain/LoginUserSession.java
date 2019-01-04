@@ -13,7 +13,7 @@ public class LoginUserSession implements Serializable{
 	 */
 	public static final int LoginIdType_phone = 2;
 	/**
-	 * id登录
+	 * 用户名登录
 	 */
 	public static final int LoginIdType_userid = 3;
 	

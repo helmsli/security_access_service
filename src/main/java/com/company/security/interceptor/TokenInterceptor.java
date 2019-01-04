@@ -51,7 +51,7 @@ public class TokenInterceptor implements HandlerInterceptor,InitializingBean {
 	@Value("${controller.loginUrl:/home/login}")  
 	private String loginUrl;	
 	
-	@Value("${controller.urlWhiteListUserkey:registerByCode,loginByPass,loginByAuthCode,getSmsValid,getRandom,getRsaPubKey,resetPassByAuthCode,checkAuthCode}")  
+	@Value("${controller.urlWhiteListUserkey:registerByCode,loginByPass,loginByAuthCode,getSmsValid,getRandom,getRsaPubKey,resetPassByAuthCode,checkAuthCode,registerByUserName}")  
 	private String urlWhiteListUserkey;
 	
 	@Resource (name = "redisTemplate")

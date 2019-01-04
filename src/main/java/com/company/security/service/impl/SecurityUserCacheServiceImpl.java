@@ -161,6 +161,19 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		return null;
 	}
 	
+	public void setBInfoByUserName(String userName,long userId) {
+		// TODO Auto-generated method stub
+		try {
+			String phoneKey = this.getUserNameKey(userName);
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
+			opsForValue.set(phoneKey, new Long(userId),userCacheExpireHours,TimeUnit.HOURS);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@Override
 	public LoginUser getBInfoByEmail(String email) {
 		// TODO Auto-generated method stub

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.security.Const.LoginServiceConst;
 import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.AccessContext;
+import com.company.security.domain.LoginUserSession;
 import com.company.security.domain.RequestLogin;
 import com.company.security.domain.RequestModifyPassword;
 import com.company.security.domain.RequestTokenBody;
@@ -91,8 +92,19 @@ public class UserLoginController {
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
+			String authKey = loginUserSession.getLoginIdType() +":" + loginUserSession.getLoginId();
+			try {
+				
+				if(loginUserSession.getLoginIdType()==LoginUserSession.LoginIdType_phone)
+				{
+					authKey =loginUserSession.getLoginId();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//设置秘钥
-			PrivateKey rsaPrivateKey = this.getPrivatekey(loginUserSession.getTransid(), loginUserSession.getLoginId());
+			PrivateKey rsaPrivateKey = this.getPrivatekey(loginUserSession.getTransid(), authKey);
 			accessContext.setRsaPrivateKey(rsaPrivateKey);
 			accessContext.setTransid(loginUserSession.getTransid());
 			//设置电话号码，transid，authcode
@@ -121,7 +133,18 @@ public class UserLoginController {
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			AccessContext accessContext =new AccessContext();
-			PrivateKey rsaPrivateKey = getPrivatekey(loginUserSession.getTransid(),loginUserSession.getLoginId());
+			String authKey = loginUserSession.getLoginIdType() +":" + loginUserSession.getLoginId();
+			try {
+				
+				if(loginUserSession.getLoginIdType()==LoginUserSession.LoginIdType_phone)
+				{
+					authKey =loginUserSession.getLoginId();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			PrivateKey rsaPrivateKey = getPrivatekey(loginUserSession.getTransid(),authKey);
 			accessContext.setRsaPrivateKey(rsaPrivateKey);
 			accessContext.setTransid(loginUserSession.getTransid());
 			accessContext.setLoginUserSession(loginUserSession);
@@ -329,6 +352,16 @@ public class UserLoginController {
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
 			String authKey = type +":" + key;
+			try {
+				int iType = Integer.parseInt(type);
+				if(iType==LoginUserSession.LoginIdType_phone)
+				{
+					authKey =key;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			AuthCode smsValidCode =new AuthCode();
 			
 			SmsContext smsContext  = new SmsContext();

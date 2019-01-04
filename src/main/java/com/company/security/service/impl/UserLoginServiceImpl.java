@@ -214,8 +214,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			}
 			else
 			{
+			
 				loginUser = securityUser.getLoginUser();
 			}
+			securityUserCacheService.setBInfoByUserName(userName, loginUser.getUserId());
 		}
 		return loginUser;
 	}
@@ -283,6 +285,66 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			
 			String correctPassword = getCorrentPassword(accessContext,phone,loginUser.getPassword());
 			String clientPassword  = getPasswordFromRsa(accessContext,phone,password);
+			logger.debug(correctPassword + ":" +clientPassword);
+			
+			//如果密码不相等
+			if(!correctPassword.equalsIgnoreCase(clientPassword))
+			{
+				
+				return LoginServiceConst.RESULT_Error_PasswordError;
+			}
+			
+			//如果密码正确，并且内存中不存在，先放入内存
+			loginUserSession.setUserId(loginUser.getUserId());
+			if(bRet==SecurityUserConst.RESULT_Error_PhoneExist)
+			{
+				securityUserCacheService.putBasicInfo(loginUser);
+			}
+			accessContext.setLoginUserInfo(loginUser);
+			return LoginServiceConst.RESULT_Success;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bRet;
+	}
+	
+	/**
+	 * liguoqiang
+	 * @param accessContext
+	 * @param loginType
+	 * @param loginId
+	 * @param password
+	 * @return
+	 */
+	protected int checkPassword(AccessContext accessContext, int loginType,String loginId, String password)
+	{
+		int bRet = LoginServiceConst.RESULT_Error_PasswordError;
+		try {
+			LoginUserSession loginUserSession =accessContext.getLoginUserSession();
+			LoginUser loginUser  = null;
+			String randomKey = "";
+			if(loginUserSession.getLoginIdType()==loginUserSession.LoginIdType_userid)
+			{
+				randomKey = loginUserSession.getLoginIdType() +":" + loginId;
+				loginUser = this.getLoginUserByUserName(loginId);
+			}
+			else
+			{
+				randomKey = loginId;
+				 loginUser = getLoginUser(loginId);	
+			}
+			
+			if(loginUser==null)
+			{
+				bRet = SecurityUserConst.RESULT_Error_PhoneExist;
+				return bRet;
+			}
+			logger.debug("loginuser:" + loginUser.toString());
+			
+			
+			String correctPassword = getCorrentPassword(accessContext,randomKey,loginUser.getPassword());
+			String clientPassword  = getPasswordFromRsa(accessContext,randomKey,password);
 			logger.debug(correctPassword + ":" +clientPassword);
 			
 			//如果密码不相等
@@ -464,6 +526,10 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				if(SecurityUserConst.RESULT_SUCCESS==iRet)
 				{
 					iRet = userMainDbService.bindIdNo(securityUser.getUserId(), LoginUserSession.LoginIdType_userid, userName, securityUser.verified_Success);
+					if(iRet==1)
+					{
+						iRet = SecurityUserConst.RESULT_SUCCESS;
+					}
 				}
 				return iRet;
 	}
@@ -540,7 +606,14 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
 		try {
 			accessContext.setLoginUserSession(loginUserSession);
+			if(loginUserSession.getLoginIdType()==loginUserSession.LoginIdType_userid)
+			{
+				iRet = this.checkPassword(accessContext, loginUserSession.getLoginIdType(), loginUserSession.getLoginId(), password);
+			}
+			else
+			{
 			 iRet = checkPassword(accessContext,phone,password);
+			}
 			if(iRet!=LoginServiceConst.RESULT_Success)
 			{
 				return iRet;
