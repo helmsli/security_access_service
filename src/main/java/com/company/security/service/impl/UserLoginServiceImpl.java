@@ -328,6 +328,11 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			{
 				randomKey = loginUserSession.getLoginIdType() +":" + loginId;
 				loginUser = this.getLoginUserByUserName(loginId);
+				if(loginUser==null)
+				{
+					bRet = LoginServiceConst.RESULT_Error_UserNameNotExist;
+					return bRet;
+				}
 			}
 			else
 			{
