@@ -503,7 +503,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				
 				if(loginUser!=null)
 				{
-					accessContext.setLoginUserInfo(loginUser);
+					//accessContext.setLoginUserInfo(loginUser);
 					return LoginServiceConst.RESULT_Error_UserNameHaveRegister;
 				}
 				
