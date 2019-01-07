@@ -71,7 +71,6 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	private int localUseridPrefix;
 	
 	
-	
 	@Value("${user.register.defaultCountryCode:0086}")  
 	private String defaultCountryCode;
 	/**
@@ -198,7 +197,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		return loginUser;
 	}
 	
-	protected LoginUser getLoginUserByUserName(String userName)
+	public LoginUser getLoginUserByUserName(String userName)
 	{
 		LoginUser loginUser = securityUserCacheService.getBInfoByUserName(userName);
 		if(loginUser==null)
@@ -206,7 +205,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			//从数据库中获取信息，
 			//如果最近修改过
 			SecurityUserService securityUserService = this.getSecurityServiceByUserName(userName);
-			SecurityUser securityUser = securityUserService.selectUserByIdNo(LoginUserSession.LoginIdType_userid, userName);
+			SecurityUser securityUser = securityUserService.selectUserByIdNo(LoginUserSession.LoginIdType_userName, userName);
 			//如果数据库中不存在
 			if(securityUser==null)
 			{
@@ -324,7 +323,7 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			LoginUserSession loginUserSession =accessContext.getLoginUserSession();
 			LoginUser loginUser  = null;
 			String randomKey = "";
-			if(loginUserSession.getLoginIdType()==loginUserSession.LoginIdType_userid)
+			if(loginUserSession.getLoginIdType()==loginUserSession.LoginIdType_userName)
 			{
 				randomKey = loginUserSession.getLoginIdType() +":" + loginId;
 				loginUser = this.getLoginUserByUserName(loginId);
@@ -530,7 +529,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				iRet = userMainDbService.registerUserByPhone(securityUser);
 				if(SecurityUserConst.RESULT_SUCCESS==iRet)
 				{
-					iRet = userMainDbService.bindIdNo(securityUser.getUserId(), LoginUserSession.LoginIdType_userid, userName, securityUser.verified_Success);
+					iRet = userMainDbService.bindIdNo(securityUser.getUserId(), LoginUserSession.LoginIdType_userName, userName, securityUser.verified_Success);
 					if(iRet==1)
 					{
 						iRet = SecurityUserConst.RESULT_SUCCESS;
@@ -611,7 +610,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
 		try {
 			accessContext.setLoginUserSession(loginUserSession);
-			if(loginUserSession.getLoginIdType()==loginUserSession.LoginIdType_userid)
+			if(loginUserSession.getLoginIdType()==loginUserSession.LoginIdType_userName)
 			{
 				iRet = this.checkPassword(accessContext, loginUserSession.getLoginIdType(), loginUserSession.getLoginId(), password);
 			}
@@ -732,6 +731,27 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		return SecurityUserConst.RESULT_Error_PhoneError;
 	}
 
+	@Override
+	public int modifyPasswrodByUserId(AccessContext accessContext, String authKey,long userId,String oldPassword,String newPassword) {
+		// TODO Auto-generated method stub
+		
+		{
+			String clientNewPassword = this.getPasswordFromRsa(accessContext, authKey, newPassword);
+			String clientOldPassword = this.getPasswordFromRsa(accessContext, authKey, oldPassword);
+			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,clientNewPassword);
+			boolean bRet= userMainDbService.updatePassword(userId, clientNewPassword, clientOldPassword, encodeMd5);
+			if(bRet)
+			{
+				return LoginServiceConst.RESULT_Success;
+			}
+			else
+			{
+				return LoginServiceConst.RESULT_Error_Fail;
+			}
+		}
+		
+	}
+	
 	public SecurityUserService getUserMainDbService() {
 		return userMainDbService;
 	}
@@ -894,7 +914,79 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		return LoginServiceConst.RESULT_Error_Fail;
 	}
 
-	
+	@Override
+	public int modifyUserInfo(AccessContext accessContext, long userId) {
+		// TODO Auto-generated method stub
+		try {
+			SecurityUserService securityUserService =this.getSecurityService(userId);
+			SecurityUser securityUser = securityUserService.selectUserById(userId);
+			SecurityUser modifySecurityUser = (SecurityUser)accessContext.getObject();
+			if(-1!=modifySecurityUser.getSex())
+			{
+				securityUser.setSex(modifySecurityUser.getSex());
+			}
+			if(null!=modifySecurityUser.getBirthday())
+			{
+				securityUser.setBirthday(modifySecurityUser.getBirthday());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getDisplayName()))
+			{
+				securityUser.setDisplayName(modifySecurityUser.getDisplayName());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getLastName()))
+			{
+				securityUser.setLastName(modifySecurityUser.getLastName());
+			}
+			
+			if(!StringUtils.isEmpty(modifySecurityUser.getFirstName()))
+			{
+				securityUser.setFirstName(modifySecurityUser.getFirstName());
+			}
+			
+			if(!StringUtils.isEmpty(modifySecurityUser.getAvatar()))
+			{
+				securityUser.setAvatar(modifySecurityUser.getAvatar());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getHomeAddress()))
+			{
+				securityUser.setHomeAddress(modifySecurityUser.getHomeAddress());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getBusinessAddress()))
+			{
+				securityUser.setBusinessAddress(modifySecurityUser.getBusinessAddress());
+			}
+			if(!StringUtils.isEmpty(modifySecurityUser.getEmail()))
+			{
+				securityUser.setEmail(modifySecurityUser.getEmail());
+			}
+			
+			if(!StringUtils.isEmpty(modifySecurityUser.getRoles()))
+			{
+				securityUser.setRoles(modifySecurityUser.getRoles());
+			}
+			
+			if(modifySecurityUser.getIdType()!=-1)
+			{
+				securityUser.setIdType(modifySecurityUser.getIdType());
+				if(!StringUtils.isEmpty(modifySecurityUser.getIdNo()))
+				{
+					securityUser.setIdNo(modifySecurityUser.getIdNo());
+				}
+				
+			}
+			
+			
+			int updateRows=this.userMainDbService.updateUserBasicInfo(securityUser);
+			if(updateRows==1)
+			{
+				return LoginServiceConst.RESULT_Success;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return LoginServiceConst.RESULT_Error_Fail;
+	}
 
 	
 

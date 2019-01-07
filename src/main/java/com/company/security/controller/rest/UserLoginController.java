@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.security.Const.LoginServiceConst;
 import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.AccessContext;
+import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.domain.RequestLogin;
 import com.company.security.domain.RequestModifyPassword;
@@ -424,16 +425,57 @@ public class UserLoginController {
 	public  ProcessResult modifyPassword(@PathVariable String countryCode,@RequestBody RequestModifyPassword requestModifyPassword) {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
-		try {
+		try {			
+			
+			String authKey = requestModifyPassword.getLoginIdType() +":" + requestModifyPassword.getLoginId();
+			try {
+				
+				if(requestModifyPassword.getLoginIdType()==LoginUserSession.LoginIdType_phone)
+				{
+					authKey =requestModifyPassword.getLoginId();
+					if(StringUtils.isEmpty(authKey))
+					{
+						authKey =requestModifyPassword.getPhone();
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			AccessContext accessContext =new AccessContext();
 			
 			//RequestModifyPassword requestModifyPassword  =	JsonUtil.fromJson(requestTokenBody.getRequestBody(),RequestModifyPassword.class);
 			accessContext.setTransid(requestModifyPassword.getTransid());
-			PrivateKey privatekey = this.getPrivatekey(requestModifyPassword.getTransid(), requestModifyPassword.getPhone());
+			PrivateKey privatekey = this.getPrivatekey(requestModifyPassword.getTransid(), authKey);
 			accessContext.setRsaPrivateKey(privatekey);
 		
 			//accessContext.setLoginUserSession(loginUserSession);
-			int iRet= userLoginService.modifyPasswrodByPhone(accessContext, requestModifyPassword.getPhone(), requestModifyPassword.getModifyKey(), requestModifyPassword.getNewPassword());
+			int iRet = -1;
+			if(requestModifyPassword.getLoginIdType()==LoginUserSession.LoginIdType_phone)
+			{
+				iRet= userLoginService.modifyPasswrodByPhone(accessContext, requestModifyPassword.getPhone(), requestModifyPassword.getModifyKey(), requestModifyPassword.getNewPassword());
+			}
+			else if(requestModifyPassword.getLoginIdType()==LoginUserSession.LoginIdType_userName)
+			{
+				
+				LoginUser loginUser = userLoginService.getLoginUserByUserName(requestModifyPassword.getLoginId());
+				if(loginUser==null)
+				{
+					iRet = LoginServiceConst.RESULT_Error_UserNameNotExist;  
+				}
+				else
+				{
+					iRet= userLoginService.modifyPasswrodByUserId(accessContext, authKey, loginUser.getUserId(), requestModifyPassword.getModifyKey(), requestModifyPassword.getNewPassword());
+				}
+			}
+			else
+			{
+				long userId = Long.parseLong(requestModifyPassword.getLoginId());
+				iRet= userLoginService.modifyPasswrodByUserId(accessContext, authKey, userId, requestModifyPassword.getModifyKey(), requestModifyPassword.getNewPassword());
+				
+			}
+				
 			processResult.setRetCode(iRet);
 			processResult.setResponseInfo(accessContext.getLoginUserInfo());
 		} catch (Exception e) {
@@ -442,6 +484,9 @@ public class UserLoginController {
 		}
 		return processResult;
 	}
+	
+	
+	
 	
 	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/getUserInfo")
 	public  ProcessResult getUserInfo(@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
@@ -463,6 +508,8 @@ public class UserLoginController {
 		}
 		return processResult;
 	}
+	
+	
 	
 	@RequestMapping(method = RequestMethod.POST,value = "{routerId}/getUserInfoById")
 	public  ProcessResult getUserInfoById(@PathVariable String routerId,@RequestBody SecurityUser securityUser) {
@@ -492,7 +539,16 @@ public class UserLoginController {
 		try {
 			AccessContext accessContext =new AccessContext();
 			accessContext.setObject(securityUser);
-			int iRet = this.userLoginService.modifyUserInfo(accessContext, securityUser.getPhone());
+			int iRet =-1;
+			if(securityUser.getUserId()<=0)
+			{
+				iRet = this.userLoginService.modifyUserInfo(accessContext, securityUser.getPhone());
+			}
+			else
+			{
+				iRet = this.userLoginService.modifyUserInfo(accessContext, securityUser.getUserId());
+				
+			}
 			processResult.setRetCode(iRet);
 			
 			

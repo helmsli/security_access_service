@@ -10,6 +10,13 @@ public class RequestModifyPassword extends AuthCode{
 	 */
 	private String modifyKey;
 	private String newPassword;
+	/**
+	 * 当前登录的名字的类型
+	 */
+	private int loginIdType=LoginUserSession.LoginIdType_phone;
+	/** 登录的用户标识.*/
+	private String loginId;
+	
 	public String getModifyKey() {
 		return modifyKey;
 	}
@@ -34,6 +41,18 @@ public class RequestModifyPassword extends AuthCode{
 	public String toString() {
 		return "RequestModifyPassword [phone=" + this.getPhone() + ", modifyKey=" + modifyKey + ", newPassword=" + newPassword
 				+ "]" + super.toString();
+	}
+	public int getLoginIdType() {
+		return loginIdType;
+	}
+	public void setLoginIdType(int loginIdType) {
+		this.loginIdType = loginIdType;
+	}
+	public String getLoginId() {
+		return loginId;
+	}
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	} 
 	
 }

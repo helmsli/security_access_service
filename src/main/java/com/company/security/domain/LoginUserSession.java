@@ -15,13 +15,18 @@ public class LoginUserSession implements Serializable{
 	/**
 	 * 用户名登录
 	 */
-	public static final int LoginIdType_userid = 3;
+	public static final int LoginIdType_userName = 3;
 	
 	/**
 	 * 身份证或者护照，不能修改，在db中有实现。
 	 */
 	public static final int LoginIdType_userIdNo = 4;
 	public static final int LoginIdType_userIdPassport = 5;
+	
+	/**
+	 * 用户名登录
+	 */
+	//public static final int LoginIdType_userid = 6;
 	
 	
 	/**

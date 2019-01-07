@@ -3,6 +3,7 @@ package com.company.security.service;
 import java.security.KeyPair;
 
 import com.company.security.domain.AccessContext;
+import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
 import com.company.security.domain.sms.AuthCode;
 import com.company.security.domain.sms.SmsContext;
@@ -80,6 +81,10 @@ public interface IUserLoginService {
 	 * @return
 	 */
 	public int modifyPasswrodByPhone(AccessContext accessContext, String phone, String oldPassword,String newPassword);
+	public int modifyUserInfo(AccessContext accessContext, long userId) ;
+	
+	public int modifyPasswrodByUserId(AccessContext accessContext, String authKey,long userId,String oldPassword,String newPassword);
+	
 	
 	/**
 	 * 根据电话号码生成transid和random 
@@ -124,5 +129,5 @@ public interface IUserLoginService {
 	 */
 	public	int   modifyUserInfo(AccessContext accessContext,String phone);
 	
-	
+	public LoginUser getLoginUserByUserName(String userName);
 }
