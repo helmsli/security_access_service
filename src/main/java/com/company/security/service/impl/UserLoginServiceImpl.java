@@ -73,6 +73,10 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	
 	@Value("${user.register.defaultCountryCode:0086}")  
 	private String defaultCountryCode;
+	
+	
+	@Autowired
+	private UserNotifyService userNotifyService;
 	/**
 	 * 新申请的UserID的起始id
 	 */
@@ -917,9 +921,10 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 	@Override
 	public int modifyUserInfo(AccessContext accessContext, long userId) {
 		// TODO Auto-generated method stub
+		SecurityUser securityUser  =null;
 		try {
 			SecurityUserService securityUserService =this.getSecurityService(userId);
-			SecurityUser securityUser = securityUserService.selectUserById(userId);
+			securityUser = securityUserService.selectUserById(userId);
 			SecurityUser modifySecurityUser = (SecurityUser)accessContext.getObject();
 			if(-1!=modifySecurityUser.getSex())
 			{
@@ -984,6 +989,13 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally
+		{
+			if(securityUser!=null)
+			{
+				userNotifyService.nodifyModifyUserAsync(securityUser);
+			}
 		}
 		return LoginServiceConst.RESULT_Error_Fail;
 	}
