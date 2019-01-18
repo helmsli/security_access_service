@@ -532,6 +532,28 @@ public class UserLoginController {
 		return processResult;
 	}
 	
+	@RequestMapping(method = RequestMethod.POST,value = "/getUserInfoByUserName")
+	public  ProcessResult getUserInfoByUserName(@RequestBody RequestLogin requestLogin) {
+		ProcessResult processResult =new ProcessResult();		
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			
+			LoginUser loginUser = this.userLoginService.getLoginUserByUserName(requestLogin.getLoginId());
+			
+			if(loginUser!=null)
+			{
+				processResult.setRetCode(0);
+				processResult.setResponseInfo(loginUser);	
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
 	@RequestMapping(method = RequestMethod.POST,value = "{countryCode}/modifyUserInfo")
 	public  ProcessResult modifyUserInfo(@PathVariable String countryCode,@RequestBody SecurityUser securityUser) {
 		ProcessResult processResult =new ProcessResult();		
