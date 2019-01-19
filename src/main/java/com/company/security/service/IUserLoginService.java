@@ -61,6 +61,8 @@ public interface IUserLoginService {
 	 */
 	public int registerUserByUserName(AccessContext accessContext,String userName,String password,LoginUserSession loginUserSession);
 	
+	public int regUserNameForServer(AccessContext accessContext, String userName, String password,LoginUserSession loginUserSession);
+			
 	
 	/**
 	 * 

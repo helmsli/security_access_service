@@ -122,6 +122,41 @@ public class UserLoginController {
 	}
 	
 	
+	@RequestMapping(method = RequestMethod.POST,value = "/regUserNameForServer")
+	public  ProcessResult regUserNameForServer(@RequestBody RequestLogin loginUserSession) {
+		ProcessResult processResult =new ProcessResult();
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			String authKey = loginUserSession.getLoginIdType() +":" + loginUserSession.getLoginId();
+			try {
+				
+				if(loginUserSession.getLoginIdType()==LoginUserSession.LoginIdType_phone)
+				{
+					authKey =loginUserSession.getLoginId();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//设置秘钥
+			//PrivateKey rsaPrivateKey = this.getPrivatekey(loginUserSession.getTransid(), authKey);
+			//accessContext.setRsaPrivateKey(rsaPrivateKey);
+			//accessContext.setTransid(loginUserSession.getTransid());
+			//设置电话号码，transid，authcode
+			accessContext.setLoginUserSession(loginUserSession);
+			int iRet= userLoginService.regUserNameForServer(accessContext,loginUserSession.getLoginId(), loginUserSession.getPassword(),loginUserSession);
+					
+			processResult.setRetCode(iRet);
+			processResult.setResponseInfo(accessContext.getLoginUserInfo());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
+	
 	/**
 	 * 密码登录
 	 * @param countryCode

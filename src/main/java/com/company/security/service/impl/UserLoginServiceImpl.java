@@ -497,6 +497,31 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		
 	}
 	
+
+	public int regUserNameForServer(AccessContext accessContext, String userName, String password,
+			LoginUserSession loginUserSession) {
+		String key = "_register:" +userName;
+		long transActionId = 0;
+		try
+		{
+			transActionId = this.securityUserCacheService.getCommonLock(key, 10, 0);
+			if(transActionId==0)
+			{
+				return -1;
+			}
+			return this.regUserNameForServerNoLock(accessContext, userName, password, loginUserSession);
+		}
+		catch(Exception e)
+		{
+			return -1;	
+		}
+		finally
+		{
+			this.securityUserCacheService.releaseCommonLock(key, transActionId);
+		}
+		
+	}
+
 	
 	public int registerUserByUserNameNoLock(AccessContext accessContext, String userName, String password,
 			
@@ -542,6 +567,58 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				return iRet;
 	}
 
+	/**
+	 * 
+	 * @param accessContext
+	 * @param userName
+	 * @param password
+	 * @param loginUserSession
+	 * @return
+	 */
+	public int regUserNameForServerNoLock(AccessContext accessContext, String userName, String password,
+			
+			LoginUserSession loginUserSession) {
+		
+		// TODO Auto-generated method stub
+				//获取用户名
+				int iRet = LoginServiceConst.RESULT_Error_Fail;
+				
+				//注册用户
+				LoginUser  loginUser = getLoginUserByUserName(userName);
+				
+				if(loginUser!=null)
+				{
+					//accessContext.setLoginUserInfo(loginUser);
+					return LoginServiceConst.RESULT_Error_UserNameHaveRegister;
+				}
+				
+				//更新数据库信息
+				String phone = defaultCountryCode + "--" + userName;
+				SecurityUser securityUser =new SecurityUser();
+				securityUser.setPhone(phone);
+				
+				securityUser.setPhoneCode(defaultCountryCode);
+				String correctPassword = SecurityUserAlgorithm.EncoderByMd5(dbUserKey, password);
+			    
+				securityUser.setPassword(correctPassword);
+				securityUser.setUserId(this.createUserId());
+				securityUser.setPhoneVerified(securityUser.verified_Success);
+				accessContext.setLoginUserInfo(securityUser.getLoginUser());
+				
+				securityUser.setCreateTime(Calendar.getInstance().getTime());
+				iRet = userMainDbService.registerUserByPhone(securityUser);
+				if(SecurityUserConst.RESULT_SUCCESS==iRet)
+				{
+					iRet = userMainDbService.bindIdNo(securityUser.getUserId(), LoginUserSession.LoginIdType_userName, userName, securityUser.verified_Success);
+					if(iRet==1)
+					{
+						iRet = SecurityUserConst.RESULT_SUCCESS;
+					}
+				}
+				return iRet;
+	}
+
+	
 	@Override
 	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
 		// TODO Auto-generated method stub
