@@ -653,6 +653,29 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		return iRet;
 	}
 	
+	
+	public int bindTelno(AccessContext accessContext,String countryCode,String phone,LoginUserSession loginUserSession,AuthCode validCode) {
+		// TODO Auto-generated method stub
+		//获取用户名
+		int iRet = LoginServiceConst.RESULT_Error_Fail;
+		//校验短信认证码
+		SmsContext smsContext = new SmsContext();
+		iRet = smsValidCodeService.checkValidCodeBySms(smsContext, validCode);
+		if(LoginServiceConst.RESULT_Success!=iRet)
+		{
+			return iRet;
+		}
+		//注册用户
+		LoginUser  loginUser = getLoginUser(phone);
+		if(loginUser!=null)
+		{
+			userMainDbService.unbindPhone(loginUser.getUserId(), countryCode, phone);
+		}		
+		int verified_Success=1;
+		iRet = userMainDbService.bindPhone(loginUserSession.getUserId(), countryCode, phone, verified_Success);
+		return iRet;
+	}
+	
 	/**
 	 * 不需要验证，验证成功后基础的登录流程
 	 * @param accessContext

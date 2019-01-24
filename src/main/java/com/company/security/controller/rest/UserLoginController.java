@@ -53,12 +53,38 @@ public class UserLoginController {
 	private SecurityKeyService securityKeyService;
 	
 	/**
-	 * 认证码注册
+	 * 绑定电话号码
 	 * @param request
 	 * @param countryCode
 	 * @param requestTokenBody
 	 * @return
 	 */
+	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/bindTelno")
+	public  ProcessResult bindTelno(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
+		ProcessResult processResult =new ProcessResult();
+		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
+		try {
+			AccessContext accessContext =new AccessContext();
+			//设置秘钥
+			PrivateKey rsaPrivateKey = this.getPrivatekey(loginUserSession.getTransid(), loginUserSession.getLoginId());
+			accessContext.setRsaPrivateKey(rsaPrivateKey);
+			accessContext.setTransid(loginUserSession.getTransid());
+			//设置电话号码，transid，authcode
+			AuthCode authCode = new AuthCode();
+			authCode.setTransid(loginUserSession.getTransid());
+			authCode.setAuthCode(loginUserSession.getAuthCode());
+			authCode.setPhone(loginUserSession.getLoginId());
+			accessContext.setLoginUserSession(loginUserSession);
+			int iRet= userLoginService.registerUserByCode(accessContext, countryCode, loginUserSession.getLoginId(), loginUserSession.getPassword(),loginUserSession,authCode);
+			processResult.setRetCode(iRet);
+			processResult.setResponseInfo(accessContext.getLoginUserInfo());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return processResult;
+	}
+	
 	@RequestMapping(method = RequestMethod.POST,value = "/{countryCode}/registerByCode")
 	public  ProcessResult registerUserByCode(@PathVariable String countryCode,@RequestBody RequestLogin loginUserSession) {
 		ProcessResult processResult =new ProcessResult();
@@ -84,8 +110,6 @@ public class UserLoginController {
 		}
 		return processResult;
 	}
-	
-	
 	
 	@RequestMapping(method = RequestMethod.POST,value = "/registerByUserName")
 	public  ProcessResult registerUserByUserName(@RequestBody RequestLogin loginUserSession) {
