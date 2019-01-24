@@ -75,7 +75,7 @@ public class UserLoginController {
 			authCode.setAuthCode(loginUserSession.getAuthCode());
 			authCode.setPhone(loginUserSession.getLoginId());
 			accessContext.setLoginUserSession(loginUserSession);
-			int iRet= userLoginService.registerUserByCode(accessContext, countryCode, loginUserSession.getLoginId(), loginUserSession.getPassword(),loginUserSession,authCode);
+			int iRet= userLoginService.bindTelno(accessContext, countryCode, loginUserSession.getLoginId(), loginUserSession, authCode);
 			processResult.setRetCode(iRet);
 			processResult.setResponseInfo(accessContext.getLoginUserInfo());
 		} catch (Exception e) {

@@ -653,7 +653,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		return iRet;
 	}
 	
-	
+	@Override
 	public int bindTelno(AccessContext accessContext,String countryCode,String phone,LoginUserSession loginUserSession,AuthCode validCode) {
 		// TODO Auto-generated method stub
 		//获取用户名
