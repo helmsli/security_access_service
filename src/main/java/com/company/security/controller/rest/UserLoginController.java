@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.security.Const.LoginServiceConst;
+import com.company.security.Const.SecurityUserConst;
 import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.AccessContext;
 import com.company.security.domain.LoginUser;
@@ -76,6 +77,10 @@ public class UserLoginController {
 			authCode.setPhone(loginUserSession.getLoginId());
 			accessContext.setLoginUserSession(loginUserSession);
 			int iRet= userLoginService.bindTelno(accessContext, countryCode, loginUserSession.getLoginId(), loginUserSession, authCode);
+			if(iRet==1)
+			{
+				iRet = SecurityUserConst.RESULT_SUCCESS;
+			}
 			processResult.setRetCode(iRet);
 			processResult.setResponseInfo(accessContext.getLoginUserInfo());
 		} catch (Exception e) {
@@ -216,6 +221,14 @@ public class UserLoginController {
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
 				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
+				if(StringUtils.isEmpty(accessContext.getLoginUserInfo().getPhone())||accessContext.getLoginUserInfo().getPhone().contains("--"))
+				{
+					loginUserSession.setIsBindTelno(0);
+				}
+				else
+				{
+					loginUserSession.setIsBindTelno(1);
+				}
 				accessContext.getLoginUserInfo().setPassword("");
 				
 			}
@@ -254,6 +267,14 @@ public class UserLoginController {
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
 				accessContext.getLoginUserInfo().setPassword("");
+				if(StringUtils.isEmpty(accessContext.getLoginUserInfo().getPhone())||accessContext.getLoginUserInfo().getPhone().contains("--"))
+				{
+					loginUserSession.setIsBindTelno(0);
+				}
+				else
+				{
+					loginUserSession.setIsBindTelno(1);
+				}
 				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
 			}
 			processResult.setResponseInfo(loginUserSession);

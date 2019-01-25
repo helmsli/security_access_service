@@ -27,7 +27,7 @@ public class LoginUserSession implements Serializable{
 	 * 用户名登录
 	 */
 	//public static final int LoginIdType_userid = 6;
-	
+	public static final int LoginIdType_userId = 7;
 	
 	/**
 	 * pcweb登录

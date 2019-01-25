@@ -22,6 +22,10 @@ public class RequestLogin extends LoginUserSession {
 	
 	private String displayName;
 	
+	private String inviteNo;
+	
+	private int isBindTelno=0;
+	
 	public String getPassword() {
 		return password;
 	}
@@ -60,11 +64,25 @@ public class RequestLogin extends LoginUserSession {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	
+	
+	public String getInviteNo() {
+		return inviteNo;
+	}
+	public void setInviteNo(String inviteNo) {
+		this.inviteNo = inviteNo;
+	}
 	@Override
 	public String toString() {
 		return "RequestLogin [transid=" + transid + ", password=" + password + ", countryCode=" + countryCode
 				+ ", authCode=" + authCode + ", avatar=" + avatar + ", displayName=" + displayName + ", toString()="
 				+ super.toString() + "]";
+	}
+	public int getIsBindTelno() {
+		return isBindTelno;
+	}
+	public void setIsBindTelno(int isBindTelno) {
+		this.isBindTelno = isBindTelno;
 	}
 	
 	

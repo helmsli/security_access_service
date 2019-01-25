@@ -1,8 +1,10 @@
 package com.company.security.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.util.Calendar;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -546,7 +548,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				securityUser.setPhone(phone);
 				
 				securityUser.setPhoneCode(defaultCountryCode);
-				
+				securityUser.setDisplayName(getRandomJianHan(10));
 				String randomTransKey =  accessContext.getLoginUserSession().getLoginIdType() + ":" + accessContext.getLoginUserSession().getLoginId();
 				String clientPassword = this.getPasswordFromRsa(accessContext, randomTransKey, password);
 				securityUser.setPassword(clientPassword);
@@ -596,7 +598,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				String phone = defaultCountryCode + "--" + userName;
 				SecurityUser securityUser =new SecurityUser();
 				securityUser.setPhone(phone);
-				
+				securityUser.setDisplayName(getRandomJianHan(10));
 				securityUser.setPhoneCode(defaultCountryCode);
 				String correctPassword = SecurityUserAlgorithm.EncoderByMd5(dbUserKey, password);
 			    
@@ -618,7 +620,29 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 				return iRet;
 	}
 
-	
+	  public static String getRandomJianHan(int length) {
+		  String val = "";  
+	        Random random = new Random();  
+	          
+	        //参数length，表示生成几位随机数  
+	        for(int i = 0; i < length; i++) {  
+	              
+	            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";  
+	            if(i==0)
+	            {
+	            	charOrNum="char";
+	            }
+	            //输出字母还是数字  
+	            if( "char".equalsIgnoreCase(charOrNum) ) {  
+	                //输出是大写字母还是小写字母  
+	                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;  
+	                val += (char)(random.nextInt(26) + temp);  
+	            } else if( "num".equalsIgnoreCase(charOrNum) ) {  
+	                val += String.valueOf(random.nextInt(10));  
+	            }  
+	        }  
+	        return val;  
+	  }
 	@Override
 	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
 		// TODO Auto-generated method stub
@@ -642,6 +666,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		SecurityUser securityUser =new SecurityUser();
 		securityUser.setPhone(phone);
 		securityUser.setPhoneCode(countryCode);
+		securityUser.setDisplayName(getRandomJianHan(10));
 		String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
 		securityUser.setPassword(clientPassword);
 		securityUser.setUserId(this.createUserId());
@@ -666,10 +691,10 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			return iRet;
 		}
 		//注册用户
-		LoginUser  loginUser = getLoginUser(phone);
-		if(loginUser!=null)
+		//LoginUser  loginUser = getLoginUser(phone);
+		//if(loginUser!=null)
 		{
-			userMainDbService.unbindPhone(loginUser.getUserId(), countryCode, phone);
+			//userMainDbService.unbindPhone(loginUser.getUserId(), countryCode, phone);
 		}		
 		int verified_Success=1;
 		iRet = userMainDbService.bindPhone(loginUserSession.getUserId(), countryCode, phone, verified_Success);
