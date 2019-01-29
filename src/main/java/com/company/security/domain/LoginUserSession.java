@@ -86,6 +86,14 @@ public class LoginUserSession implements Serializable{
 	
 	private String role;
 	
+	private String inviteNo;
+	public String getInviteNo() {
+		return inviteNo;
+	}
+	public void setInviteNo(String inviteNo) {
+		this.inviteNo = inviteNo;
+	}
+	
 	public Date getLoginTime() {
 		return loginTime;
 	}

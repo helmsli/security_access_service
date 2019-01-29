@@ -22,7 +22,7 @@ public class RequestLogin extends LoginUserSession {
 	
 	private String displayName;
 	
-	private String inviteNo;
+	
 	
 	private int isBindTelno=0;
 	
@@ -66,12 +66,7 @@ public class RequestLogin extends LoginUserSession {
 	}
 	
 	
-	public String getInviteNo() {
-		return inviteNo;
-	}
-	public void setInviteNo(String inviteNo) {
-		this.inviteNo = inviteNo;
-	}
+	
 	@Override
 	public String toString() {
 		return "RequestLogin [transid=" + transid + ", password=" + password + ", countryCode=" + countryCode

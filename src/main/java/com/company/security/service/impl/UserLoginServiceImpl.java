@@ -503,6 +503,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			LoginUserSession loginUserSession) {
 		String key = "_register:" +userName;
 		long transActionId = 0;
+		int iRet = LoginServiceConst.RESULT_Error_Fail;
 		try
 		{
 			transActionId = this.securityUserCacheService.getCommonLock(key, 10, 0);
@@ -510,7 +511,8 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			{
 				return -1;
 			}
-			return this.registerUserByUserNameNoLock(accessContext, userName, password, loginUserSession);
+			iRet= this.registerUserByUserNameNoLock(accessContext, userName, password, loginUserSession);
+			return iRet;
 		}
 		catch(Exception e)
 		{
@@ -518,6 +520,11 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		}
 		finally
 		{
+			if(SecurityUserConst.RESULT_SUCCESS==iRet)
+			{
+				LoginUser loginUser = accessContext.getLoginUserInfo();
+				userNotifyService.nodifyRegisterUserAsync(loginUser.getUserId(),accessContext.getLoginUserSession().getInviteNo());
+			}
 			this.securityUserCacheService.releaseCommonLock(key, transActionId);
 		}
 		
@@ -528,6 +535,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			LoginUserSession loginUserSession) {
 		String key = "_register:" +userName;
 		long transActionId = 0;
+		int iRet=-1;
 		try
 		{
 			transActionId = this.securityUserCacheService.getCommonLock(key, 10, 0);
@@ -535,7 +543,8 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			{
 				return -1;
 			}
-			return this.regUserNameForServerNoLock(accessContext, userName, password, loginUserSession);
+			 iRet= this.regUserNameForServerNoLock(accessContext, userName, password, loginUserSession);
+			return iRet;
 		}
 		catch(Exception e)
 		{
@@ -543,6 +552,11 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		}
 		finally
 		{
+			if(SecurityUserConst.RESULT_SUCCESS==iRet)
+			{
+				LoginUser loginUser = accessContext.getLoginUserInfo();
+				userNotifyService.nodifyRegisterUserAsync(loginUser.getUserId(),accessContext.getLoginUserSession().getInviteNo());
+			}
 			this.securityUserCacheService.releaseCommonLock(key, transActionId);
 		}
 		
@@ -667,8 +681,26 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 	        }  
 	        return val;  
 	  }
-	@Override
-	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
+	  @Override
+	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) 
+	{
+		  int iRet = -1;
+		  try {
+			iRet = this.registerUserByCodeNoLock(accessContext, countryCode, phone, password, loginUserSession,
+					validCode);
+			return iRet;
+		} finally {
+			// TODO: handle finally clause
+			if(SecurityUserConst.RESULT_SUCCESS==iRet)
+			{
+				LoginUser loginUser = accessContext.getLoginUserInfo();
+				userNotifyService.nodifyRegisterUserAsync(loginUser.getUserId(),accessContext.getLoginUserSession().getInviteNo());
+			}
+		}
+	}
+	 
+	
+	public int registerUserByCodeNoLock(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
 		// TODO Auto-generated method stub
 		//获取用户名
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
