@@ -203,6 +203,30 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		return loginUser;
 	}
 	
+	
+	protected LoginUser getLoginUserByUserId(long userId)
+	{
+		LoginUser loginUser = securityUserCacheService.getBasicInfo(userId);
+		if(loginUser==null)
+		{		
+			//从数据库中获取信息，
+			//如果最近修改过
+			SecurityUserService securityUserService = userMainDbService;
+			SecurityUser securityUser = securityUserService.selectUserById(userId);
+			//如果数据库中不存在
+			if(securityUser==null)
+			{
+				return null;
+			}
+			else
+			{
+				loginUser = securityUser.getLoginUser();
+			}
+		}
+		return loginUser;
+	}
+	
+	
 	public LoginUser getLoginUserByUserName(String userName)
 	{
 		LoginUser loginUser = securityUserCacheService.getBInfoByUserName(userName);
@@ -868,6 +892,22 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			String clientNewPassword = this.getPasswordFromRsa(accessContext, authKey, newPassword);
 			String clientOldPassword = this.getPasswordFromRsa(accessContext, authKey, oldPassword);
 			String encodeMd5 = SecurityUserAlgorithm.EncoderByMd5(transferUserKey,clientNewPassword);
+			
+			LoginUser loginUser = this.getLoginUserByUserId(userId);
+			if(loginUser==null)
+			{
+				int bRet = SecurityUserConst.RESULT_Error_PhoneExist;
+				return bRet;
+			}
+			
+			if(loginUser.getPassword().compareToIgnoreCase(clientOldPassword)!=0)
+			{
+				return	LoginServiceConst.RESULT_Error_PasswordError;
+			}
+			
+			
+			
+			
 			boolean bRet= userMainDbService.updatePassword(userId, clientNewPassword, clientOldPassword, encodeMd5);
 			if(bRet)
 			{
