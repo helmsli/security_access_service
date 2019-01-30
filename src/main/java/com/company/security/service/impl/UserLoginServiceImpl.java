@@ -747,13 +747,20 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			return iRet;
 		}
 		//注册用户
-		//LoginUser  loginUser = getLoginUser(phone);
-		//if(loginUser!=null)
+		LoginUser  loginUser = getLoginUser(phone);
+		if(loginUser!=null)
 		{
-			//userMainDbService.unbindPhone(loginUser.getUserId(), countryCode, phone);
+			if(!loginUser.getPhone().contains("--"))
+			{
+				return LoginServiceConst.RESULT_Error_UserHavedBindTelno;
+			}
 		}		
 		int verified_Success=1;
 		iRet = userMainDbService.bindPhone(loginUserSession.getUserId(), countryCode, phone, verified_Success);
+		if(SecurityUserConst.RESULT_Error_PhoneExist==iRet)
+		{
+			iRet=LoginServiceConst.RESULT_Error_PhoneHaveRegister;
+		}
 		return iRet;
 	}
 	

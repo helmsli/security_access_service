@@ -33,4 +33,7 @@ public class LoginServiceConst {
      * 用户名不存在
      */
     public static final int RESULT_Error_UserNameNotExist = RESULT_ERROR_START+6;
+    
+    
+    public static final int RESULT_Error_UserHavedBindTelno = RESULT_ERROR_START+7;
 }
