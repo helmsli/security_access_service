@@ -747,7 +747,7 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 			return iRet;
 		}
 		//注册用户
-		LoginUser  loginUser = getLoginUser(phone);
+		LoginUser  loginUser = this.getLoginUserByUserId(loginUserSession.getUserId());
 		if(loginUser!=null)
 		{
 			if(!loginUser.getPhone().contains("--"))
