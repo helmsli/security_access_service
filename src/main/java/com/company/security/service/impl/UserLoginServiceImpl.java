@@ -32,6 +32,8 @@ import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityUserAlgorithm;
 @Service("userLoginService")
 public class UserLoginServiceImpl implements IUserLoginService {
+	
+	public static final int ERROR_DEVICE_NOTEqual = -2;
 	 private Logger logger = LoggerFactory.getLogger(getClass());
 	 
 	@Resource(name="securityUserCacheService")
@@ -407,21 +409,42 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	 * 清除老的session信息
 	 * @param loginUserSession
 	 */
-	protected void clearOldsession(AccessContext accessContext,LoginUserSession loginUserSession)
+	protected int clearOldsession(AccessContext accessContext,LoginUserSession loginUserSession)
 	{
 		try {
 			//获取老的Token，将老的Token设置为失效
 					LoginUserSession oldLoginSession = securityUserCacheService.getSessionInfo(loginUserSession.getLoginType(), loginUserSession.getUserId());
 					if(oldLoginSession!=null)
 					{
+						if(loginUserSession.getLoginManul()!=loginUserSession.loginManul_manual)
+						{
+							if(StringUtils.isEmpty(loginUserSession.getLoginDeviceId())&&StringUtils.isEmpty(oldLoginSession.getLoginDeviceId()))
+							{
+								
+							}
+							else if(StringUtils.isEmpty(loginUserSession.getLoginDeviceId())&&!StringUtils.isEmpty(oldLoginSession.getLoginDeviceId()))
+							{
+								return LoginServiceConst.RESULT_Error_haveLoginOnOtherDevice;
+							}
+							else if(!StringUtils.isEmpty(loginUserSession.getLoginDeviceId())&&StringUtils.isEmpty(oldLoginSession.getLoginDeviceId()))
+							{
+								return LoginServiceConst.RESULT_Error_haveLoginOnOtherDevice;
+							}
+							else if(loginUserSession.getLoginDeviceId().compareToIgnoreCase(oldLoginSession.getLoginDeviceId())!=0)
+							{
+								return LoginServiceConst.RESULT_Error_haveLoginOnOtherDevice;
+							}
+							
+						}
 					//	securityUserCacheService.delSessionAccessTime(oldLoginSession.getToken());
-						tokenService.delTokenInfo(oldLoginSession.getToken());
+						//tokenService.delTokenInfo(oldLoginSession.getToken());
 					}
 					accessContext.setOldUserSession(oldLoginSession);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 0;
 	}
 
 	/**
@@ -780,7 +803,11 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		String token = getToken(loginUser);
 		loginUserSession.setToken(token);
 		//清除老的session
-		clearOldsession(accessContext,loginUserSession);
+		int errorCode = clearOldsession(accessContext,loginUserSession);
+		if(errorCode!=0)
+		{
+			return errorCode;
+		}
 		int durationSeconds = getSessionDurSedonds(loginUserSession.getLoginType());
 		boolean bRet = securityUserCacheService.putSessionInfo(loginUserSession, loginUser,durationSeconds);
 		//

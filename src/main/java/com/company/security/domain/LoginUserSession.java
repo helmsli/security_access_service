@@ -80,13 +80,24 @@ public class LoginUserSession implements Serializable{
 	/**
 	 * 登录的设备ID
 	 */
-	private String loginDeviceId;
+	private String loginDeviceId="";
 	
 	private String ip;
 	
 	private String role;
 	
 	private String inviteNo;
+	
+	
+	public static final int loginManul_auto =0;
+	public static final int loginManul_manual =1;
+	
+	/**
+	 * 0 自动登录，1-手动登录
+	 */
+	private int loginManul =0;
+	
+	
 	public String getInviteNo() {
 		return inviteNo;
 	}
@@ -163,6 +174,12 @@ public class LoginUserSession implements Serializable{
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public int getLoginManul() {
+		return loginManul;
+	}
+	public void setLoginManul(int loginManul) {
+		this.loginManul = loginManul;
 	}
 	
 	

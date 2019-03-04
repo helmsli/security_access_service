@@ -252,6 +252,7 @@ public class UserLoginController {
 		ProcessResult processResult =new ProcessResult();
 		processResult.setRetCode(LoginServiceConst.RESULT_Error_Fail);
 		try {
+			loginUserSession.setLoginManul(loginUserSession.loginManul_manual);
 			AccessContext accessContext =new AccessContext();
 			//构造短信认证码
 			AuthCode authCode = new AuthCode();

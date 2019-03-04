@@ -36,4 +36,6 @@ public class LoginServiceConst {
     
     
     public static final int RESULT_Error_UserHavedBindTelno = RESULT_ERROR_START+7;
+    
+    public static final int RESULT_Error_haveLoginOnOtherDevice= RESULT_ERROR_START+8;
 }
