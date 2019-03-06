@@ -8,6 +8,10 @@ public class SmsContext implements Serializable{
 	
     private String  authCode;
     
+    private String phone;
+    
+    private String countryCode;
+    
 	public AuthCode getSmsValidCode() {
 		return smsValidCode;
 	}
@@ -22,6 +26,22 @@ public class SmsContext implements Serializable{
 
 	public void setAuthCode(String authCode) {
 		this.authCode = authCode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 	
 }

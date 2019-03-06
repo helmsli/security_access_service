@@ -20,6 +20,14 @@ public class AuthCode implements Serializable{
 	/**加密方式，rsa*/
 	public static final int CrcType_RSA = 0;
 	
+	private String countryCode = "0086";
+	
+	public static final int bizType_register = 1;
+	public static final int bizType_resetPassword = 2;
+	
+	
+	private int bizType=bizType_register;
+	
 	private String phone;
 	/**
 	 * 短信交易号
@@ -119,6 +127,18 @@ public class AuthCode implements Serializable{
 		return "AuthCode [phone=" + phone + ", transid=" + transid + ", sendSeqno=" + sendSeqno + ", authCode="
 				+ authCode + ", sendType=" + sendType + ", crcType=" + crcType + ", random=" + random + ", publicKey="
 				+ publicKey + "]";
+	}
+	public String getCountryCode() {
+		return countryCode;
+	}
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	public int getBizType() {
+		return bizType;
+	}
+	public void setBizType(int bizType) {
+		this.bizType = bizType;
 	}
 	
 	
