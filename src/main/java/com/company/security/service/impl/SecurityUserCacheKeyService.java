@@ -49,6 +49,13 @@ public class SecurityUserCacheKeyService {
 	{
 		return SecurityConst.getTokenRediskey(token);
 	}
+	public String getTokenInfoKey(String token)
+	{
+		StringBuilder str= new StringBuilder();
+		str.append("tokenInfoTimeout:");
+		str.append(token);
+		return str.toString();
+	}
 	
 	/**
 	 * 获取同步锁的key

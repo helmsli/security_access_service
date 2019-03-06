@@ -433,11 +433,11 @@ public class UserLoginServiceImpl implements IUserLoginService {
 							else if(loginUserSession.getLoginDeviceId().compareToIgnoreCase(oldLoginSession.getLoginDeviceId())!=0)
 							{
 								return LoginServiceConst.RESULT_Error_haveLoginOnOtherDevice;
-							}
-							
+							}							
 						}
+						
 					//	securityUserCacheService.delSessionAccessTime(oldLoginSession.getToken());
-						//tokenService.delTokenInfo(oldLoginSession.getToken());
+						tokenService.delTokenInfo(oldLoginSession.getToken());
 					}
 					accessContext.setOldUserSession(oldLoginSession);
 		} catch (Exception e) {

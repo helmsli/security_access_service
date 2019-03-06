@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import com.company.security.Const.SessionKeyConst;
 import com.company.security.domain.LoginUser;
 import com.company.security.domain.LoginUserSession;
+import com.company.security.domain.TokenCacheInfo;
 import com.company.security.service.SecurityUserCacheService;
 import com.company.security.utils.RSAUtils;
 import com.xinwei.nnl.common.util.JsonUtil;
@@ -42,7 +43,7 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	/**
 	 * token在内存中失效的天数,仅仅时内存中保留的天数，不是token失效的天数
 	 */
-	protected int tokenExpiredDays = 5;
+	protected int tokenExpiredDays = 30;
 	
 	/**
 	 * 将基本信息放入cache，不加锁
@@ -314,9 +315,10 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		//按照登录的渠道类型和用户ID构造用户登录的具体设备信息
 		String tokenkey = this.getTokenKey(loginUserSession.getLoginType(), loginUserSession.getUserId());
 		//所有的登录设备信息保留一个固定的时间
+		logger.debug("tokenKey:" + tokenkey + "*" + JsonUtil.toJson(loginUserSession));
 		opsForValue.set(tokenkey, JsonUtil.toJson(loginUserSession),tokenExpiredDays,TimeUnit.DAYS);
 		//设置token信息
-		this.setSessionAccessTime(loginUserSession.getToken(), System.currentTimeMillis(), duartionSeconds);		
+		this.setSessionAccessTime(loginUserSession.getToken(), System.currentTimeMillis(), loginUserSession,duartionSeconds);		
 		return true;
 	}
 	@Override
@@ -373,18 +375,35 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		{
 			return 0;
 		}
-		return Long.parseLong(accessTime);
+		try {
+			TokenCacheInfo tokenCacheInfo = JsonUtil.fromJson(accessTime, TokenCacheInfo.class);
+			return tokenCacheInfo.getAccessTime();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 		
 	}
 
 	
-	public boolean setSessionAccessTime(String token, long accessTime,int duartionSeconds) {
+	public boolean setSessionAccessTime(String token, long accessTime,LoginUserSession loginUserSession,int duartionSeconds) {
 		//获取tokne的ken
-		String accessKey  =this.getTokenAccessKey(token);
+		String  timeOutKey =this.getTokenAccessKey(token);
+		String sessionInfoKey  =this.getTokenInfoKey(token);
 		ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();
-		logger.debug("set session:" + accessKey + ":" + String.valueOf(accessTime));
+		logger.debug("set session:" + timeOutKey + ":" + String.valueOf(accessTime));
 		//判断token是否有效
-		opsForValue.set(accessKey, String.valueOf(accessTime),duartionSeconds,TimeUnit.SECONDS);
+		TokenCacheInfo tokenCacheInfo = new TokenCacheInfo();
+		tokenCacheInfo.setAccessTime(accessTime);
+		tokenCacheInfo.setDeviceId(loginUserSession.getLoginDeviceId());
+		tokenCacheInfo.setLoginType(loginUserSession.getLoginType());
+		tokenCacheInfo.setUserId(loginUserSession.getUserId());
+		logger.debug(" JsonUtil.toJson(tokenCacheInfo):" + sessionInfoKey +"*" + JsonUtil.toJson(tokenCacheInfo));
+		
+		opsForValue.set(sessionInfoKey, JsonUtil.toJson(tokenCacheInfo),duartionSeconds,TimeUnit.SECONDS);
+		opsForValue.set(timeOutKey, String.valueOf(System.currentTimeMillis()),duartionSeconds,TimeUnit.SECONDS);
+		
 		return true;
 	}
 

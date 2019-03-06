@@ -118,6 +118,9 @@ public class TokenServiceImpl implements TokenService{
 	@Override
 	public boolean delTokenInfo(String token) {
 		// TODO Auto-generated method stub
+		logger.debug("delete old token:"+token);
+		String accessKey  =getTokenAccessKey(token);
+		redisTemplate.delete(accessKey);
 		return true;
 	}
 
