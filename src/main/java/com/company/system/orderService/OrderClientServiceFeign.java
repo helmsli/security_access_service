@@ -12,7 +12,7 @@ import com.xinwei.orderDb.domain.OrderFlow;
 import com.xinwei.orderDb.domain.OrderMainContext;
 
 // 服务名称不能使用下划线
-@FeignClient(value = "order-access", fallback = OrderClientServiceFeignCallback.class)
+@FeignClient(value = "${coojisu.order-access}", fallback = OrderClientServiceFeignCallback.class)
 public interface OrderClientServiceFeign {
 
 	// @PathVariable注解必须使用value属性指定路径
