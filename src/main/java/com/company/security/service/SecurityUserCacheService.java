@@ -132,6 +132,10 @@ public interface SecurityUserCacheService {
 	 * @return  使用：分割，返回事务号和随机码
 	 */
 	public String getTrandsId(String loginId);
+	
+	public String getShortTrandsId(String loginId);
+	
+	
 	/**
 	 * 验证随机码和事务号
 	 * @param loginId

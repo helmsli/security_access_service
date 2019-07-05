@@ -9,6 +9,7 @@ import java.util.Collection;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +34,10 @@ import com.company.security.domain.sms.AuthCode;
 import com.company.security.service.ISmsValidCodeService;
 import com.company.security.service.IUserLoginService;
 import com.company.security.service.SecurityUserCacheService;
+import com.company.security.service.impl.SecurityUserCacheServiceImpl;
 import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityKeyService;
+import com.company.security.utils.SecurityUserAlgorithm;
 import com.google.gson.Gson;
 import com.xinwei.nnl.common.domain.ProcessResult;
 import com.xinwei.nnl.common.util.JsonUtil;
@@ -53,6 +56,9 @@ public class UserLoginController {
 	@Resource(name="securityKeyService")
 	private SecurityKeyService securityKeyService;
 	
+	@Resource(name="securityUserCacheService")
+	@Lazy
+	private SecurityUserCacheServiceImpl securityUserCacheServiceImpl;
 	/**
 	 * 绑定电话号码
 	 * @param request
@@ -87,6 +93,9 @@ public class UserLoginController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			//删除随机数
+		}
 		return processResult;
 	}
 	
@@ -112,6 +121,9 @@ public class UserLoginController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally{
+			//删除随机数
 		}
 		return processResult;
 	}
@@ -147,8 +159,12 @@ public class UserLoginController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			//删除随机数
+		}
 		return processResult;
 	}
+	
 	
 	
 	@RequestMapping(method = RequestMethod.POST,value = "/regUserNameForServer")
@@ -237,6 +253,9 @@ public class UserLoginController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			//删除随机数
+		}
 		return processResult;
 	}
 	
@@ -261,6 +280,18 @@ public class UserLoginController {
 			authCode.setAuthCode(loginUserSession.getAuthCode());
 			accessContext.setLoginUserSession(loginUserSession);
 			int iRet= userLoginService.loginUserBySmsCode(accessContext, countryCode, loginUserSession.getLoginId(),loginUserSession,authCode);
+			
+			if(iRet==SecurityUserConst.RESULT_Error_PhoneExist)
+			{
+				String correctPassword = SecurityUserAlgorithm.EncoderByMd5("abcdefdg", securityUserCacheServiceImpl.getRandom6());
+				iRet= userLoginService.registerUserInner(accessContext, countryCode, authCode.getPhone(), correctPassword, loginUserSession);
+				if(iRet==0)
+				{
+					iRet= userLoginService.loginUserBySmsCode(accessContext, countryCode, loginUserSession.getLoginId(),loginUserSession,authCode);
+				}
+			}
+			
+			
 			processResult.setRetCode(iRet);
 			loginUserSession.setPassword("");
 			if(iRet==0)
@@ -282,6 +313,10 @@ public class UserLoginController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally
+		{
+			//删除随机数
 		}
 		return processResult;
 	}

@@ -23,6 +23,8 @@ import com.xinwei.nnl.common.util.JsonUtil;
 @Service("securityUserCacheService")
 public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService implements SecurityUserCacheService,InitializingBean {
 	
+	
+	private final String UserIdKey_prefix = "userBindId:";
 	@Resource (name = "redisTemplate")
 	protected RedisTemplate<Object, Object> redisTemplate;
 	
@@ -468,6 +470,38 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		opsForValue.set(key, random,300,TimeUnit.SECONDS);		
 		return transid+SecurityUserCacheKeyService.Key_prefix_Split+random;
 	}
+	
+	@Override
+	public String getShortTrandsId(String loginId) {
+		// TODO Auto-generated method stub
+		String transid = getShortTransId();
+		
+		try {
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();	
+			String key = UserIdKey_prefix + transid;
+			if(opsForValue.setIfAbsent(key,loginId))
+			{
+				redisTemplate.expire(key, 30, TimeUnit.MINUTES);
+				return transid;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	public String getShortUserIdByTrandsId(String transid) {
+		// TODO Auto-generated method stub
+		try {
+			ValueOperations<Object, Object> opsForValue = redisTemplate.opsForValue();	
+			String key = UserIdKey_prefix + transid;
+			return (String)opsForValue.get(key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
 	@Override
 	public String getRandomByTransid(String loginId,String transid)
 	{
@@ -476,6 +510,9 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		String random = (String) opsForValue.get(key);	
 		return random;
 	}
+	
+	
+	
 	/**
 	 * 获取transid
 	 * @return
@@ -484,6 +521,12 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 	{
 		long transId =  System.currentTimeMillis()-1504369881000l;
 		return serverNode + transId+"*"+getRandom4();
+	}
+	
+	public synchronized String getShortTransId()
+	{
+		
+		return serverNode +getRandom6();
 	}
 	
 	/**
@@ -496,12 +539,21 @@ public class SecurityUserCacheServiceImpl extends SecurityUserCacheKeyService im
 		if(mobile_code>9999)
 		{
 			String ret = String.valueOf(mobile_code);
-			return ret.substring(0, 3);
+			return ret.substring(0, 4);
 		}
 		return String.valueOf(mobile_code);
 	}
 
-	
+	public String getRandom6()
+	{
+		int mobile_code = (int)((Math.random()*9+1)*100000);
+		if(mobile_code>999999)
+		{
+			String ret = String.valueOf(mobile_code);
+			return ret.substring(0, 6);
+		}
+		return String.valueOf(mobile_code);
+	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		// TODO Auto-generated method stub

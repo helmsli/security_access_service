@@ -51,6 +51,8 @@ public interface IUserLoginService {
 	 */
 	public int registerUserByCode(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode);
 	
+	
+	public int registerUserInner(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession);	
 	public int bindTelno(AccessContext accessContext,String countryCode,String phone,LoginUserSession loginUserSession,AuthCode validCode);
 	/**
 	 * 将验证好的信息注册成为用户
@@ -87,6 +89,7 @@ public interface IUserLoginService {
 	
 	public int modifyPasswrodByUserId(AccessContext accessContext, String authKey,long userId,String oldPassword,String newPassword);
 	
+	public int bindIdNoByShortRandom(SmsContext smsContext);
 	
 	/**
 	 * 根据电话号码生成transid和random 
@@ -95,6 +98,14 @@ public interface IUserLoginService {
 	 * @return --authcode对象；
 	 */
 	public int createRandom(SmsContext smsContext,String phone); 
+	
+	/**
+	 *     创建微信或者支付宝的唯一的认证消息
+	 * @param smsContext
+	 * @param userKey
+	 * @return
+	 */
+	public int createImUniqueRamdon(SmsContext smsContext,String userKey); 
 	
 	/**
 	 * 根据电话号码和事务号，查询随机数，用于校验

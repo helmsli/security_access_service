@@ -30,6 +30,7 @@ import com.company.security.service.SecurityUserService;
 import com.company.security.token.TokenService;
 import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityUserAlgorithm;
+import com.xinwei.nnl.common.util.JsonUtil;
 @Service("userLoginService")
 public class UserLoginServiceImpl implements IUserLoginService {
 	
@@ -722,7 +723,41 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		}
 	}
 	 
-	
+	/**
+	 * 内部函数
+	 * @param accessContext
+	 * @param countryCode
+	 * @param phone
+	 * @param password
+	 * @param loginUserSession
+	 * @param validCode
+	 * @return
+	 */
+	public int registerUserInner(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession) {
+		//注册用户
+				LoginUser  loginUser = getLoginUser(phone);
+				if(loginUser!=null)
+				{
+					accessContext.setLoginUserInfo(loginUser);
+					return LoginServiceConst.RESULT_Error_PhoneHaveRegister;
+				}
+				//更新数据库信息
+				SecurityUser securityUser =new SecurityUser();
+				securityUser.setPhone(phone);
+				securityUser.setPhoneCode(countryCode);
+				securityUser.setDisplayName(getRandomJianHan(10));
+				securityUser.setPassword(password);
+				securityUser.setUserId(this.createUserId());
+				securityUser.setPhoneVerified(securityUser.verified_Success);
+				accessContext.setLoginUserInfo(securityUser.getLoginUser());
+				
+				securityUser.setCreateTime(Calendar.getInstance().getTime());
+				int iRet = userMainDbService.registerUserByPhone(securityUser);
+				return iRet;
+		
+	}
+	  
+	  
 	public int registerUserByCodeNoLock(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
 		// TODO Auto-generated method stub
 		//获取用户名
@@ -734,27 +769,9 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		{
 			return iRet;
 		}
-		//注册用户
-		LoginUser  loginUser = getLoginUser(phone);
-		if(loginUser!=null)
-		{
-			accessContext.setLoginUserInfo(loginUser);
-			return LoginServiceConst.RESULT_Error_PhoneHaveRegister;
-		}
-		//更新数据库信息
-		SecurityUser securityUser =new SecurityUser();
-		securityUser.setPhone(phone);
-		securityUser.setPhoneCode(countryCode);
-		securityUser.setDisplayName(getRandomJianHan(10));
 		String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
-		securityUser.setPassword(clientPassword);
-		securityUser.setUserId(this.createUserId());
-		securityUser.setPhoneVerified(securityUser.verified_Success);
-		accessContext.setLoginUserInfo(securityUser.getLoginUser());
 		
-		securityUser.setCreateTime(Calendar.getInstance().getTime());
-		iRet = userMainDbService.registerUserByPhone(securityUser);
-		return iRet;
+		return this.registerUserInner(accessContext, countryCode, phone, clientPassword, loginUserSession);
 	}
 	
 	@Override
@@ -797,29 +814,41 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 	protected int baseLogin(AccessContext accessContext,LoginUser  loginUser,LoginUserSession loginUserSession)
 	{
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
-		accessContext.setLoginUserInfo(loginUser);
-		accessContext.setLoginUserSession(loginUserSession);
-		//构造token
-		String token = getToken(loginUser);
-		loginUserSession.setToken(token);
-		//清除老的session
-		int errorCode = clearOldsession(accessContext,loginUserSession);
-		if(errorCode!=0)
+		
+		try
 		{
-			return errorCode;
+			accessContext.setLoginUserInfo(loginUser);
+			accessContext.setLoginUserSession(loginUserSession);
+			//构造token
+			String token = getToken(loginUser);
+			loginUserSession.setToken(token);
+			//清除老的session
+			int errorCode = clearOldsession(accessContext,loginUserSession);
+			if(errorCode!=0)
+			{
+				return errorCode;
+			}
+			int durationSeconds = getSessionDurSedonds(loginUserSession.getLoginType());
+			boolean bRet = securityUserCacheService.putSessionInfo(loginUserSession, loginUser,durationSeconds);
+			//
+			if(!bRet)
+			{
+				iRet =  LoginServiceConst.RESULT_Error_putSession;
+			}
+			else
+			{
+				iRet =  LoginServiceConst.RESULT_Success;
+			}
+			return iRet;
 		}
-		int durationSeconds = getSessionDurSedonds(loginUserSession.getLoginType());
-		boolean bRet = securityUserCacheService.putSessionInfo(loginUserSession, loginUser,durationSeconds);
-		//
-		if(!bRet)
-		{
-			iRet =  LoginServiceConst.RESULT_Error_putSession;
+		finally {
+			// TODO: handle finally clause
+			if(LoginServiceConst.RESULT_Success==iRet)
+			{
+				
+				userNotifyService.notifyLoginUserAsync(loginUser.getUserId(),"login");
+			}
 		}
-		else
-		{
-			iRet =  LoginServiceConst.RESULT_Success;
-		}
-		return iRet;
 	}
 	
 	@Override
@@ -1002,7 +1031,57 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 	public void setUserReadDbService(SecurityUserService userReadDbService) {
 		this.userReadDbService = userReadDbService;
 	}
-
+	
+	/**
+	 * 用于微信支付宝认证
+	 */
+	@Override
+	public int createImUniqueRamdon(SmsContext smsContext, String userKey) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<10;i++)
+		{
+			String transId = this.securityUserCacheService.getShortTrandsId(userKey);
+			if(!StringUtils.isEmpty(transId))
+			{
+				AuthCode authCode = smsContext.getSmsValidCode();
+				authCode.setTransid(transId);
+				authCode.setRandom(transId);
+				return 0;
+			}			
+		}
+		return -1;
+	}
+	
+	/**
+	 * 绑定id到用户
+	 * @param smsContext
+	 * @param receiveId
+	 * @return
+	 */
+	public int bindIdNoByShortRandom(SmsContext smsContext) {
+		
+		String userIdContext = this.securityUserCacheService.getShortUserIdByTrandsId(smsContext.getSmsValidCode().getRandom());
+		if(StringUtils.isEmpty(userIdContext))
+		{
+			return LoginServiceConst.RESULT_Error_ValidCode;
+		}
+		String userIdBuffer[] = StringUtils.split(userIdContext, ":");
+		String userId = userIdBuffer[0];
+		String type = userIdBuffer[1];
+		/**
+		 * 外面的电话号码是接收者的id，里面的电话号码是用户的id
+		 */
+		String userImKey = smsContext.getSmsValidCode().getPhone() + "," + smsContext.getPhone();
+		
+		int iRet = userMainDbService.bindIdNo(Long.parseLong(userId), Integer.parseInt(type),userImKey , SecurityUser.verified_Success);
+		if(iRet==1)
+		{
+			iRet = SecurityUserConst.RESULT_SUCCESS;
+		}
+		return iRet;
+	}
+	
+	
 	@Override
 	public int createRandom(SmsContext smsContext,String phone) 
 	 {
@@ -1019,8 +1098,6 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		}
 		return -1;
 	}
-
-	
 
 	@Override
 	public String getRandom(String phone, String transid) {
@@ -1230,6 +1307,8 @@ public int registerUserByUserName(AccessContext accessContext, String userName, 
 		}
 		return LoginServiceConst.RESULT_Error_Fail;
 	}
+
+	
 
 	
 
