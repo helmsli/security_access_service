@@ -28,11 +28,8 @@ import com.company.security.service.SecurityUserService;
 import com.company.security.token.TokenService;
 import com.company.security.utils.RSAUtils;
 import com.company.security.utils.SecurityUserAlgorithm;
-<<<<<<< HEAD
-import com.xinwei.nnl.common.util.JsonUtil;
-=======
 
->>>>>>> b29bc84c1554bb00e160dbbdad7a73283943b4d6
+import com.xinwei.nnl.common.util.JsonUtil;
 @Service("userLoginService")
 public class UserLoginServiceImpl implements IUserLoginService {
 
@@ -646,7 +643,6 @@ public class UserLoginServiceImpl implements IUserLoginService {
 			}
 		}
 	}
-<<<<<<< HEAD
 	 
 	/**
 	 * 内部函数
@@ -684,11 +680,6 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	  
 	  
 	public int registerUserByCodeNoLock(AccessContext accessContext,String countryCode,String phone,String password,LoginUserSession loginUserSession,AuthCode validCode) {
-=======
-
-	public int registerUserByCodeNoLock(AccessContext accessContext, String countryCode, String phone, String password,
-			LoginUserSession loginUserSession, AuthCode validCode) {
->>>>>>> b29bc84c1554bb00e160dbbdad7a73283943b4d6
 		// TODO Auto-generated method stub
 		//获取用户名
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
@@ -698,32 +689,9 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		if (LoginServiceConst.RESULT_Success != iRet) {
 			return iRet;
 		}
-<<<<<<< HEAD
 		String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
 		
 		return this.registerUserInner(accessContext, countryCode, phone, clientPassword, loginUserSession);
-=======
-		//注册用户
-		LoginUser loginUser = getLoginUser(phone);
-		if (loginUser != null) {
-			accessContext.setLoginUserInfo(loginUser);
-			return LoginServiceConst.RESULT_Error_PhoneHaveRegister;
-		}
-		//更新数据库信息
-		SecurityUser securityUser = new SecurityUser();
-		securityUser.setPhone(phone);
-		securityUser.setPhoneCode(countryCode);
-		securityUser.setDisplayName(getRandomJianHan(10));
-		String clientPassword = this.getPasswordFromRsa(accessContext, phone, password);
-		securityUser.setPassword(clientPassword);
-		securityUser.setUserId(this.createUserId());
-		securityUser.setPhoneVerified(securityUser.verified_Success);
-		accessContext.setLoginUserInfo(securityUser.getLoginUser());
-
-		securityUser.setCreateTime(Calendar.getInstance().getTime());
-		iRet = userMainDbService.registerUserByPhone(securityUser);
-		return iRet;
->>>>>>> b29bc84c1554bb00e160dbbdad7a73283943b4d6
 	}
 
 	@Override
@@ -762,7 +730,6 @@ public class UserLoginServiceImpl implements IUserLoginService {
 	 */
 	protected int baseLogin(AccessContext accessContext, LoginUser loginUser, LoginUserSession loginUserSession) {
 		int iRet = LoginServiceConst.RESULT_Error_Fail;
-<<<<<<< HEAD
 		
 		try
 		{
@@ -797,25 +764,6 @@ public class UserLoginServiceImpl implements IUserLoginService {
 				
 				userNotifyService.notifyLoginUserAsync(loginUser.getUserId(),"login");
 			}
-=======
-		accessContext.setLoginUserInfo(loginUser);
-		accessContext.setLoginUserSession(loginUserSession);
-		//构造token
-		String token = getToken(loginUser);
-		loginUserSession.setToken(token);
-		//清除老的session
-		int errorCode = clearOldsession(accessContext, loginUserSession);
-		if (errorCode != 0) {
-			return errorCode;
-		}
-		int durationSeconds = getSessionDurSedonds(loginUserSession.getLoginType());
-		boolean bRet = securityUserCacheService.putSessionInfo(loginUserSession, loginUser, durationSeconds);
-		//
-		if (!bRet) {
-			iRet = LoginServiceConst.RESULT_Error_putSession;
-		} else {
-			iRet = LoginServiceConst.RESULT_Success;
->>>>>>> b29bc84c1554bb00e160dbbdad7a73283943b4d6
 		}
 	}
 
@@ -1224,13 +1172,4 @@ public class UserLoginServiceImpl implements IUserLoginService {
 		return LoginServiceConst.RESULT_Error_Fail;
 	}
 
-<<<<<<< HEAD
-	
-
-	
-
-	
-			
-=======
->>>>>>> b29bc84c1554bb00e160dbbdad7a73283943b4d6
 }
