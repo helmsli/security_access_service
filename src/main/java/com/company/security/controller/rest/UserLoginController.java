@@ -236,6 +236,8 @@ public class UserLoginController {
 			{
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
+				loginUserSession.setUserId(accessContext.getLoginUserInfo().getUserId());
+				
 				loginUserSession.setRole(accessContext.getLoginUserInfo().getRoles());
 				if(StringUtils.isEmpty(accessContext.getLoginUserInfo().getPhone())||accessContext.getLoginUserInfo().getPhone().contains("--"))
 				{
@@ -297,6 +299,7 @@ public class UserLoginController {
 			if(iRet==0)
 			{
 				loginUserSession.setAvatar(accessContext.getLoginUserInfo().getAvatar());
+				loginUserSession.setUserId(accessContext.getLoginUserInfo().getUserId());
 				loginUserSession.setDisplayName(accessContext.getLoginUserInfo().getDisplayName());
 				accessContext.getLoginUserInfo().setPassword("");
 				if(StringUtils.isEmpty(accessContext.getLoginUserInfo().getPhone())||accessContext.getLoginUserInfo().getPhone().contains("--"))
